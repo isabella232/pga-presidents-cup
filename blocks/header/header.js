@@ -1,4 +1,5 @@
-import { readBlockConfig, decorateIcons, makeLinksRelative } from '../../scripts/scripts.js';
+import {
+  readBlockConfig, decorateIcons, makeLinksRelative, lookupPages, createOptimizedPicture } from '../../scripts/scripts.js';
 
 /**
  * collapses all open nav sections
@@ -9,6 +10,13 @@ function collapseAllNavSections(sections) {
   sections.querySelectorAll('.nav-sections > ul > li').forEach((section) => {
     section.setAttribute('aria-expanded', 'false');
   });
+}
+
+function displayNextPartner(proud) {
+  const partners = [...proud.querySelectorAll('.nav-partner')];
+  const appeared = partners.findIndex((e) => e.classList.contains('nav-partner-appear'));
+  partners[appeared].classList.remove('nav-partner-appear');
+  partners[(appeared + 1) % partners.length].classList.add('nav-partner-appear');
 }
 
 /**
@@ -62,6 +70,23 @@ export default async function decorate(block) {
     nav.prepend(hamburger);
     nav.setAttribute('aria-expanded', 'false');
     decorateIcons(nav);
+    const pages = await lookupPages();
+    const sponsors = pages.filter((e) => e.path.startsWith('/sponsors'));
+    const brand = nav.querySelector('.nav-brand');
+    const proud = document.createElement('div');
+    proud.className = 'nav-partners';
+    proud.innerHTML = '<span>proud partners</span>';
+    sponsors.forEach((e, i) => {
+      const partner = document.createElement('div');
+      partner.className = 'nav-partner';
+      if (!i) partner.classList.add('nav-partner-appear');
+      partner.append(createOptimizedPicture(e.logoWhite, e.title, false, [{ width: '300' }]));
+      proud.append(partner);
+    });
+    setInterval(() => {
+      displayNextPartner(proud);
+    }, 5000);
+    brand.append(proud);
     block.append(nav);
   }
 }
