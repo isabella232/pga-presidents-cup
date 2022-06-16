@@ -1,12 +1,22 @@
 footer {
   padding: 2rem;
-  background-color: var(--overlay-background-color);
+  background-color: white;
   font-size: var(--body-font-size-s);
 }
 
 footer .footer {
-  max-width: 1200px;
+  max-width: 768px;
   margin: auto;
+}
+
+footer .footer .footer-logos > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+footer .footer .footer-logos img {
+  height: 45px;
 }
 
 footer .footer p {

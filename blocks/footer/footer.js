@@ -1,4 +1,4 @@
-import { readBlockConfig, decorateIcons } from '../../scripts/scripts.js';
+import { readBlockConfig, decorateIcons, decorateLinkedPictures } from '../../scripts/scripts.js';
 
 /**
  * loads and decorates the footer
@@ -15,5 +15,10 @@ export default async function decorate(block) {
   const footer = document.createElement('div');
   footer.innerHTML = html;
   await decorateIcons(footer);
+  decorateLinkedPictures(footer);
   block.append(footer);
+  const styles = ['logos', 'legal'];
+  styles.forEach((style, i) => {
+    if (block.children[i]) block.children[i].classList.add(`footer-${style}`);
+  });
 }

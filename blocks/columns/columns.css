@@ -1,25 +1,32 @@
-.columns > div {
-    display: flex;
-    flex-direction: column;
+.columns {
+    font-size: var(--body-font-size-s);
 }
 
-.columns img {
-    width: 100%;
+.columns > div > div {
+    background-color: white;
 }
 
-@media (min-width: 900px) {
+.columns h2 {
+    font-size: var(--heading-font-size-m);
+    text-transform: uppercase;
+}
+
+.columns div div > * {
+    margin-left: 32px;
+    margin-right: 32px;
+}
+
+.columns div div > p.columns-contains-image {
+    margin: 0;
+}
+
+@media (min-width: 600px) {
     .columns > div {
         display: flex;
-        align-items: center;
-        flex-direction: unset;
     }
 
     .columns > div > div {
         flex: 1;
-        margin-left: 32px;
-    }
-
-    .columns > div > div:first-of-type {
-        margin-left: unset;
+        margin: 16px;
     }
 }

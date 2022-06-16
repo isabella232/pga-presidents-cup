@@ -8,11 +8,12 @@ header nav {
   padding: 0 2rem;
   position: fixed;
   z-index: 1;
-  background-color: var(--background-color);
+  background-color: #999;
   width: 100vw;
   height: var(--nav-height);
   box-sizing: border-box;
   font-family: var(--body-font-family);
+  color: white;
 }
 
 header nav a:any-link {
@@ -33,6 +34,10 @@ header .nav-brand {
   font-size: 22px;
   font-weight: 700;
   line-height: 1em;
+  background-color: #777;
+  padding: 0 20px;
+  width: 100px;
+  height: 100%;
 }
 
 header nav .nav-brand p {
@@ -40,7 +45,7 @@ header nav .nav-brand p {
 }
 
 header nav .nav-brand img {
-  width: 128px;
+  height: 51px;
 }
 
 /* hamburger */
@@ -191,8 +196,17 @@ header nav[aria-expanded='true'] .nav-tools li {
   }
 
   header nav .nav-brand {
-    flex: 0 0 150px;
+    flex: 0 0 200px;
+    box-shadow: 0 0 10px 5px rgb(0 0 0 / 30%);
+    height: auto;
   }
+
+  header nav .nav-brand img {
+    padding-top: 10px;
+    width: 200px;
+    height: auto;
+  }
+  
 
   header nav .nav-sections ul {
     display: flex;
@@ -200,6 +214,7 @@ header nav[aria-expanded='true'] .nav-tools li {
     background-color: unset;
     width: unset;
     margin: 0;
+    justify-content: space-around;
   }
   
   header nav[aria-expanded='true'] .nav-sections ol {
@@ -214,6 +229,7 @@ header nav[aria-expanded='true'] .nav-tools li {
     margin: 0;
     cursor: pointer;
     padding-top: 0;
+    height: 100%;
   }
 
   header nav .nav-sections > ul > li > p {
@@ -237,11 +253,10 @@ header nav[aria-expanded='true'] .nav-tools li {
     position: absolute;
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;    
-    border-bottom: 15px solid var(--highlight-background-color);
+    border-bottom: 15px solid #888;
     top: -15px;
-    left: 20px;
+    left: 30px;
   }
-
 
   header nav .nav-sections > ul > li > ul > li {
     font-size: 18px;
@@ -251,10 +266,11 @@ header nav[aria-expanded='true'] .nav-tools li {
   header nav .nav-sections > ul > li[aria-expanded='true'] ul {
     display: block;
     position: absolute;
-    background-color: var(--highlight-background-color);
+    background-color: #888;
     width: 300px;
     left: 0;
+    top: 24px;
     padding: 16px;
-    box-shadow: 0 0 5px var(text-color);
+    box-shadow: 0 10px 10px 5px #00000040;
   }
 }

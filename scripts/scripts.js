@@ -477,7 +477,7 @@ export function makeLinksRelative(main) {
       try {
         const url = new URL(a.href);
         const relative = hosts.some((host) => url.hostname.includes(host));
-        if (relative) a.href = `${url.pathname}${url.search}${url.hash}`;
+        if (relative) a.href = `${url.pathname.split('.')[0]}${url.search}${url.hash}`;
       } catch (e) {
         // something went wrong
         // eslint-disable-next-line no-console
@@ -622,7 +622,7 @@ initHlx();
 
 const LCP_BLOCKS = ['hero']; // add your LCP blocks to the list
 const RUM_GENERATION = 'project-1'; // add your RUM generation information here
-const PRODUCTION_DOMAINS = [];
+const PRODUCTION_DOMAINS = ['www.worldgolffoundation.org'];
 
 sampleRUM('top');
 window.addEventListener('load', () => sampleRUM('load'));
@@ -641,18 +641,39 @@ function buildHeroBlock(main) {
   }
 }
 
-function loadHeader(header) {
+export function linkPicture($picture) {
+  const $nextSib = $picture.parentNode.nextElementSibling;
+  if ($nextSib) {
+    const $a = $nextSib.querySelector('a');
+    if ($a && $a.textContent.startsWith('https://')) {
+      $a.innerHTML = '';
+      $a.className = '';
+      $a.appendChild($picture);
+    }
+  }
+}
+
+export function decorateLinkedPictures($main) {
+  /* thanks to word online */
+  $main.querySelectorAll('picture').forEach(($picture) => {
+    if (!$picture.closest('div.block')) {
+      linkPicture($picture);
+    }
+  });
+}
+
+async function loadHeader(header) {
   const headerBlock = buildBlock('header', '');
   header.append(headerBlock);
   decorateBlock(headerBlock);
-  loadBlock(headerBlock);
+  await loadBlock(headerBlock);
 }
 
-function loadFooter(footer) {
+async function loadFooter(footer) {
   const footerBlock = buildBlock('footer', '');
   footer.append(footerBlock);
   decorateBlock(footerBlock);
-  loadBlock(footerBlock);
+  await loadBlock(footerBlock);
 }
 
 /**
@@ -677,6 +698,7 @@ export function decorateMain(main) {
   decoratePictures(main);
   // forward compatible link rewriting
   makeLinksRelative(main);
+  decorateLinkedPictures(main);
 
   // hopefully forward compatible button decoration
   decorateButtons(main);
@@ -713,7 +735,7 @@ async function loadLazy(doc) {
   loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
-  addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.svg`);
+  addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.ico`);
 }
 
 /**
