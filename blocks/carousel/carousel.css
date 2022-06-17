@@ -3,7 +3,7 @@ main .carousel-container {
 }
 
 main .carousel-wrapper {
-  padding-bottom: 128px;
+  padding-bottom: 32px;
   max-width: unset;
 }
 
@@ -106,7 +106,6 @@ main .carousel a.button.secondary:any-link {
   color: white;
   font-size: var(--body-font-size-s);
   background-color: #002547f0;
-  border-color: white;
 }
 
 main .carousel a.button.primary:any-link {
@@ -114,4 +113,5 @@ main .carousel a.button.primary:any-link {
   font-weight: 400;
   font-size: var(--body-font-size-l);
   font-family: var(--body-font-family);
+  border-color: transparent;
 }

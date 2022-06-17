@@ -5,20 +5,21 @@ footer {
 }
 
 footer .footer {
-  max-width: 768px;
+  max-width: 1200px;
   margin: auto;
 }
 
-footer .footer .footer-logos > div {
+footer .footer > div > div {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-footer .footer .footer-logos img {
-  height: 45px;
+footer .footer > div > div.footer-partners {
+  align-items: center;
+  flex-flow: column nowrap;
 }
 
 footer .footer p {
-  margin: 0;
+  margin: 16px 8px;
 }

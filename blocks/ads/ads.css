@@ -1,0 +1,7 @@
+.ads {
+    background-color: lightgray;
+    min-height: 128px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

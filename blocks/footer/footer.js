@@ -1,4 +1,11 @@
-import { readBlockConfig, decorateIcons, decorateLinkedPictures } from '../../scripts/scripts.js';
+import {
+  readBlockConfig,
+  decorateIcons,
+  decorateLinkedPictures,
+  buildBlock,
+  decorateBlock,
+  loadBlock,
+} from '../../scripts/scripts.js';
 
 /**
  * loads and decorates the footer
@@ -14,11 +21,16 @@ export default async function decorate(block) {
   const html = await resp.text();
   const footer = document.createElement('div');
   footer.innerHTML = html;
-  await decorateIcons(footer);
+  decorateIcons(footer);
   decorateLinkedPictures(footer);
   block.append(footer);
-  const styles = ['logos', 'legal'];
+  const styles = ['partners', 'nav', 'legal', 'links', 'social', 'copyright'];
   styles.forEach((style, i) => {
-    if (block.children[i]) block.children[i].classList.add(`footer-${style}`);
+    if (footer.children[i]) footer.children[i].classList.add(`footer-${style}`);
   });
+  const partners = block.querySelector('.footer-partners');
+  const partnersBlock = buildBlock('partners', '');
+  partners.append(partnersBlock);
+  decorateBlock(partnersBlock);
+  await loadBlock(partnersBlock);
 }

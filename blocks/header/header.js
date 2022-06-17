@@ -1,5 +1,10 @@
 import {
-  readBlockConfig, decorateIcons, makeLinksRelative, lookupPages, createOptimizedPicture } from '../../scripts/scripts.js';
+  readBlockConfig,
+  decorateIcons,
+  makeLinksRelative,
+  lookupPages,
+  createOptimizedPicture,
+} from '../../scripts/scripts.js';
 
 /**
  * collapses all open nav sections
@@ -75,7 +80,7 @@ export default async function decorate(block) {
     const brand = nav.querySelector('.nav-brand');
     const proud = document.createElement('div');
     proud.className = 'nav-partners';
-    proud.innerHTML = '<span>proud partners</span>';
+    proud.innerHTML = '<span>proud partners</span><div class="nav-partners-line"></div>';
     sponsors.forEach((e, i) => {
       const partner = document.createElement('div');
       partner.className = 'nav-partner';
