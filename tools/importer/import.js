@@ -1,20 +1,55 @@
 /* global WebImporter */
 /* eslint-disable no-console, class-methods-use-this */
 
-// eslint-disable-next-line no-unused-vars
-const cleanupName = (name) => {
-  let n = name;
-  const firstChar = n.charAt(0);
-  const lastChar = n.charAt(n.length - 1);
-  if (!/[A-Za-z0-9]/.test(firstChar)) {
-    n = n.substring(1);
+const reorganiseHero = (main, document) => {
+  const articleBodyText = document.querySelector('.articleBodyText');
+  if (articleBodyText) {
+    main.prepend(articleBodyText);
   }
-  if (!/[A-Za-z0-9]/.test(lastChar)) {
-    n = n.slice(0, -1);
-  }
-  return n;
-};
 
+  const heroLegend = document.querySelector('.image-autor');
+  if (heroLegend) {
+    const p = document.createElement('p');
+    const em = document.createElement('em');
+    em.innerHTML = heroLegend.innerHTML;
+    p.append(em);
+    main.prepend(p);
+    heroLegend.remove();
+  }
+  
+  const hero = document.querySelector('.main-image');
+  if (hero) {
+    main.prepend(hero);
+  }
+
+  const video = document.querySelector('.hero-module .video-container')
+  if (video) {
+    let ref = video.getAttribute('data-video-link-url');
+    if (!ref) {
+      ref = video.getAttribute('data-video-id');
+    } else {
+      const a = document.createElement('a');
+      a.href = ref;
+      a.innerHTML = ref;
+      ref = a;
+    }
+    if (ref) {
+      const cells = [['Video'], [ref]]
+      const table = WebImporter.DOMUtils.createTable(cells, document);
+      main.prepend(table);
+    }
+  }
+
+  const subtitle = document.querySelector('.subtitle');
+  if (subtitle) {
+    main.prepend(subtitle);
+  }
+
+  const h1 = document.querySelector('h1');
+  if (h1 && h1.textContent.trim() !== '') {
+    main.prepend(h1);
+  }
+}
 const createMetadata = (main, document) => {
   const meta = {};
 
@@ -41,106 +76,6 @@ const createMetadata = (main, document) => {
   return meta;
 };
 
-const createEmbeds = (main, document) => {
-  main.querySelectorAll('iframe').forEach((embed) => {
-    let src = embed.getAttribute('src');
-    src = src && src.startsWith('//') ? `https:${src}` : src;
-    if (src) {
-      embed.replaceWith(WebImporter.DOMUtils.createTable([
-        ['Embed'],
-        [`<a href="${src}">${src}</a>`],
-      ], document));
-    }
-  });
-};
-
-const createCalloutAndQuoteBlocks = (main, document) => {
-  main.querySelectorAll('.blogPostContent__ctaContainer, .blogPostContent__quoteContainer').forEach((callout) => {
-    const rows = [];
-    let blockName = 'Callout';
-
-    if (callout.classList.contains('blogPostContent__quoteContainer')) {
-      blockName = 'Quote';
-    }
-
-    if (callout.classList.contains('blogPostContent__ctaContainer--right') || callout.classList.contains('blogPostContent__quoteContainer--right')) {
-      blockName += ' (right)';
-    } else if (callout.classList.contains('blogPostContent__ctaContainer--left') || callout.classList.contains('blogPostContent__quoteContainer--left')) {
-      blockName += ' (left)';
-    }
-
-    rows.push([blockName]);
-
-    const container = document.createElement('div');
-
-    const firstText = callout.querySelector('.blogPostContent__ctaText');
-    if (firstText) {
-      const h = document.createElement('h3');
-      h.innerHTML = firstText.textContent;
-      container.append(h);
-    }
-
-    const sub = callout.querySelector('.blogPostContent__ctaSubheading') || callout.querySelector('.blogPostContent__quote');
-    if (sub) {
-      const p = document.createElement('p');
-      p.innerHTML = sub.innerHTML;
-      container.append(p);
-    }
-
-    rows.push([container]);
-
-    const cta = callout.querySelector('a');
-    if (cta) {
-      rows.push([cta]);
-    }
-    callout.replaceWith(WebImporter.DOMUtils.createTable(rows, document));
-  });
-};
-
-const createImageBlocks = (main, document) => {
-  main.querySelectorAll('img.alignleft, img.alignright').forEach((img) => {
-    const rows = [];
-    let blockName = 'Image';
-
-    if (img.classList.contains('alignright')) {
-      blockName += ' (right)';
-    } else if (img.classList.contains('alignleft')) {
-      blockName += ' (left)';
-    }
-
-    rows.push([blockName]);
-    rows.push([img]);
-
-    img.parentNode.replaceWith(WebImporter.DOMUtils.createTable(rows, document));
-  });
-
-  main.querySelectorAll('.blogPostContent__imgContainer').forEach((div) => {
-    const img = div.querySelector('img');
-    if (img) {
-      const rows = [];
-      let blockName = 'Image';
-
-      if (div.classList.contains('blogPostContent__imgContainer--right')) {
-        blockName += ' (right)';
-      } else if (div.classList.contains('blogPostContent__imgContainer--left')) {
-        blockName += ' (left)';
-      }
-
-      rows.push([blockName]);
-      rows.push([img]);
-
-      div.replaceWith(WebImporter.DOMUtils.createTable(rows, document));
-    }
-  });
-};
-
-const createTOC = (main, document) => {
-  const toc = main.querySelector('.blogPostContentToc');
-  if (toc) {
-    toc.replaceWith(WebImporter.DOMUtils.createTable([['TOC']], document));
-  }
-};
-
 const createRelatedStoriesBlock = (main, document) => {
   const related = document.querySelectorAll('.relatedStories .thumb');
   if (related) {
@@ -165,18 +100,11 @@ const createRelatedStoriesBlock = (main, document) => {
   }
 };
 
-const cleanupHeadings = (main) => {
-  main.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach((h) => {
-    // eslint-disable-next-line no-param-reassign
-    h.innerHTML = h.textContent;
-  });
-};
-
-const makeAbsoluteLinks = (main) => {
+const makeAbsoluteLinks = (main, host) => {
   main.querySelectorAll('a').forEach((a) => {
     if (a.href.startsWith('/')) {
       const ori = a.href;
-      const u = new URL(a.href, 'https://www.bamboohr.com/');
+      const u = new URL(a.href, host);
       a.href = u.toString();
 
       if (a.textContent === ori) {
@@ -215,50 +143,25 @@ export default {
   transformDOM: ({ document, url }) => {
     const main = document.querySelector('.page');
 
-    // need to reconstruct page
-
-    const articleBodyText = document.querySelector('.articleBodyText');
-    if (articleBodyText) {
-      main.prepend(articleBodyText);
-    }
-
-    const heroLegend = document.querySelector('.image-autor');
-    if (heroLegend) {
-      const p = document.createElement('p');
-      const em = document.createElement('em');
-      em.innerHTML = heroLegend.innerHTML;
-      p.append(em);
-      main.prepend(p);
-      heroLegend.remove();
-    }
-    
-    const hero = document.querySelector('.main-image');
-    if (hero) {
-      main.prepend(hero);
-    }
-
-    const subtitle = document.querySelector('.subtitle');
-    if (subtitle) {
-      main.prepend(subtitle);
-    }
-
-    const h1 = document.querySelector('h1');
-    if (h1 && h1.textContent.trim() !== '') {
-      main.prepend(h1);
-    }
-
+    reorganiseHero(main, document);
     createRelatedStoriesBlock(main, document);
     createMetadata(main, document);
 
     WebImporter.DOMUtils.remove(main, [
       '.hero-module',
       '.relatedStories',
-      '.parsys',
-      '.article-body-text',
-      '.articleBody',
     ]);
 
+    // remove the empty li / ul
+    main.querySelectorAll('li, ul').forEach((l) => {
+      console.log('l.textContent', l.textContent.trim() === '', l.outerHTML);
+      if (l.textContent.trim() === '') {
+        l.remove();
+      }
+    });
+
     makeProxySrcs(main, 'https://www.theplayers.com');
+    makeAbsoluteLinks(main, 'https://www.theplayers.com');
 
     return main;
   },
