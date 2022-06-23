@@ -2,18 +2,14 @@
     font-size: var(--body-font-size-s);
 }
 
-.columns > div > div {
+.columns > div {
     background-color: white;
+    margin: 16px 0;
 }
 
 .columns h2 {
     font-size: var(--heading-font-size-m);
     text-transform: uppercase;
-}
-
-.columns div div > * {
-    margin-left: 32px;
-    margin-right: 32px;
 }
 
 .columns div div > p.columns-contains-image {
