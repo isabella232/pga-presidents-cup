@@ -116,7 +116,6 @@ const makeAbsoluteLinks = (main, host) => {
 
 const makeProxySrcs = (main, host) => {
   main.querySelectorAll('img').forEach((img) => {
-    console.log('ori img.src', img.src)
     if (img.src.startsWith('/')) {
       // make absolute
       const cu = new URL(host);
@@ -129,7 +128,6 @@ const makeProxySrcs = (main, host) => {
     } catch (error) {
       console.warn(`Unable to make proxy src for ${img.src}: ${error.message}`);
     }
-    console.log('computed img.src', img.src)
   });
 };
 
@@ -152,11 +150,18 @@ export default {
       '.relatedStories',
     ]);
 
-    // remove the empty li / ul
-    main.querySelectorAll('li, ul').forEach((l) => {
-      console.log('l.textContent', l.textContent.trim() === '', l.outerHTML);
+    // remove the empty li / ul and replace by divs
+    main.querySelectorAll('ul').forEach((l) => {
       if (l.textContent.trim() === '') {
         l.remove();
+      } else {
+        const div = document.createElement('div');
+        div.innerHTML = l.outerHTML
+          .replace(/\<li/gm,'<div')
+          .replace(/\<\/li\>/gm,'</div>')
+          .replace(/\<ul/gm,'<div')
+          .replace(/\<\/ul\>/gm,'</div>');
+        l.replaceWith(div);
       }
     });
 
