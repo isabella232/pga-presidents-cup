@@ -4,7 +4,7 @@ main .carousel-container {
 
 main .carousel-wrapper {
   padding-bottom: 32px;
-  max-width: unset;
+  max-width: 1500px;
 }
 
 main .carousel h2 {
@@ -52,7 +52,7 @@ main .carousel > div {
 }
 
 main .carousel div.carousel-text {
-  width: 80vw;
+  width: 90%;
   margin: 0 auto;
   color: white;
   display: flex;
