@@ -1,22 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="22px" height="17px" viewBox="0 0 22 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
-    <title>Group</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <rect id="path-email" x="0" y="0" width="22" height="17" rx="2.5"></rect>
-    </defs>
-    <g id="Proofs" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Blog-Theme-2019_Post-Page_Desktop" transform="translate(-1832.000000, -1054.000000)">
-            <g id="Newsletter-Signup" transform="translate(1816.000000, 1035.000000)">
-                <g id="Group" transform="translate(16.000000, 19.000000)">
-                    <mask id="mask-2" fill="white">
-                        <use xlink:href="#path-email"></use>
-                    </mask>
-                    <rect stroke="currentColor" stroke-width="2.3" x="1.15" y="1.15" width="19.7" height="14.7" rx="2.5"></rect>
-                    <path d="M22.9171655,0.15 L-0.917165521,0.15 L11,10.4782101 L22.9171655,0.15 Z" id="Rectangle" stroke="currentColor" stroke-width="2.3" fill-rule="nonzero" mask="url(#mask-2)"></path>
-                </g>
-            </g>
-        </g>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <title>Email</title>
+  <path d="M464 64C490.5 64 512 85.49 512 112C512 127.1 504.9 141.3 492.8 150.4L275.2 313.6C263.8 322.1 248.2 322.1 236.8 313.6L19.2 150.4C7.113 141.3 0 127.1 0 112C0 85.49 21.49 64 48 64H464zM217.6 339.2C240.4 356.3 271.6 356.3 294.4 339.2L512 176V384C512 419.3 483.3 448 448 448H64C28.65 448 0 419.3 0 384V176L217.6 339.2z"/>
 </svg>
