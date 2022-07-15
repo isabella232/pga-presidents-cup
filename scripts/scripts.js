@@ -158,6 +158,23 @@ export function decorateIcons(element) {
 }
 
 /**
+ * Wraps images followed by links within a matching <a> tag.
+ * @param {Element} container The container element
+ */
+export function wrapImgsInLinks(container) {
+  const pictures = container.querySelectorAll('p picture');
+  pictures.forEach((pic) => {
+    const parent = pic.parentNode;
+    const link = parent.nextElementSibling.querySelector('a');
+    if (link && link.textContent.includes(link.getAttribute('href'))) {
+      link.parentElement.remove();
+      link.innerHTML = pic.outerHTML;
+      parent.replaceWith(link);
+    }
+  });
+}
+
+/**
  * Gets placeholders object
  * @param {string} prefix
  */

@@ -4,13 +4,13 @@ import {
   makeLinksRelative,
   lookupPages,
   createOptimizedPicture,
+  wrapImgsInLinks,
 } from '../../scripts/scripts.js';
 
 /**
  * collapses all open nav sections
  * @param {Element} sections The container element
  */
-
 function collapseAllNavSections(sections) {
   sections.querySelectorAll('.nav-sections > ul > li').forEach((section) => {
     section.setAttribute('aria-expanded', 'false');
@@ -24,17 +24,42 @@ function displayNextPartner(proud) {
   partners[(appeared + 1) % partners.length].classList.add('nav-partner-appear');
 }
 
+async function setupPartners(section) {
+  const pages = await lookupPages();
+  const sponsors = pages.filter((e) => e.path.startsWith('/sponsors'));
+
+  const partners = document.createElement('div');
+  partners.className = 'nav-partners';
+  partners.innerHTML = '<div class="nav-partners-title"><span>Proud Partners</span></div><div class="nav-partner-wrapper"></div>';
+  sponsors.forEach((e, i) => {
+    const partner = document.createElement('div');
+    partner.className = 'nav-partner';
+    if (!i) partner.classList.add('nav-partner-appear');
+    partner.append(createOptimizedPicture(e.logoWhite, e.title, false, [{ width: '300' }]));
+    partners.querySelector('.nav-partner-wrapper').append(partner);
+  });
+  setInterval(() => {
+    displayNextPartner(partners);
+  }, 5000);
+  section.append(partners);
+}
+
+function setupUser(section) {
+  const icon = section.querySelector('.icon');
+  const text = section.textContent.trim();
+  section.innerHTML = `${icon.outerHTML}<span>${text}</span>`;
+}
+
 /**
  * decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
-
 export default async function decorate(block) {
-  const cfg = readBlockConfig(block);
+  const config = readBlockConfig(block);
   block.textContent = '';
 
   // fetch nav content
-  const navPath = cfg.nav || '/nav';
+  const navPath = config.nav || '/nav';
   const resp = await fetch(`${navPath}.plain.html`);
   if (resp.ok) {
     const html = await resp.text();
@@ -42,24 +67,29 @@ export default async function decorate(block) {
     // decorate nav DOM
     const nav = document.createElement('nav');
     nav.innerHTML = html;
-    decorateIcons(nav);
     makeLinksRelative(nav);
 
-    const classes = ['brand', 'sections', 'tools'];
-    classes.forEach((e, j) => {
-      const section = nav.children[j];
+    const classes = ['brand', 'sections', 'social', 'tour', 'user'];
+    classes.forEach((e, i) => {
+      const section = nav.children[i];
       if (section) section.classList.add(`nav-${e}`);
     });
 
     const navSections = [...nav.children][1];
     if (navSections) {
       navSections.querySelectorAll(':scope > ul > li').forEach((navSection) => {
-        if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-        navSection.addEventListener('click', () => {
-          const expanded = navSection.getAttribute('aria-expanded') === 'true';
-          collapseAllNavSections(navSections);
-          navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-        });
+        if (navSection.querySelector('ul')) {
+          navSection.classList.add('nav-drop');
+          const ul = navSection.querySelector('ul');
+          const title = navSection.innerHTML.split('<')[0].trim();
+          navSection.innerHTML = `<span>${title}</span>${ul.outerHTML}`;
+          navSection.setAttribute('aria-expanded', false);
+          navSection.addEventListener('click', () => {
+            const expanded = navSection.getAttribute('aria-expanded') === 'true';
+            collapseAllNavSections(navSections);
+            navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          });
+        }
       });
     }
 
@@ -74,24 +104,12 @@ export default async function decorate(block) {
     });
     nav.prepend(hamburger);
     nav.setAttribute('aria-expanded', 'false');
+
+    wrapImgsInLinks(nav);
+    setupUser(nav.querySelector('.nav-user'));
+    await setupPartners(nav.querySelector('.nav-brand'));
     decorateIcons(nav);
-    const pages = await lookupPages();
-    const sponsors = pages.filter((e) => e.path.startsWith('/sponsors'));
-    const brand = nav.querySelector('.nav-brand');
-    const proud = document.createElement('div');
-    proud.className = 'nav-partners';
-    proud.innerHTML = '<span>proud partners</span><div class="nav-partners-line"></div>';
-    sponsors.forEach((e, i) => {
-      const partner = document.createElement('div');
-      partner.className = 'nav-partner';
-      if (!i) partner.classList.add('nav-partner-appear');
-      partner.append(createOptimizedPicture(e.logoWhite, e.title, false, [{ width: '300' }]));
-      proud.append(partner);
-    });
-    setInterval(() => {
-      displayNextPartner(proud);
-    }, 5000);
-    brand.append(proud);
+
     block.append(nav);
   }
 }
