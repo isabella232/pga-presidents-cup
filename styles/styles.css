@@ -14,6 +14,8 @@
   /* colors */
   --color-blue: #003360;
   --color-blue-dark: #071D37;
+  --color-blue-light: #004B98;
+  --color-tan: #C2A36E;
   --color-white: #fff;
 
   --link-color: #002547e6;
@@ -29,15 +31,16 @@
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
   /* body sizes */
+  --body-font-size-xl: 32px;
   --body-font-size-l: 20px;
   --body-font-size-m: 18px;
   --body-font-size-s: 16px;
   --body-font-size-xs: 14px;
 
   /* heading sizes */
-  --heading-font-size-xxl: 48px;
-  --heading-font-size-xl: 40px;
-  --heading-font-size-l: 32px;
+  --heading-font-size-xxl: 72px;
+  --heading-font-size-xl: 60px;
+  --heading-font-size-l: 36px;
   --heading-font-size-m: 24px;
   --heading-font-size-s: 20px;
   --heading-font-size-xs: 18px;
@@ -141,7 +144,7 @@ a.button:any-link, button {
   display: inline-block;
   box-sizing: border-box;
   text-decoration: none;
-  border: 2px solid white;
+  border: 1px solid white;
   padding: 5px 30px;
   text-align: center;
   font-style: normal; 
@@ -167,7 +170,7 @@ button:disabled, button:disabled:hover {
 
 a.button.secondary, button.secondary {
   background-color: unset;
-  border: 2px solid currentcolor;
+  border: 1px solid;
   color: var(--text-color)
 } 
 
@@ -233,12 +236,12 @@ main img {
 
 @media (min-width: 900px) {
   :root {
-    --heading-font-size-xxl: 80px;
-    --heading-font-size-xl: 48px;
-    --heading-font-size-l: 36px;
-    --heading-font-size-m: 30px;
-    --heading-font-size-s: 24px;
-    --heading-font-size-xs: 22px;  
+    /* --heading-font-size-xxl: 80px; */
+    /* --heading-font-size-xl: 48px; */
+    /* --heading-font-size-l: 36px; */
+    /* --heading-font-size-m: 30px; */
+    /* --heading-font-size-s: 24px; */
+    /* --heading-font-size-xs: 22px;   */
   }
   
   .section > div {
