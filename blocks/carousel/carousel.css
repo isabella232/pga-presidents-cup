@@ -3,7 +3,6 @@ main .carousel-container {
 }
 
 main .carousel-wrapper {
-  padding-bottom: 32px;
   max-width: 1400px;
 }
 
@@ -191,7 +190,7 @@ main .carousel a.button.secondary:any-link {
 
   main .carousel a.button.primary:any-link,
   main .carousel a.button.secondary:any-link {
-    font-size: var(--body-font-size-xl);
+    font-size: var(--body-font-size-xxl);
   }
 }
 
