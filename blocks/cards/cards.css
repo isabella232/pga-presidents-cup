@@ -1,60 +1,100 @@
 .cards {
-    margin: 16px;
+  /* margin: 16px; */
 }
 
 .cards > ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-gap: 16px;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  grid-gap: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 900px) {
+  .cards > ul {
+    grid-template-columns: repeat(auto-fill, minmax(calc((100% / 3) - 30px), 1fr));
+    grid-gap: 30px;
+  }
 }
 
 .cards > ul > li {
-    border: 1px solid var(--highlight-background-color);
-    background-color: var(--background-color)
+  background-color: var(--background-color);
+}
+
+.cards h2 {
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xl);
+  text-transform: uppercase;
+}
+
+@media (min-width: 700px) {
+  .cards h2 {
+    font-size: var(--body-font-size-xxl);
+  }
 }
 
 .cards .cards-card-body {
-    margin: 16px;
+  /* margin: 16px; */
+}
+
+.cards .button-container {
+  margin: 0;
 }
 
 .cards .cards-card-image {
-    line-height: 0;
+  line-height: 0;
 }
 
 .cards .cards-card-body > *:first-child {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 .cards > ul > li img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
+  max-height: 180px;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+@media (min-width: 900px) {
+  .cards > ul > li img {
+    max-height: 230px;
+  }
 }
 
 .cards.overlay > ul > li {
-    position: relative;
-    color: white;
-    font-size: var(--heading-font-size-l);
+  position: relative;
+  color: var(--color-white);
+  font-size: var(--heading-font-size-l);
 }
 
 .cards.overlay .cards-card-body {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: 0;
-    padding: 16px;
-    background-color: #0004;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 0;
+  padding: 16px;
+  background-color: #0004;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .cards.overlay > ul > li p.button-container {
+  font-size: var(--body-font-size-xxs);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.cards.overlay > ul > li p.button-container a {
+  margin: 0;
+}
+
+@media (min-width: 700px) {
+  .cards.overlay > ul > li p.button-container {
     font-size: var(--body-font-size-m);
-    margin: 0;
+  }
 }
