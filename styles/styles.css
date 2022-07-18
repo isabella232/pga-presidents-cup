@@ -153,21 +153,22 @@ svg {
 
 a.button:any-link, button {
   font-family: var(--font-family-body);
-  display: inline-block;
   box-sizing: border-box;
-  text-decoration: none;
+  display: inline-block;
+  margin: 16px 0;
   border: 1px solid white;
   padding: 5px 30px;
-  text-align: center;
+  background-color: var(--link-color);
+  color: var(--background-color);
   font-style: normal; 
   font-weight: 600;
-  cursor: pointer;
-  color: var(--background-color);
-  background-color: var(--link-color);
-  margin: 16px 0;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  cursor: pointer;
 }
 
 a.button:hover, a.button:focus, button:hover, button:focus  {
@@ -286,7 +287,7 @@ main .section.highlight {
   background-color: var(--highlight-background-color);
 }
 
-main .section.highlight h2 {
+main .section.highlight > div > h2 {
   margin-top: 0;
   color: var(--color-blue);
   text-align: center;
