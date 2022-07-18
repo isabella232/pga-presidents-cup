@@ -1,7 +1,13 @@
 .leaderboard {
-    background-color: lightgray;
-    min-height: 256px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 660px;
+  background-color: lightgray;
+}
+
+@media (min-width: 900px) {
+  .leaderboard {
+    min-height: 372px;
+  }
 }
