@@ -1,28 +1,92 @@
 .columns {
-    font-size: var(--body-font-size-s);
+  font-size: var(--body-font-size-xs);
 }
 
 .columns > div {
-    background-color: white;
-    margin: 16px 0;
+  margin: 16px 0;
+  background-color: var(--background-color);
+}
+
+.columns > div > div:not(.columns-contains-image) {
+  padding: 16px;
+}
+
+.columns > div > div.columns-contains-image {
+  position: relative;
+  height: 170px;
+}
+
+@media (min-width: 700px) {
+  .columns > div > div.columns-contains-image {
+    height: 355px;
+  }
+}
+
+@media (min-width: 900px) {
+  .columns {
+    font-size: var(--body-font-size-s);
+  }
+
+  .columns > div {
+    display: flex;
+    align-items: center;
+  }
+
+  .columns > div > div {
+    flex: 1;
+  }
+
+  .columns > div > div.columns-contains-image {
+    height: 260px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .columns > div > div.columns-contains-image {
+    height: 355px;
+  }
+}
+
+.columns > div > div.columns-contains-image p {
+  margin: 0;
 }
 
 .columns h2 {
-    font-size: var(--heading-font-size-m);
-    text-transform: uppercase;
+  margin-top: 0;
+  font-size: var(--heading-font-size-m);
+  text-transform: uppercase;
 }
 
-.columns div div > p.columns-contains-image {
-    margin: 0;
+.columns picture {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
-@media (min-width: 600px) {
-    .columns > div {
-        display: flex;
-    }
+.columns img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-    .columns > div > div {
-        flex: 1;
-        margin: 16px;
-    }
+.columns .button-container {
+  margin: 0;
+  font-size: var(--body-font-size-s);
+}
+
+.columns .button-container a {
+  margin: 0;
+}
+
+@media (min-width: 1200px) {
+  .columns h2 {
+    font-size: var(--heading-font-size-l);
+  }
+
+  .columns .button-container {
+    font-size: var(--body-font-size-m);
+  }
 }
