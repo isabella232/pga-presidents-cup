@@ -20,14 +20,15 @@
 
   --color-tan: #C2A36E;
   --color-white: #fff;
-  --color-gray: #f2f2f2;
+  --color-gray: #ccc;
+  --color-gray-light: #f2f2f2;
 
   --link-color: var(--color-blue-dark);
   --link-hover-color: var(--color-blue);
   --background-color: var(--color-white);
   --overlay-background-color: var(--color-blue-lighter);
   --overlay-text-color: var(--color-white);
-  --highlight-background-color: var(--color-gray);
+  --highlight-background-color: var(--color-gray-light);
   --text-color: #000;
 
   /* fonts */
@@ -259,7 +260,7 @@ hr {
   border-bottom: 1px solid var(--overlay-background-color);
 }
 
-main img {
+img {
   max-width: 100%;
   height: auto;
 }
