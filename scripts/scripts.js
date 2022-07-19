@@ -675,6 +675,23 @@ function buildHeroBlock(main) {
   }
 }
 
+async function populatePlayerFeature(block, link) {
+  const source = link.getAttribute('href');
+  const resp = await fetch(`${source}.plain.html`);
+  if (resp.ok) {
+    const html = await resp.text();
+    const feature = document.createElement('div');
+    feature.innerHTML = html;
+    block.innerHTML = feature.querySelector('div').innerHTML;
+    const video = block.querySelector('.embed, .video');
+    if (video) {
+      decorateBlock(video);
+      await loadBlock(video);
+      decorateButtons(block);
+    }
+  }
+}
+
 export function linkPicture($picture) {
   const $nextSib = $picture.parentNode.nextElementSibling;
   if ($nextSib) {
@@ -714,9 +731,17 @@ async function loadFooter(footer) {
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
-function buildAutoBlocks(main) {
+async function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
+
+    const playerFeature = main.querySelector('.player-feature');
+    if (playerFeature) {
+      const a = playerFeature.querySelector('a');
+      if (a && (a.textContent === playerFeature.textContent)) {
+        await populatePlayerFeature(playerFeature, a);
+      }
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -727,7 +752,7 @@ function buildAutoBlocks(main) {
  * Decorates the main element.
  * @param {Element} main The main element
  */
-export function decorateMain(main) {
+export async function decorateMain(main) {
   // forward compatible pictures redecoration
   decoratePictures(main);
   // forward compatible link rewriting
@@ -737,7 +762,7 @@ export function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
-  buildAutoBlocks(main);
+  await buildAutoBlocks(main);
   decorateSections(main);
 
   const sections = [...main.querySelectorAll('.section')];
@@ -760,7 +785,7 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
-    decorateMain(main);
+    await decorateMain(main);
     await waitForLCP();
   }
 }
