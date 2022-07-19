@@ -51,6 +51,6 @@ indices:
         value: |
           attribute(el, 'content')
       link:
-        select: head > meta[name="link"]
+        select: head > meta[name="external-link"]
         value: |
           attribute(el, 'content')
