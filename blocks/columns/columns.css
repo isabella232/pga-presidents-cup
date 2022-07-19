@@ -1,63 +1,64 @@
-.columns {
+main .columns {
   font-size: var(--body-font-size-xs);
+  text-align: left;
 }
 
-.columns > div {
+main .columns > div {
   margin: 16px 0;
   background-color: var(--background-color);
 }
 
-.columns > div > div:not(.columns-contains-image) {
+main .columns > div > div:not(.columns-contains-image) {
   padding: 16px;
 }
 
-.columns > div > div.columns-contains-image {
+main .columns > div > div.columns-contains-image {
   position: relative;
   height: 170px;
 }
 
 @media (min-width: 700px) {
-  .columns > div > div.columns-contains-image {
+  main .columns > div > div.columns-contains-image {
     height: 355px;
   }
 }
 
 @media (min-width: 900px) {
-  .columns {
+  main .columns {
     font-size: var(--body-font-size-s);
   }
 
-  .columns > div {
+  main .columns > div {
     display: flex;
     align-items: center;
   }
 
-  .columns > div > div {
+  main .columns > div > div {
     flex: 1;
   }
 
-  .columns > div > div.columns-contains-image {
+  main .columns > div > div.columns-contains-image {
     height: 260px;
   }
 }
 
 @media (min-width: 1200px) {
-  .columns > div > div.columns-contains-image {
+  main .columns > div > div.columns-contains-image {
     height: 355px;
   }
 }
 
-.columns > div > div.columns-contains-image p {
+main .columns > div > div.columns-contains-image p {
   margin: 0;
 }
 
-.columns h2 {
+main .columns h2 {
   margin-top: 0;
   font-size: var(--heading-font-size-m);
   text-transform: uppercase;
 }
 
-.columns picture {
+main .columns picture {
   box-sizing: border-box;
   position: absolute;
   top: 0;
@@ -66,27 +67,27 @@
   right: 0;
 }
 
-.columns img {
+main .columns img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.columns .button-container {
+main .columns .button-container {
   margin: 0;
   font-size: var(--body-font-size-s);
 }
 
-.columns .button-container a {
+main .columns .button-container a {
   margin: 0;
 }
 
 @media (min-width: 1200px) {
-  .columns h2 {
+  main .columns h2 {
     font-size: var(--heading-font-size-l);
   }
 
-  .columns .button-container {
+  main .columns .button-container {
     font-size: var(--body-font-size-m);
   }
 }
