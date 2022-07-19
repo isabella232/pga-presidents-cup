@@ -50,3 +50,7 @@ indices:
         select: head > meta[name="logo-white"]
         value: |
           attribute(el, 'content')
+      link:
+        select: head > meta[name="link"]
+        value: |
+          attribute(el, 'content')
