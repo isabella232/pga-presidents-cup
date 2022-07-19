@@ -3,7 +3,6 @@ main .section.player-feature-container {
   margin-top: -16px;
   margin-bottom: 0;
   padding: 0;
-  /* background-color: var(--highlight-background-color); */
 }
 
 main .section.player-feature-container + div {
