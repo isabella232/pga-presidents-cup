@@ -5,6 +5,7 @@ import {
   lookupPages,
   createOptimizedPicture,
   wrapImgsInLinks,
+  decorateLinkedPictures,
 } from '../../scripts/scripts.js';
 
 /**
@@ -51,7 +52,7 @@ function setupUser(section) {
 }
 
 /**
- * decorates the header, mainly the nav
+ * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
@@ -70,9 +71,9 @@ export default async function decorate(block) {
     makeLinksRelative(nav);
 
     const classes = ['brand', 'sections', 'social', 'tour', 'user'];
-    classes.forEach((e, i) => {
+    classes.forEach((c, i) => {
       const section = nav.children[i];
-      if (section) section.classList.add(`nav-${e}`);
+      if (section) section.classList.add(`nav-${c}`);
     });
 
     const navSections = [...nav.children][1];
@@ -107,9 +108,11 @@ export default async function decorate(block) {
 
     wrapImgsInLinks(nav);
     setupUser(nav.querySelector('.nav-user'));
-    await setupPartners(nav.querySelector('.nav-brand'));
-    decorateIcons(nav);
 
+    decorateIcons(nav);
+    decorateLinkedPictures(nav);
     block.append(nav);
+
+    await setupPartners(nav.querySelector('.nav-brand'));
   }
 }
