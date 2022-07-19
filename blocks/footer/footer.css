@@ -1,25 +1,206 @@
 footer {
-  padding: 2rem;
-  background-color: white;
-  font-size: var(--body-font-size-s);
+  font-size: var(--body-font-size-xs);
+  text-align: center;
+}
+
+@media (min-width: 700px) {
+  footer {
+    font-size: var(--body-font-size-s);
+  }
 }
 
 footer .footer {
-  max-width: 1200px;
-  margin: auto;
+  padding: 20px;
+  background-color: var(--color-blue);
+  color: var(--color-white);
 }
 
 footer .footer > div > div {
+  max-width: 1400px;
+  margin: auto;
+  padding: 15px 0;
+}
+
+footer .footer a {
+  color: var(--color-white);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+footer .footer svg {
+  fill: var(--color-white);
+}
+
+footer .footer ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+@media (min-width: 900px) {
+  footer .footer {
+    padding-top: 60px;
+  }
+}
+
+/* ribbon */
+footer .footer.footer-ribbon {
+  padding: 0 20px;
+  background-color: var(--color-white);
+  color: var(--color-blue);
+}
+
+footer .footer.footer-ribbon a {
+  color: var(--color-blue);
+}
+
+/* partners */
+footer .footer .footer-partners img {
+  max-width: 250px;
+  max-height: 132px;
+}
+
+@media (min-width: 700px) {
+  footer .footer .footer-partners > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer .footer .footer-partners .footer-partner {
+    flex-basis: calc(100% / 3);
+  }
+
+  footer .footer .footer-partners .footer-partner:not(:first-child) {
+    border-left: 1px solid var(--color-gray);
+  }
+}
+
+@media (min-width: 1200px) {
+  footer .footer .footer-partners img {
+    max-width: 300px;
+    max-height: 180px;
+  }
+}
+
+/* nav */
+footer .footer .footer-nav {
+  border-top: 1px solid var(--color-gray);
+}
+
+footer .footer .footer-nav ul {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
 }
 
-footer .footer > div > div.footer-partners {
+footer .footer .footer-nav li {
+  padding: 5px 10px;
+}
+
+@media (min-width: 700px) {
+  footer .footer .footer-nav ul {
+    justify-content: space-around;
+  }
+}
+
+/* links */
+footer .footer .footer-links img {
+  max-width: 130px;
+  max-height: 60px;
+}
+
+footer .footer .footer-links ul {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  flex-flow: column nowrap;
+  justify-content: center;
+  max-width: 400px;
+  margin: 30px auto;
 }
 
-footer .footer p {
-  margin: 16px 8px;
+footer .footer .footer-links li {
+  flex-basis: calc(50% - 20px);
+  padding: 5px 10px;
+}
+
+@media (min-width: 900px) {
+  footer .footer .footer-links {
+    display: grid;
+    grid-template-columns: 60px 1fr 130px;
+    align-items: center;
+    gap: 0 10px;
+    font-size: var(--body-font-size-xs);
+  }
+
+  footer .footer .footer-links ul {
+    justify-content: space-between;
+    max-width: unset;
+    margin: 0;
+  }
+
+  footer .footer .footer-links li {
+    flex-basis: unset;
+  }
+}
+
+/* social */
+footer .footer .footer-social h3 {
+  font-family: var(--body-font-family);
+  font-size: var(--heading-font-size-s);
+}
+
+footer .footer .footer-social p {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: 5px 10px;
+  border-radius: 50%;
+  background-color: #727272;
+}
+
+footer .footer .footer-social p:hover {
+  filter: brightness(.85);
+}
+
+footer .footer .footer-social p.footer-social-facebook {
+  background-color: #4267B2;
+}
+
+footer .footer .footer-social p.footer-social-twitter {
+  background-color: #1DA1F2;
+}
+
+footer .footer .footer-social p.footer-social-instagram {
+  background-color: #405DE6;
+}
+
+footer .footer .footer-social p.footer-social-youtube {
+  background-color: #f00;
+}
+
+footer .footer .footer-social p a {
+  display: block;
+  padding: 10px;
+  padding-bottom: 0;
+}
+
+footer .footer .footer-social svg {
+  height: 20px;
+  width: 20px;
+}
+
+/* copyright */
+footer .footer .footer-copyright {
+  font-size: var(--body-font-size-xxs);
+}
+
+footer .footer .footer-copyright a {
+  text-transform: initial;
+}
+
+@media (min-width: 700px) {
+  footer .footer .footer-copyright {
+    font-size: var(--body-font-size-xs);
+  }
 }
