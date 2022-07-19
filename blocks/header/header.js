@@ -32,11 +32,11 @@ async function setupPartners(section) {
   const partners = document.createElement('div');
   partners.className = 'nav-partners';
   partners.innerHTML = '<div class="nav-partners-title"><span>Proud Partners</span></div><div class="nav-partner-wrapper"></div>';
-  sponsors.forEach((e, i) => {
+  sponsors.forEach((sponsor, i) => {
     const partner = document.createElement('div');
     partner.className = 'nav-partner';
     if (!i) partner.classList.add('nav-partner-appear');
-    partner.append(createOptimizedPicture(e.logoWhite, e.title, false, [{ width: '300' }]));
+    partner.append(createOptimizedPicture(sponsor.logoWhite, sponsor.title, false, [{ width: '300' }]));
     partners.querySelector('.nav-partner-wrapper').append(partner);
   });
   setInterval(() => {
