@@ -29,11 +29,10 @@ async function setupPartners(section) {
 
   const wrapper = document.createElement('div');
   sponsors.forEach((sponsor) => {
-    // console.log('sponsor:', sponsor);
     const partner = document.createElement('div');
     partner.className = 'footer-partner';
     const link = document.createElement('a');
-    link.href = sponsor.path; // TODO: fix with metadata link
+    link.href = sponsor.link || sponsor.path; // TODO: fix with metadata link
     link.append(createOptimizedPicture(sponsor.image, sponsor.title, false, [{ width: '300' }]));
     partner.append(link);
     wrapper.append(partner);
