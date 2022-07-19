@@ -15,6 +15,8 @@
   --color-blue: #003360;
   --color-blue-dark: #071D37;
   --color-blue-light: #004B98;
+  --color-blue-lighter: #2D4976;
+
   --color-tan: #C2A36E;
   --color-white: #fff;
   --color-gray: #f2f2f2;
@@ -22,7 +24,8 @@
   --link-color: var(--color-blue-dark);
   --link-hover-color: var(--color-blue);
   --background-color: var(--color-white);
-  --overlay-background-color: #eee;
+  --overlay-background-color: var(--color-blue-lighter);
+  --overlay-text-color: var(--color-white);
   --highlight-background-color: var(--color-gray);
   --text-color: #000;
 
@@ -99,6 +102,7 @@ h4, h5, h6 {
   margin-bottom: .5em;
   scroll-margin: calc(var(--nav-height) + 1em);
   font-family: var(--heading-font-family);
+  text-transform: uppercase;
 }
 
 h1 { font-size: var(--heading-font-size-l) }
@@ -285,13 +289,17 @@ main .section.highlight {
   padding-top: 32px;
   padding-bottom: 32px;
   background-color: var(--highlight-background-color);
+  text-align: center;
+}
+
+main .section.highlight > div > h2,
+main .section.highlight > div > h3 {
+  color: var(--color-blue);
+  text-transform: uppercase;
 }
 
 main .section.highlight > div > h2 {
   margin-top: 0;
-  color: var(--color-blue);
-  text-align: center;
-  text-transform: uppercase;
 }
 
 /* section player feature */
