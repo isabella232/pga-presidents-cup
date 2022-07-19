@@ -470,7 +470,7 @@ header nav .nav-tour {
   grid-area: tour;
   align-self: stretch;
   position: relative;
-  background-color: var(--color-blue-dark);
+  background-color: var(--color-blue-darker);
 }
 
 header nav[aria-expanded=true] .nav-tour {
@@ -527,7 +527,11 @@ header nav .nav-user .icon svg {
   header nav[aria-expanded=false] .nav-user {
     display: block;
     position: relative;
-    background-color: var(--color-blue-dark);
+    background-color: var(--color-blue-darker);
+  }
+
+  header nav[aria-expanded=false] .nav-user span:hover {
+    background-color: unset;
   }
 
   header nav[aria-expanded=false] .nav-user .icon {

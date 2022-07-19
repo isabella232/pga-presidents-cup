@@ -12,8 +12,9 @@
 
  :root {
   /* colors */
+  --color-blue-darker: #071D37;
+  --color-blue-dark: #04294C;
   --color-blue: #003360;
-  --color-blue-dark: #071D37;
   --color-blue-light: #004B98;
   --color-blue-lighter: #2D4976;
 
