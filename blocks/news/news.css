@@ -1,80 +1,148 @@
-.news {
-    margin: 16px;
+main .news {
+  font-size: var(--body-font-size-s);
 }
 
-.news > ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-gap: 16px;
+main .news > ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  grid-gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.news > ul > li {
-    position: relative;
+@media (min-width: 700px) {
+  main .news > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.news .news-item-body a:any-link {
-    color: inherit;
+@media (min-width: 900px) {
+  main .news > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-.news .news-item-body {
-    padding: 16px;
-    aspect-ratio: 1;
-    color: white;
-    display: flex;
-    align-items: flex-end;
-    background: linear-gradient( #0000, #0008)
+@media (min-width: 900px) {
+  main .news > ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
-.news .news-item-image {
-    line-height: 0;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: -1;
+main .news > ul > li {
+  position: relative;
+  height: 310px;
 }
 
-.news .news-item-image img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+main .news .news-item {
+  display: none;
+  visibility: hidden;
 }
 
-.news .news-item-play {
-    color: white;
-    line-height: 0;
-    position: absolute;
-    top: 50%;
-    bottom: 0;
-    left: 50%;
-    right: 0;
-    box-sizing: border-box;
-    display: block;
-    width: 100px;
-    height: 100px;
-    border: 2px solid;
-    border-radius: 100px;
-    transform: translate(-50%, -50%)
-    }
-       
-.news-item-play::before {
-    content: "";
-    display: block;
-    box-sizing: border-box;
-    position: absolute;
-    width: 0;
-    height: 50px;
-    border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent;
-    border-left: 36px solid;
-    top: 24px;
-    left: 38px;
-} 
+main .news .news-item:nth-child(1),
+main .news .news-item:nth-child(2) {
+  display: unset;
+  visibility: visible;
+}
 
-.news .news-item-body > *:first-child {
-    margin-top: 0;
+@media (min-width: 700px) {
+  main .news .news-item:nth-child(3),
+  main .news .news-item:nth-child(4) {
+    display: unset;
+    visibility: visible;
+  }
+}
+
+@media (min-width: 900px) {
+  main .news .news-item:nth-child(5),
+  main .news .news-item:nth-child(6) {
+    display: unset;
+    visibility: visible;
+  }
+}
+
+@media (min-width: 1200px) {
+  main .news .news-item {
+    display: unset;
+    visibility: visible;
+  }
+}
+
+/* item image */
+main .news .news-item-image {
+  line-height: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+}
+
+main .news .news-item-image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* item body */
+main .news .news-item-body {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 310px;
+  padding: 10px;
+  background: linear-gradient(#0000, #0008);
+  color: var(--color-white);
+  text-transform: uppercase;
+}
+
+main .news .news-item-body > *:first-child {
+  margin-top: 0;
+}
+
+main .news .news-item-body a:any-link {
+  color: inherit;
+}
+
+/* item play button */
+main .news .news-item-play {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  border: 2px solid;
+  border-radius: 100px;
+  color: var(--color-white);
+  line-height: 0;
+}
+
+main .news-item-play::before {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  top: 24px;
+  left: 38px;
+  width: 0;
+  height: 50px;
+  border-top: 25px solid transparent;
+  border-bottom: 25px solid transparent;
+  border-left: 36px solid;
+  content: '';
+}
+
+/* index styles */
+.index main .news-container {
+  padding: 0;
+}
+
+@media (min-width: 700px) {
+  .index main .news-container {
+    padding: 0 32px;
+  }
 }
