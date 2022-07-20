@@ -1,61 +1,162 @@
-/* block specific CSS goes here */
-
-main .hero-container > div {
-    max-width: 1500px;
-}
-  
 main .hero-container {
-    padding: 0;
+  padding: 0;
 }
-  
+
+main .hero-wrapper {
+  max-width: 1400px;
+}
+
 main .hero {
-    position: relative;
-    padding: 2rem;
-    min-height: 300px;
-    background: linear-gradient(#0000, #0006);
+  display: flex;
+  flex-flow: row wrap;
+  align-content: center;
+  position: relative;
+  height: 230px;
+  margin: 0 auto;
+  padding: 0 10px;
+  background-image: linear-gradient(#0002, #0006);
+  color: var(--color-white);
+  text-align: center;
+}
+
+main .hero > div > div {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: center;
+  justify-content: center;
+  height: 230px;
+}
+
+@media (min-width: 700px) {
+  main .hero {
+    height: 460px;
+    padding: 0 30px;
+  }
+
+  main .hero > div > div {
+    height: 460px;
+  }
+}
+
+@media (min-width: 900px) {
+  main .hero {
+    height: 490px;
+  }
+
+  main .hero > div > div {
+    height: 490px;
+  }
 }
 
 main .hero h1 {
-    max-width: 768px;
-    margin-left: auto;
-    margin-right: auto;
-    color: white;
-    text-shadow: 0 0 10px #0008;
+  flex-basis: 100%;
+  font-size: var(--heading-font-size-l);
+  font-weight: 400;
+  line-height: .8;
+  text-shadow: 0 0 10px #0008;
 }
 
+@media (min-width: 700px) {
+  main .hero h1 {
+    font-size: var(--heading-font-size-xxl);
+  }
+}
+
+@media (min-width: 900px) {
+  main .hero h1 {
+    font-size: var(--heading-font-size-xl);
+    margin-right: 30%;
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  main .hero h1 {
+    font-size: var(--heading-font-size-xxl);
+  }
+}
+
+main .carousel a:any-link {
+  color: var(--color-white);
+}
+
+main .carousel a:hover {
+  text-decoration: none;
+}
 
 main .hero picture {
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    object-fit: cover;
-    box-sizing: border-box;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  object-fit: cover;
+  box-sizing: border-box;
 }
 
 main .hero img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
+/* buttons */
 main .hero p.button-container {
-    margin: 0;
+  margin: 5px;
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  main .hero p.button-container {
+    flex-basis: 100%;
   }
-  
-main .hero a.button.secondary:any-link {
-    color: white;
-    font-size: var(--body-font-size-s);
-    background-color: #002547f0;
-  }
-  
+}
+
+main .hero a.button {
+  min-width: 115px;
+  margin: 0;
+  color: var(--color-white);
+  font-family: var(--body-font-family);
+  opacity: .95;
+}
+
+main .hero a.button:hover {
+  filter: brightness(.85);
+}
+
 main .hero a.button.primary:any-link {
-    background-color: #caaa77f0;
-    font-weight: 400;
-    font-size: var(--body-font-size-l);
-    font-family: var(--body-font-family);
-    border-color: transparent;
+  border-color: transparent;
+  background-color: var(--color-tan);
+  font-size: var(--body-font-size-xs);
+}
+
+main .hero a.button.secondary:any-link {
+  background-color: var(--color-blue);
+  font-size: var(--body-font-size-m);
+}
+
+@media (min-width: 700px) {
+  main .hero a.button {
+    min-width: 200px;
   }
-  
+
+  main .hero a.button.primary:any-link {
+    font-size: var(--body-font-size-l);
+  }
+}
+
+@media (min-width: 900px) {
+  main .hero a.button {
+    min-width: 300px;
+  }
+
+  main .hero p.button-container  {
+    text-align: right;
+  }
+
+  main .hero a.button.primary:any-link,
+  main .hero a.button.secondary:any-link {
+    font-size: var(--body-font-size-xxl);
+  }
+}
