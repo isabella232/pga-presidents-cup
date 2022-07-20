@@ -4,15 +4,19 @@ main .columns {
 }
 
 main .columns > div {
-  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  margin: 32px 0;
   background-color: var(--highlight-background-color);
 }
 
 main .columns > div > div:not(.columns-contains-image) {
+  order: 2;
   padding: 16px;
 }
 
 main .columns > div > div.columns-contains-image {
+  order: 1;
   position: relative;
   height: 170px;
 }
@@ -29,7 +33,7 @@ main .columns > div > div.columns-contains-image {
   }
 
   main .columns > div {
-    display: flex;
+    flex-direction: row;
     align-items: center;
   }
 
@@ -38,13 +42,22 @@ main .columns > div > div.columns-contains-image {
   }
 
   main .columns > div > div.columns-contains-image {
+    order: unset;
     height: 260px;
+  }
+
+  main .columns > div > div:not(.columns-contains-image) {
+    order: unset;
   }
 }
 
 @media (min-width: 1200px) {
   main .columns > div > div.columns-contains-image {
     height: 355px;
+  }
+
+  main .columns > div > div:not(.columns-contains-image) {
+    padding: 32px;
   }
 }
 
