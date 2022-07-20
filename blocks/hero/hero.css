@@ -21,11 +21,14 @@ main .hero {
 }
 
 main .hero > div > div {
+  box-sizing: border-box;
   display: flex;
   flex-flow: row wrap;
   align-content: center;
   justify-content: center;
   height: 230px;
+  width: 100vw;
+  padding: 0 16px;
 }
 
 @media (min-width: 700px) {
@@ -36,6 +39,7 @@ main .hero > div > div {
 
   main .hero > div > div {
     height: 460px;
+    padding: 0 32px;
   }
 }
 
@@ -69,6 +73,7 @@ main .hero h1 {
     font-size: var(--heading-font-size-xl);
     margin-right: 30%;
     margin-bottom: 0;
+    text-align: left;
   }
 }
 
