@@ -3,11 +3,14 @@ import { readBlockConfig, toClassName } from '../../scripts/scripts.js';
 function filterNews(e) {
   const button = e.target.closest('button');
   const block = button.closest('.block');
+  const feed = block.querySelector('ul');
   const filter = button.getAttribute('data-filter');
   // update button
   const buttons = block.querySelectorAll('.news .button-container > button');
   buttons.forEach((btn) => btn.setAttribute('aria-selected', false));
   button.setAttribute('aria-selected', true);
+  // reset feed height
+  feed.style.removeProperty('height');
   // filter items
   const items = block.querySelectorAll('.news .news-item');
   items.forEach((item) => item.classList.remove('news-filtered'));
