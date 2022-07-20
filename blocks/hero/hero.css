@@ -10,6 +10,7 @@ main .hero {
   display: flex;
   flex-flow: row wrap;
   align-content: center;
+  justify-content: center;
   position: relative;
   height: 230px;
   margin: 0 auto;

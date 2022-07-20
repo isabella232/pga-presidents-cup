@@ -83,7 +83,7 @@ footer .footer .footer-partners img {
   }
 
   footer .footer .footer-partners .footer-partner:not(:first-child) {
-    border-left: 1px solid var(--color-gray);
+    border-left: 1px solid var(--color-gray-light);
   }
 }
 
@@ -96,7 +96,7 @@ footer .footer .footer-partners img {
 
 /* nav */
 footer .footer .footer-nav {
-  border-top: 1px solid var(--color-gray);
+  border-top: 1px solid var(--color-gray-light);
 }
 
 footer .footer .footer-nav ul {

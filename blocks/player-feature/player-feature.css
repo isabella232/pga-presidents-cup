@@ -88,6 +88,7 @@ main .player-feature .player-feature-status {
 /* name */
 main .player-feature .player-feature-name {
   margin-top: 0;
+  color: var(--color-white);
 }
 
 /* credits */
