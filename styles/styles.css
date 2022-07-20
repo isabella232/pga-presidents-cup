@@ -293,6 +293,10 @@ main .section.highlight {
   text-align: center;
 }
 
+.index main .section > .default-content-wrapper {
+  text-align: center;
+}
+
 .index main .section > div > h2,
 .index main .section > div > h3 {
   color: var(--color-blue);
