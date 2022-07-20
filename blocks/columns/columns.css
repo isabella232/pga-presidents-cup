@@ -5,7 +5,7 @@ main .columns {
 
 main .columns > div {
   margin: 16px 0;
-  background-color: var(--background-color);
+  background-color: var(--highlight-background-color);
 }
 
 main .columns > div > div:not(.columns-contains-image) {

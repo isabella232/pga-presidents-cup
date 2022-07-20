@@ -25,10 +25,10 @@
 
   --link-color: var(--color-blue-dark);
   --link-hover-color: var(--color-blue);
-  --background-color: var(--color-white);
+  --background-color: var(--color-gray-light);
   --overlay-background-color: var(--color-blue-lighter);
   --overlay-text-color: var(--color-white);
-  --highlight-background-color: var(--color-gray-light);
+  --highlight-background-color: var(--color-white);
   --text-color: #000;
 
   /* fonts */
@@ -156,14 +156,13 @@ svg {
 }
 
 /* buttons */
-
 a.button:any-link, button {
   font-family: var(--font-family-body);
   box-sizing: border-box;
   display: inline-block;
   margin: 16px 0;
   border: 1px solid white;
-  padding: 5px 30px;
+  padding: 5px 16px;
   background-color: var(--link-color);
   color: var(--background-color);
   font-style: normal; 
@@ -288,19 +287,20 @@ main .section[data-section-status='initialized'] {
 }
 
 main .section.highlight {
-  padding-top: 32px;
-  padding-bottom: 32px;
+  padding-top: 16px;
+  padding-bottom: 16px;
   background-color: var(--highlight-background-color);
   text-align: center;
 }
 
-main .section.highlight > div > h2,
-main .section.highlight > div > h3 {
+.index main .section > div > h2,
+.index main .section > div > h3 {
   color: var(--color-blue);
+  text-align: center;
   text-transform: uppercase;
 }
 
-main .section.highlight > div > h2 {
+.index main .section > div > h2 {
   margin-top: 0;
 }
 

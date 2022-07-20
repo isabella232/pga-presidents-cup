@@ -1,6 +1,5 @@
 /* wrapper setup */
 main .section.player-feature-container {
-  margin-top: -16px;
   margin-bottom: 0;
   padding: 0;
 }
@@ -15,7 +14,7 @@ main .player-feature-wrapper {
   max-width: 1400px;
   margin: auto;
   padding-top: 290px;
-  background: linear-gradient(#fff0 400px, var(--highlight-background-color) 630px);
+  background: linear-gradient(#fff0 400px, var(--background-color) 630px);
   font-size: var(--body-font-size-s);
 }
 
@@ -36,12 +35,6 @@ main .player-feature-wrapper .player-feature-background img {
 }
 
 @media (min-width: 1200px) {
-  main .section.player-feature-container {
-    margin-top: -32px;
-    background-color: var(--highlight-background-color);
-    
-  }
-  
   main .player-feature-wrapper {
     min-height: 950px;
     padding-top: 30px;
