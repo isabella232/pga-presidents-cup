@@ -21,6 +21,12 @@ footer .footer > div > div {
   padding: 15px 0;
 }
 
+footer .footer h2,
+footer .footer h3,
+footer .footer h4 {
+  color: var(--color-white);
+}
+
 footer .footer a {
   color: var(--color-white);
   text-transform: uppercase;
@@ -46,6 +52,12 @@ footer .footer ul {
 footer .footer.footer-ribbon {
   padding: 0 20px;
   background-color: var(--color-white);
+  color: var(--color-blue);
+}
+
+footer .footer.footer-ribbon h2,
+footer .footer.footer-ribbon h3,
+footer .footer.footer-ribbon h4 {
   color: var(--color-blue);
 }
 
