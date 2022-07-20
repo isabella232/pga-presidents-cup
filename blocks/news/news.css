@@ -114,7 +114,7 @@ main .news-item-play::before {
   content: '';
 }
 
-/* filters */
+/* filters and pagination */
 main .news .news-filters,
 main .news .news-pagination {
   margin: 0 16px;
@@ -158,4 +158,9 @@ main .news .news-item.news-filtered {
   display: none;
   visibility: hidden;
   order: 2;
+}
+
+main .news .news-pagination button:disabled {
+  display: none;
+  visibility: hidden;
 }

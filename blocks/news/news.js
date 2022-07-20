@@ -24,6 +24,18 @@ function filterNews(e) {
   }
 }
 
+function toggleShowLessButton(feed) {
+  const block = feed.closest('.block');
+  const lessButton = block.querySelector('button[data-show="less"]');
+  const feedHeight = feed.offsetHeight;
+  const twoRowHeight = parseInt(`${(310 * 2) + 2}`, 10); /* match .news-item height + gap */
+  if (feedHeight > twoRowHeight) {
+    lessButton.disabled = false;
+  } else {
+    lessButton.disabled = true;
+  }
+}
+
 function paginateNews(e) {
   const button = e.target.closest('button');
   const block = button.closest('.block');
@@ -33,9 +45,10 @@ function paginateNews(e) {
   const twoRowHeight = parseInt(`${(310 * 2) + 2}`, 10); /* match .news-item height + gap */
   if (type === 'more') {
     feed.style.height = `${feedHeight + twoRowHeight}px`;
-  } else if (type === 'less') {
+  } else if (type === 'less' && (feedHeight > twoRowHeight)) {
     feed.style.height = `${feedHeight - twoRowHeight}px`;
   }
+  toggleShowLessButton(feed);
 }
 
 export default async function decorate(block) {
@@ -75,7 +88,7 @@ export default async function decorate(block) {
     filters.forEach((filter, i) => {
       const button = document.createElement('button');
       button.textContent = filter;
-      button.setAttribute('aria-selected', !i);
+      button.setAttribute('aria-selected', !i); // first filter is default view
       button.setAttribute('role', 'tab');
       button.setAttribute('data-filter', toClassName(filter));
       button.addEventListener('click', filterNews);
@@ -88,9 +101,10 @@ export default async function decorate(block) {
     const container = document.createElement('div');
     container.classList.add('button-container', 'news-pagination');
     const types = ['More', 'Less'];
-    types.forEach((type) => {
+    types.forEach((type, i) => {
       const button = document.createElement('button');
       button.textContent = `Show ${type}`;
+      if (i) button.disabled = true; // do not show less on initial display
       button.setAttribute('data-show', type.toLowerCase());
       button.addEventListener('click', paginateNews);
       container.append(button);
