@@ -1,3 +1,13 @@
+main .news-container {
+  padding: 0;
+}
+
+@media (min-width: 700px) {
+  main .news-container {
+    padding: 0 32px;
+  }
+}
+
 main .news {
   font-size: var(--body-font-size-s);
 }
@@ -6,6 +16,8 @@ main .news > ul {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
   grid-gap: 1px;
+  height: calc((310px * 2) + 2px); /* only show two rows at a time */
+  overflow-y: hidden;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -23,7 +35,7 @@ main .news > ul {
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1200px) {
   main .news > ul {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -32,40 +44,6 @@ main .news > ul {
 main .news > ul > li {
   position: relative;
   height: 310px;
-}
-
-main .news .news-item {
-  display: none;
-  visibility: hidden;
-}
-
-main .news .news-item:nth-child(1),
-main .news .news-item:nth-child(2) {
-  display: unset;
-  visibility: visible;
-}
-
-@media (min-width: 700px) {
-  main .news .news-item:nth-child(3),
-  main .news .news-item:nth-child(4) {
-    display: unset;
-    visibility: visible;
-  }
-}
-
-@media (min-width: 900px) {
-  main .news .news-item:nth-child(5),
-  main .news .news-item:nth-child(6) {
-    display: unset;
-    visibility: visible;
-  }
-}
-
-@media (min-width: 1200px) {
-  main .news .news-item {
-    display: unset;
-    visibility: visible;
-  }
 }
 
 /* item image */
@@ -136,13 +114,48 @@ main .news-item-play::before {
   content: '';
 }
 
-/* index styles */
-.index main .news-container {
-  padding: 0;
+/* filters */
+main .news .news-filters,
+main .news .news-pagination {
+  margin: 0 16px;
+  text-align: center;
 }
 
 @media (min-width: 700px) {
-  .index main .news-container {
-    padding: 0 32px;
+  main .news .news-filters,
+  main .news .news-pagination {
+    margin: 0;
   }
+}
+
+main .news .news-filters button,
+main .news .news-pagination button {
+  margin: 10px 5px;
+  border-color: transparent;
+}
+
+@media (min-width: 700px) {
+  main .news .news-filters button,
+  main .news .news-pagination button {
+    font-size: var(--body-font-size-m);
+  }
+}
+
+main .news .news-filters button:hover,
+main .news .news-pagination button:hover {
+  background-color: var(--color-blue);
+}
+
+main .news .news-filters button[aria-selected=false] {
+  background-color: var(--color-gray);
+}
+
+main .news .news-filters button[aria-selected=false]:hover {
+  background-color: var(--color-gray-light);
+}
+
+main .news .news-item.news-filtered {
+  display: none;
+  visibility: hidden;
+  order: 2;
 }
