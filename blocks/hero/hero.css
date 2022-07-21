@@ -27,7 +27,7 @@ main .hero > div > div {
   align-content: center;
   justify-content: center;
   height: 230px;
-  width: 100vw;
+  width: calc(100vw - 16px);
   padding: 0 16px;
 }
 
