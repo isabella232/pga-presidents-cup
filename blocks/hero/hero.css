@@ -77,6 +77,11 @@ main .hero h1 {
     margin-bottom: 0;
     text-align: left;
   }
+
+  main .hero p {
+    margin-right: 30%;
+    text-align: left;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -85,9 +90,21 @@ main .hero h1 {
   }
 }
 
+main .hero h1 + p {
+  display: none;
+  visibility: hidden;
+  margin-top: 0;
+}
+
+@media (min-width: 700px) {
+  main .hero h1 + p {
+    display: unset;
+    visibility: visible;
+  }
+}
+
 main .hero p {
   flex-basis: 100%;
-  margin: 5px 0;
 }
 
 main .carousel a:any-link {
