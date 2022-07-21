@@ -3,6 +3,7 @@ main .hero-container {
 }
 
 main .hero-wrapper {
+  position: relative;
   max-width: 1400px;
 }
 
@@ -28,6 +29,7 @@ main .hero > div > div {
   justify-content: center;
   height: 230px;
   width: calc(100vw - 16px);
+  max-width: 1290px;
   padding: 0 16px;
 }
 
@@ -81,6 +83,11 @@ main .hero h1 {
   main .hero h1 {
     font-size: var(--heading-font-size-xxl);
   }
+}
+
+main .hero p {
+  flex-basis: 100%;
+  margin: 5px 0;
 }
 
 main .carousel a:any-link {
@@ -165,5 +172,55 @@ main .hero a.button.secondary:any-link {
   main .hero a.button.primary:any-link,
   main .hero a.button.secondary:any-link {
     font-size: var(--body-font-size-xxl);
+  }
+}
+
+/* themes and templates */
+.past-champions main .hero {
+  height: 420px;
+}
+
+.past-champions main .hero > div > div {
+  height: 420px;
+}
+
+@media (min-width: 700px) {
+  .past-champions main .hero {
+    height: 600px;
+  }
+
+  .past-champions main .hero > div > div {
+    height: 600px;
+  }
+}
+
+@media (min-width: 900px) {
+  .past-champions main .hero {
+    height: 700px;
+  }
+
+  .past-champions main .hero > div > div {
+    height: 700px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .past-champions main .hero {
+    height: 800px;
+  }
+
+  .past-champions main .hero > div > div {
+    height: 800px;
+  }
+}
+
+.past-champions main .hero h1 {
+  margin-bottom: 0;
+}
+
+@media (min-width: 900px) {
+  .past-champions main .hero h1 {
+    margin-right: auto;
+    text-align: center;
   }
 }

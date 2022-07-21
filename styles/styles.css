@@ -264,9 +264,16 @@ hr {
   border-bottom: 1px solid var(--overlay-background-color);
 }
 
+picture {
+  display: block;
+  width: 100%;
+}
+
 img {
+  display: block;
   max-width: 100%;
   height: auto;
+  margin: auto;
 }
 
 @media (min-width: 900px) {
@@ -306,15 +313,19 @@ main .section > .default-content-wrapper h6 {
   text-transform: uppercase;
 }
 
-.index main .section > div > h2 {
-  margin-top: 0;
-}
-
 main .section.highlight {
   padding-top: 16px;
   padding-bottom: 16px;
   background-color: var(--highlight-background-color);
   text-align: center;
+}
+
+.index main .section > div > h2 {
+  margin-top: 0;
+}
+
+.past-champions main .section > .default-content-wrapper {
+  text-align: left;
 }
 
 /* section player feature */
