@@ -682,7 +682,7 @@ async function populatePlayerFeature(block, link) {
     const html = await resp.text();
     const feature = document.createElement('div');
     feature.innerHTML = html;
-    block.innerHTML = feature.querySelector('div').innerHTML;
+    block.innerHTML = `<div>${feature.querySelector('div').outerHTML}</div>`;
     const video = block.querySelector('.embed, .video');
     if (video) {
       decorateBlock(video);

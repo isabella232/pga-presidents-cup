@@ -97,6 +97,7 @@ main .player-feature .player-feature-credits {
   justify-content: flex-end;
   border-top: 1px solid #fff4;
   border-bottom: 1px solid #fff4;
+  text-transform: uppercase;
 }
 
 main .player-feature .player-feature-credits-multi {

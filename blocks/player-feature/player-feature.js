@@ -1,3 +1,5 @@
+import { buildBlock, decorateBlock, loadBlock } from '../../scripts/scripts.js';
+
 function transformBackgroundImage(section) {
   const picture = section.querySelector('picture');
   picture.classList.add('player-feature-background');
@@ -7,7 +9,7 @@ function transformBackgroundImage(section) {
 function wrapCredits(section) {
   const wrapper = document.createElement('div');
   wrapper.classList.add('player-feature-credits');
-  const credits = section.textContent.split(';');
+  const credits = section.textContent.split(',').map((credit) => credit.trim());
   credits.forEach((credit, i) => {
     const p = document.createElement('p');
     p.textContent = credit;
@@ -17,9 +19,20 @@ function wrapCredits(section) {
   return wrapper;
 }
 
-export default function decorate(block) {
+function buildVideoContent(section) {
+  if (section) {
+    const a = section.querySelector('a');
+    if (a) {
+      const block = buildBlock('embed', a);
+      return block;
+    }
+  }
+  return null;
+}
+
+export default async function decorate(block) {
   const sections = ['background', 'status', 'name', 'credits'];
-  [...block.children].forEach((child, i) => {
+  [...block.firstElementChild.firstElementChild.children].forEach((child, i) => {
     if (sections[i]) child.classList.add(`player-feature-${sections[i]}`);
   });
 
@@ -27,20 +40,31 @@ export default function decorate(block) {
   const status = block.querySelector('.player-feature-status');
   const name = block.querySelector('.player-feature-name');
   const credits = block.querySelector('.player-feature-credits');
-  const bio = credits.nextElementSibling;
+  const hasBio = credits.nextElementSibling.className !== 'button-container';
   const button = block.querySelector('.button-container');
-  const video = block.querySelector('.embed, .video');
+  let video = block.querySelector('.embed, .video');
 
-  // transform content
+  // // transform content
   const backgroundImg = transformBackgroundImage(background);
   const wrappedCredits = wrapCredits(credits);
+  if (!video) video = buildVideoContent(button.nextElementSibling);
+
+  // order content
+  const content = [status, name, wrappedCredits];
+  if (hasBio) content.push(credits.nextElementSibling);
+  content.push(button);
+  if (video) content.push(video);
 
   // wrap content
   const wrapper = document.createElement('div');
   wrapper.classList.add('player-feature-content');
-  wrapper.append(status, name, wrappedCredits, bio, button, video);
+  content.forEach((c) => wrapper.append(c));
 
   block.innerHTML = '';
   block.append(wrapper);
+  if (video) {
+    decorateBlock(video);
+    await loadBlock(video);
+  }
   block.parentNode.prepend(backgroundImg);
 }
