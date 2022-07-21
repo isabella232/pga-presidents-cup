@@ -31,8 +31,8 @@ function toggleShowLessButton(feed) {
   const block = feed.closest('.block');
   const lessButton = block.querySelector('button[data-show="less"]');
   const feedHeight = feed.offsetHeight;
-  const twoRowHeight = parseInt(`${(310 * 2) + 2}`, 10); /* match .news-item height + gap */
-  if (feedHeight > twoRowHeight) {
+  const rowHeight = 311; /* match .news-item height + gap */
+  if (feedHeight > rowHeight) {
     lessButton.disabled = false;
   } else {
     lessButton.disabled = true;
@@ -45,11 +45,11 @@ function paginateNews(e) {
   const feed = block.querySelector('ul');
   const type = button.getAttribute('data-show');
   const feedHeight = feed.offsetHeight;
-  const twoRowHeight = parseInt(`${(310 * 2) + 2}`, 10); /* match .news-item height + gap */
+  const rowHeight = 311; /* match .news-item height + gap */
   if (type === 'more') {
-    feed.style.height = `${feedHeight + twoRowHeight}px`;
-  } else if (type === 'less' && (feedHeight > twoRowHeight)) {
-    feed.style.height = `${feedHeight - twoRowHeight}px`;
+    feed.style.height = `${feedHeight + rowHeight}px`;
+  } else if (type === 'less' && (feedHeight > rowHeight)) {
+    feed.style.height = `${feedHeight - rowHeight}px`;
   }
   toggleShowLessButton(feed);
 }
@@ -59,7 +59,7 @@ export default async function decorate(block) {
   const damPrefix = 'https://www.pgatour.com';
   const config = readBlockConfig(block);
   const newsURL = config.source;
-  const limit = config.limit || 12;
+  const limit = config.limit || 8;
   block.textContent = '';
   // populate news content
   /* TODO: add CORS header, to be replaced with direct API */
@@ -104,10 +104,9 @@ export default async function decorate(block) {
     const container = document.createElement('div');
     container.classList.add('button-container', 'news-pagination');
     const types = ['More', 'Less'];
-    types.forEach((type, i) => {
+    types.forEach((type) => {
       const button = document.createElement('button');
       button.textContent = `Show ${type}`;
-      if (i) button.disabled = true; // do not show less on initial display
       button.setAttribute('data-show', type.toLowerCase());
       button.addEventListener('click', paginateNews);
       container.append(button);
