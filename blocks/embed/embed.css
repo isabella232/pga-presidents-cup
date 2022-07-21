@@ -1,7 +1,21 @@
 main .embed iframe {
+  width: 100%;
+  max-width: 100%;
   border: 0;
 }
 
+/* form */
+main .embed .embed-form-wrapper iframe {
+  min-height: 910px;
+}
+
+@media (min-width: 700px) {
+  main .embed .embed-form-wrapper iframe {
+    min-height: 940px;
+  }
+}
+
+/* iframe */
 main .embed .embed-iframe-wrapper {
   position: relative;
   width: 100%;
