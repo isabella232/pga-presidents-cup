@@ -16,19 +16,14 @@ main .cards > ul {
 
 main .cards > ul > li {
   position: relative;
-  background-color: var(--background-color);
+  background-color: var(--highlight-background-color);
 }
 
 /* card body */
-main .cards .cards-card-body {
+main .cards .cards-card-body,
+main .cards .cards-card-links {
   padding: 16px;
   background-color: var(--color-white);
-}
-
-@media (min-width: 900px) {
-  main .cards .cards-card-body {
-    padding: 32px;
-  }
 }
 
 main .cards h2 {
@@ -78,9 +73,43 @@ main .cards .cards-card-bubble {
   }
 }
 
+/* card links */
+main .cards .cards-card-links ul {
+  margin: 0;
+  padding: 0;
+  font-size: var(--body-font-size-s);
+}
+
+@media (min-width: 700px) {
+  main .cards .cards-card-links ul {
+    font-size: var(--body-font-size-m);
+  }
+}
+
+main .cards .cards-card-links ul li {
+  padding: 5px 0;
+}
+
+main .cards .cards-card-links a::after {
+  padding-left: 5px;
+  font-size: var(--body-font-size-xl);
+  font-weight: bold;
+  line-height: 0;
+  content: '\203A';
+  transition: padding .1s;
+}
+
+main .cards .cards-card-links a:hover {
+  text-decoration: none;
+}
+
+main .cards .cards-card-links a:hover::after {
+  padding-left: 8px;
+}
+
 /* card image */
 main .cards > ul > li img {
-  max-height: 180px;
+  height: 180px;
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
@@ -88,7 +117,7 @@ main .cards > ul > li img {
 
 @media (min-width: 900px) {
   main .cards > ul > li img {
-    max-height: 230px;
+    height: 230px;
   }
 }
 
@@ -100,17 +129,25 @@ main .cards.overlay > ul > li {
 }
 
 main .cards.overlay .cards-card-body {
+  box-sizing: border-box;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
+  height: 180px;
   margin: 0;
   padding: 16px;
   background-color: #0004;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+@media (min-width: 900px) {
+  main .cards.overlay .cards-card-body {
+    height: 230px;
+  }
 }
 
 main .cards.overlay h2 {

@@ -38,7 +38,16 @@ export default async function decorate(block) {
     li.innerHTML = row.innerHTML;
     [...li.children].forEach((div) => {
       if (div.children.length === 1 && div.querySelector('picture')) div.className = 'cards-card-image';
-      else div.className = 'cards-card-body';
+      else {
+        div.className = 'cards-card-body';
+        const list = div.querySelector('ul, ol');
+        if (list) {
+          const links = document.createElement('div');
+          links.className = 'cards-card-links';
+          links.append(list);
+          div.after(links);
+        }
+      }
     });
     ul.append(li);
   });
