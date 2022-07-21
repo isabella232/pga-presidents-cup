@@ -1,6 +1,36 @@
-import { createOptimizedPicture } from '../../scripts/scripts.js';
+import { createOptimizedPicture, readBlockConfig, lookupPages } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
+function decorateChampionCards(champions, block) {
+  block.classList.add('cards-champions');
+  // eslint-disable-next-line no-param-reassign
+  champions = champions.sort((a, b) => {
+    const aYear = parseInt(a.title.split(' ').pop(), 10);
+    const bYear = parseInt(b.title.split(' ').pop(), 10);
+    return (aYear > bYear) ? -1 : 1;
+  });
+  champions.forEach((champion) => {
+    const year = champion.title.split(' ').pop();
+    const name = champion.title.replace('THE PLAYERS Championship:', '').replace(year, '').trim();
+    const card = document.createElement('div');
+    card.innerHTML = `<div>
+        <a href="${champion.path}">${createOptimizedPicture(champion.image).outerHTML}</a>
+      </div>
+      <div>${year ? `<p class="cards-card-bubble">${year}</p>` : ''}<h3><a href="${champion.path}">${name}</a></h3></div>`;
+    block.append(card);
+  });
+}
+
+export default async function decorate(block) {
+  const config = readBlockConfig(block);
+  if (config.source && config.type) {
+    block.innerHTML = '';
+    const pages = await lookupPages();
+    const items = pages.filter((e) => e.path.startsWith(config.source));
+    if (items) {
+      const type = config.type.toLowerCase();
+      if (type === 'champions') decorateChampionCards(items, block);
+    }
+  }
   /* change to ul, li */
   const ul = document.createElement('ul');
   [...block.children].forEach((row) => {

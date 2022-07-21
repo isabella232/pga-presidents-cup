@@ -1,8 +1,4 @@
-.cards {
-  /* margin: 16px; */
-}
-
-.cards > ul {
+main .cards > ul {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
@@ -12,46 +8,78 @@
 }
 
 @media (min-width: 900px) {
-  .cards > ul {
+  main .cards > ul {
     grid-template-columns: repeat(auto-fill, minmax(calc((100% / 3) - 30px), 1fr));
     grid-gap: 30px;
   }
 }
 
-.cards > ul > li {
+main .cards > ul > li {
+  position: relative;
   background-color: var(--background-color);
 }
 
-.cards h2 {
-  color: var(--color-white);
-  font-family: var(--body-font-family);
+/* card body */
+main .cards .cards-card-body {
+  padding: 16px;
+  background-color: var(--color-white);
+}
+
+@media (min-width: 900px) {
+  main .cards .cards-card-body {
+    padding: 32px;
+  }
+}
+
+main .cards h2 {
   font-size: var(--body-font-size-xl);
   text-transform: uppercase;
 }
 
 @media (min-width: 700px) {
-  .cards h2 {
+  main .cards h2 {
     font-size: var(--body-font-size-xxl);
   }
 }
 
-.cards .cards-card-body {
-  /* margin: 16px; */
-}
-
-.cards .button-container {
+main .cards .button-container {
   margin: 0;
 }
 
-.cards .cards-card-image {
+main .cards .cards-card-image {
   line-height: 0;
 }
 
-.cards .cards-card-body > *:first-child {
+main .cards .cards-card-body > *:first-child {
   margin-top: 0;
 }
 
-.cards > ul > li img {
+main .cards .cards-card-bubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 20px;
+  background-color: var(--color-tan);
+  color: var(--color-white);
+  font-size: var(--body-font-size-xxs);
+}
+
+@media (min-width: 700px) {
+  main .cards .cards-card-bubble {
+    min-width: 80px;
+    min-height: 80px;
+    border-radius: 40px;
+    font-size: var(--body-font-size-l);
+  }
+}
+
+/* card image */
+main .cards > ul > li img {
   max-height: 180px;
   width: 100%;
   aspect-ratio: 4 / 3;
@@ -59,18 +87,19 @@
 }
 
 @media (min-width: 900px) {
-  .cards > ul > li img {
+  main .cards > ul > li img {
     max-height: 230px;
   }
 }
 
-.cards.overlay > ul > li {
+/* overlay*/
+main .cards.overlay > ul > li {
   position: relative;
   color: var(--color-white);
   font-size: var(--heading-font-size-l);
 }
 
-.cards.overlay .cards-card-body {
+main .cards.overlay .cards-card-body {
   position: absolute;
   top: 0;
   left: 0;
@@ -84,18 +113,41 @@
   justify-content: space-between;
 }
 
-.cards.overlay > ul > li p.button-container {
+main .cards.overlay h2 {
+  color: var(--color-white);
+  font-family: var(--body-font-family);
+}
+
+main .cards.overlay > ul > li p.button-container {
   font-size: var(--body-font-size-xxs);
   text-transform: uppercase;
   margin: 0;
 }
 
-.cards.overlay > ul > li p.button-container a {
+main .cards.overlay > ul > li p.button-container a {
   margin: 0;
 }
 
 @media (min-width: 700px) {
-  .cards.overlay > ul > li p.button-container {
+  main .cards.overlay > ul > li p.button-container {
     font-size: var(--body-font-size-m);
+  }
+}
+
+/* champions */
+main .cards.cards-champions h3 {
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  main .cards.cards-champions > ul {
+    grid-template-columns: repeat(auto-fill, minmax(calc((100% / 2) - 30px), 1fr));
+    grid-gap: 30px;
+  }
+}
+
+@media (min-width: 700px) {
+  main .cards.cards-champions > ul > li img {
+    max-height: 355px;
   }
 }
