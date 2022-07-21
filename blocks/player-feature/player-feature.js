@@ -9,7 +9,7 @@ function transformBackgroundImage(section) {
 function wrapCredits(section) {
   const wrapper = document.createElement('div');
   wrapper.classList.add('player-feature-credits');
-  const credits = section.textContent.split(',').map((credit) => credit.trim());
+  const credits = section.textContent.split('|').map((credit) => credit.trim());
   credits.forEach((credit, i) => {
     const p = document.createElement('p');
     p.textContent = credit;
