@@ -141,6 +141,7 @@ main .carousel div.carousel-text h2 {
 /* carousel content buttons */
 main .carousel p.button-container {
   margin: 5px;
+  font-weight: lighter;
   text-align: center;
 }
 

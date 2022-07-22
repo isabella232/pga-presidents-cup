@@ -188,6 +188,7 @@ main .hero a.button.secondary:any-link {
   main .hero a.button.primary:any-link,
   main .hero a.button.secondary:any-link {
     font-size: var(--body-font-size-xxl);
+    font-weight: lighter;
   }
 }
 

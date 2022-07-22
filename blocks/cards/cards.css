@@ -153,6 +153,7 @@ main .cards.overlay .cards-card-body {
 main .cards.overlay h2 {
   color: var(--color-white);
   font-family: var(--body-font-family);
+  font-weight: lighter;
 }
 
 main .cards.overlay > ul > li p.button-container {
