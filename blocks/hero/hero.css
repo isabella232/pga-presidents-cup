@@ -193,50 +193,66 @@ main .hero a.button.secondary:any-link {
 }
 
 /* themes and templates */
+.visit main .hero,
 .past-champions main .hero {
   height: 420px;
 }
 
+.visit main .hero > div > div,
 .past-champions main .hero > div > div {
   height: 420px;
 }
 
 @media (min-width: 700px) {
+  .visit main .hero,
   .past-champions main .hero {
     height: 600px;
   }
 
+  .visit main .hero > div > div,
   .past-champions main .hero > div > div {
     height: 600px;
   }
 }
 
 @media (min-width: 900px) {
+  .visit main .hero,
   .past-champions main .hero {
     height: 700px;
   }
 
+  .visit main .hero > div > div,
   .past-champions main .hero > div > div {
     height: 700px;
   }
 }
 
 @media (min-width: 1200px) {
+  .visit main .hero,
   .past-champions main .hero {
     height: 800px;
   }
 
+  .visit main .hero > div > div,
   .past-champions main .hero > div > div {
     height: 800px;
   }
 }
 
+.visit main .hero h1,
 .past-champions main .hero h1 {
   margin-bottom: 0;
 }
 
 @media (min-width: 900px) {
+  .visit main .hero h1,
   .past-champions main .hero h1 {
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .visit main .hero p,
+  .past-champions main .hero p {
     margin-right: auto;
     text-align: center;
   }
