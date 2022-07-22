@@ -17,8 +17,11 @@
   --color-blue: #003360;
   --color-blue-light: #004B98;
   --color-blue-lighter: #2D4976;
-
   --color-tan: #C2A36E;
+
+  --color-blue-95: #003360f2;
+  --color-tan-95: #C2A36Ef2;
+
   --color-black: #000;
   --color-gray-dark: #4d4d4d;
   --color-gray: #999;
@@ -107,7 +110,7 @@ h4, h5, h6 {
   scroll-margin: calc(var(--nav-height) + 1em);
   color: var(--heading-color);
   font-family: var(--heading-font-family);
-  font-weight: 600;
+  font-weight: normal;
   line-height: 1.25;
   text-transform: uppercase;
 }
@@ -162,16 +165,17 @@ svg {
 
 /* buttons */
 a.button:any-link, button {
-  font-family: var(--font-family-body);
   box-sizing: border-box;
   display: inline-block;
+  max-width: 100%;
   margin: 16px 0;
   border: 1px solid white;
   padding: 5px 16px;
   background-color: var(--link-color);
   color: var(--background-color);
-  font-style: normal; 
-  font-weight: 600;
+  font-family: var(--font-family-body);
+  font-style: normal;
+  font-weight: normal;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
@@ -197,19 +201,23 @@ a.button.secondary, button.secondary {
   color: var(--text-color)
 } 
 
+.button-container > * {
+  margin: 5px;
+}
 
 main input {
-  font-size: 1.25rem;
+  box-sizing: border-box;
+  display: block;
   width: 100%;
   max-width: 50rem;
-  display: block;
   margin-bottom: 1rem;
-  padding: 0.75rem 0.6rem;    
-  border-radius: 0.25rem;
-  box-sizing: border-box;
   border: 1px solid var(--text-color);
-  color: var(--text-color);
+  border-radius: 0.25rem;
+  padding: 0.75rem 0.6rem;    
   background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 1.25rem;
 }
 
 main input:hover {
@@ -324,68 +332,159 @@ main .section.highlight {
   margin-top: 0;
 }
 
-.past-champions main .section > .default-content-wrapper {
+.past-champions main .section > .default-content-wrapper,
+.volunteer main .section > .default-content-wrapper {
   text-align: left;
 }
 
-/* section player feature */
-
-/* main .section.player-feature {
-  position: relative;
-  padding-top: 50vw;
-  background: linear-gradient(#fff0 400px, #ffff 600px);
-  font-size: var(--body-font-size-s);
-  max-width: 1500px;
-  box-sizing: border-box;
-  margin: auto;
-}
-
-main .section.player-feature h4 {
-  color: #caaa77;
-  text-transform: uppercase;
+.volunteer main .section > .default-content-wrapper h3,
+.volunteer main .section > .default-content-wrapper h4 {
   font-family: var(--body-font-family);
-  font-size: var(--body-font-size-s);
-  font-weight: 600;
+  font-weight: bold;
+  text-align: left;
+  text-transform: initial;
+}
+
+.volunteer main .section > .default-content-wrapper h4 {
+  color: var(--color-gray-dark);
+}
+
+/* section teaser */
+main .section.teaser {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  max-width: 1400px;
+  min-height: 600px;
+  margin: auto;
+  font-size: var(--body-font-size-xs);
+}
+
+@media (min-width: 700px) {
+  main .section.teaser {
+    align-items: center;
+    justify-content: flex-end;
+    font-size: var(--body-font-size-s);
+  }
+}
+
+main .section.teaser .default-content-wrapper > :first-child {
+  position: relative;
+  font-size: var(--body-font-size-xxs);
+  text-align: center;
+}
+
+main .section.teaser .default-content-wrapper > :first-child em {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0 5px;
+  font-style: normal;
+  line-height: 1;
+}
+
+main .section.teaser .default-content-wrapper > :first-child em::before,
+main .section.teaser .default-content-wrapper > :first-child em::after {
+  content: '';
+  display: block;
+  top: 6px;
+  width: 70px;
+  height: 1px;
+  margin: 0 5px;
+  background-color: var(--color-white);
+}
+
+@media (min-width: 700px) {
+  main .section.teaser .default-content-wrapper > :first-child {
+    font-size: var(--body-font-size-xs);
+  }
+
+  main .section.teaser .default-content-wrapper > :first-child em::before,
+  main .section.teaser .default-content-wrapper > :first-child em::after {
+    width: 70px;
+  }
+}
+
+main .section.teaser h2 {
   margin: 0;
+  color: var(--color-tan);
+  text-align: center;
+  line-height: 1;
 }
 
-main .section.player-feature h3 {
-  margin: 0;
+@media (min-width: 700px) {
+  main .section.teaser h2 {
+    font-size: var(--heading-font-size-l);
+  }
 }
 
-main .section.player-feature > div {
-  background: linear-gradient(135deg,#293f68 0,#30568b 100%);
-  padding: 32px;
-  color: white;
+main .section.teaser p {
+  text-align: center;
 }
 
-main .section.player-feature picture.section-background {
+main .section.teaser .button-container {
+  font-size: var(--body-font-size-xxs);
+}
+
+@media (min-width: 700px) {
+  main .section.teaser .button-container {
+    font-size: var(--body-font-size-s);
+  }
+}
+
+main .section.teaser > div {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: var(--color-blue-95);
+  color: var(--color-white);
+}
+
+@media (min-width: 700px) {
+  main .section.teaser > div {
+    box-sizing: border-box;
+    margin-top: 32px;
+    margin-bottom: 32px;
+    padding: 32px;
+    width: 50%;
+    max-width: 410px;
+  }
+}
+
+@media (min-width: 700px) {
+  main .section.teaser > div {
+    margin-left: unset;
+    margin-right: unset;
+  }
+}
+
+@media (min-width: 1200px) {
+  main .section.teaser > div {
+    margin-right: 32px;
+  }
+}
+
+main .section.teaser picture.section-background {
   position: absolute;
-  z-index: -1;
-  left: 0;
   top: 0;
+  left: 0;
   bottom: 0;
   right: 0;
+  z-index: -1;
 }
 
-main .section.player-feature picture.section-background img {
+main .section.teaser picture.section-background img {
   max-width: 100%;
   height: 600px;
   object-fit: cover;
 }
 
-@media (min-width: 900px) {
-  main .section.player-feature {
-    padding-top: 128px;
-    padding-left: calc(min(50%, 750px));
-    background: unset;
-  }
-    
-
-  main .section.player-feature picture.section-background img {
+@media (min-width: 700px) {
+  main .section.teaser picture.section-background img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
   }
-  
-} */
+}
