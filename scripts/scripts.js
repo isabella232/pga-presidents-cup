@@ -538,10 +538,9 @@ function decorateTemplateAndTheme() {
 }
 
 /**
- * decorates paragraphs containing a single link as buttons.
+ * decorates paragraphs containing a single link as buttons and combines adjacent button containers.
  * @param {Element} element container element
  */
-
 export function decorateButtons(element) {
   element.querySelectorAll('a').forEach((a) => {
     a.title = a.title || a.textContent;
@@ -564,6 +563,13 @@ export function decorateButtons(element) {
           twoup.classList.add('button-container');
         }
       }
+    }
+  });
+  element.querySelectorAll('.button-container').forEach((container) => {
+    const next = container.nextElementSibling;
+    if (next && next.className === 'button-container') {
+      [...next.children].forEach((button) => container.append(button));
+      next.remove();
     }
   });
 }
@@ -806,6 +812,8 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.ico`);
+
+  doc.querySelectorAll('div:empty').forEach((empty) => empty.remove());
 }
 
 /**
