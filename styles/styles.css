@@ -333,19 +333,19 @@ main .section.highlight {
 }
 
 .past-champions main .section > .default-content-wrapper,
-.volunteer main .section > .default-content-wrapper {
+.left-align main .section > .default-content-wrapper {
   text-align: left;
 }
 
-.volunteer main .section > .default-content-wrapper h3,
-.volunteer main .section > .default-content-wrapper h4 {
+.left-align main .section > .default-content-wrapper h3,
+.left-align main .section > .default-content-wrapper h4 {
   font-family: var(--body-font-family);
   font-weight: bold;
   text-align: left;
   text-transform: initial;
 }
 
-.volunteer main .section > .default-content-wrapper h4 {
+.left-align main .section > .default-content-wrapper h4 {
   color: var(--color-gray-dark);
 }
 
