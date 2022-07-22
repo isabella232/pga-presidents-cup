@@ -663,13 +663,12 @@ loadPage(document);
 function buildHeroBlock(main) {
   const h1 = main.querySelector('h1');
   const picture = main.querySelector('picture');
-
   // eslint-disable-next-line no-bitwise
   if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
     const section = document.createElement('div');
     const elems = [];
     const currentSection = h1.closest('main > div');
-    if (!currentSection.previousElementSibling && currentSection.children.length < 5) {
+    if (!currentSection.previousElementSibling) {
       [...currentSection.children].forEach((child) => { elems.push(child); });
     } else {
       elems.push(picture);
@@ -813,7 +812,7 @@ async function loadLazy(doc) {
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.ico`);
 
-  doc.querySelectorAll('div:empty').forEach((empty) => empty.remove());
+  doc.querySelectorAll('div:not([class]):empty').forEach((empty) => empty.remove());
 }
 
 /**
