@@ -27,7 +27,7 @@ function displayNextPartner(proud) {
 
 async function setupPartners(section) {
   const pages = await lookupPages();
-  const sponsors = pages.filter((e) => e.path.startsWith('/sponsors'));
+  const sponsors = pages.filter((e) => e.path.startsWith('/sponsors/'));
 
   const partners = document.createElement('div');
   partners.className = 'nav-partners';

@@ -25,7 +25,7 @@ function setupSocialButtons(section) {
 
 async function setupPartners(section) {
   const pages = await lookupPages();
-  const sponsors = pages.filter((e) => e.path.startsWith('/sponsors'));
+  const sponsors = pages.filter((e) => e.path.startsWith('/sponsors/'));
 
   const wrapper = document.createElement('div');
   sponsors.forEach((sponsor) => {
