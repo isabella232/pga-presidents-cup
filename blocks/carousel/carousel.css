@@ -3,6 +3,7 @@ main .carousel-container {
 }
 
 main .carousel-wrapper {
+  position: relative;
   max-width: 1400px;
 }
 
@@ -205,10 +206,11 @@ main .carousel-wrapper .carousel-buttons {
   display: flex;
   justify-content: center;
   position: absolute;
+  bottom: 10px;
   right: 0;
   left: 0;
-  margin-top: -40px;
   text-align: center;
+  z-index: 1;
 }
 
 main .carousel-buttons button {
@@ -224,4 +226,176 @@ main .carousel-buttons button {
 
 main .carousel-buttons button.selected {
   background-color: currentColor;
+}
+
+/* course carousel */
+main .carousel.course > div {
+  flex-direction: column;
+  height: 850px;
+  background-color: var(--color-blue);
+  background-image: unset;
+}
+
+@media (min-width: 700px) {
+  main .carousel.course > div {
+    height: 670px;
+  }
+}
+
+main .carousel.course picture {
+  z-index: 1;
+}
+
+main .carousel.course div.carousel-image {
+  flex-grow: 1;
+  position: relative;
+}
+
+main .carousel.course div.course-text {
+  align-items: stretch;
+  margin: unset;
+  margin-bottom: 22px; /* for navigation */
+  padding: 16px;
+  background-color: var(--color-blue);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xxs);
+  text-transform: initial;
+}
+
+@media (min-width: 700px) {
+  main .carousel.course div.course-text {
+    /* display: grid; */
+    height: 272px;
+    margin-bottom: 0;
+  }
+}
+
+main .carousel.course div.course-text h2,
+main .carousel.course div.course-text h3 {
+  margin: 0;
+  color: var(--color-white);
+  font-family: var(--body-font-family);
+}
+
+main .carousel.course div.course-text h2 {
+  font-size: var(--heading-font-size-s);
+}
+
+main .carousel.course div.course-text h3 {
+  font-size: var(--heading-font-size-xs);
+  text-transform: initial;
+}
+
+@media (min-width: 700px) {
+  main .carousel.course div.course-text h2 {
+    font-size: var(--heading-font-size-l);
+  }
+  
+  main .carousel.course div.course-text h3 {
+    font-size: var(--heading-font-size-xxs);
+  }
+}
+
+main .carousel.course div.course-text p {
+  margin: 0;
+}
+
+/* overview */
+@media (min-width: 700px) {
+  main .carousel.course div.course-text .course-overview {
+    display: grid;
+    grid-auto-columns: 1fr; 
+    grid-template-columns: max-content 1fr; 
+    grid-template-rows: auto auto 1fr; 
+    gap: 0 8px; 
+    grid-template-areas: 
+      'title hole'
+      'subtitle hole'
+      'description description'; 
+  }
+
+  main .carousel.course div.course-text .course-overview h2 {
+    grid-area: title;
+  }
+
+  main .carousel.course div.course-text .course-overview h3 {
+    grid-area: subtitle;
+    margin-bottom: 16px;
+  }
+
+  main .carousel.course div.course-text .course-hole {
+    grid-area: hole;
+  }
+
+  main .carousel.course div.course-text p:last-child {
+    grid-area: description;
+    overflow-y: auto;
+  }
+}
+
+main .carousel.course div.course-text .course-hole {
+  display: none;
+  visibility: hidden;
+  position: initial;
+}
+
+main .carousel.course div.course-text .course-hole img {
+  width: unset;
+  max-width: 150px;
+  height: unset;
+  margin: 0;
+}
+
+@media (min-width: 700px) {
+  main .carousel.course div.course-text .course-hole {
+    display: block;
+    visibility: visible;
+  }
+}
+
+/* stats */
+main .carousel.course div.course-text .course-stats {
+  display: none;
+  visibility: hidden;
+}
+
+/* credits */
+main .carousel.course div.course-text .course-credits {
+  width: 100%;
+  border-top: 1px solid #fff8;
+  padding: 5px 0;
+  font-style: normal;
+  text-align: right;
+}
+
+main .carousel.course div.course-text .course-credits em {
+  font-style: normal;
+}
+
+/* nav buttons */
+main .carousel-buttons.course-buttons button {
+  width: 8px;
+  height: 8px;
+  margin: 8px 2px;
+  border-color: var(--color-blue);
+  background-color: #fff8;
+}
+
+main .carousel-buttons.course-buttons button.selected {
+  border-color: var(--color-white);
+  background-color: var(--color-white);
+}
+
+@media (min-width: 700px) {
+  main .carousel-buttons.course-buttons {
+    bottom: 272px;
+    z-index: 2;
+    background-color: #0008;
+  }
+
+  main .carousel-buttons.course-buttons button {
+    width: 10px;
+    height: 10px;
+    margin: 10px 4px;
+  }
 }
