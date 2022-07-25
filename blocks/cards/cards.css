@@ -186,6 +186,6 @@ main .cards.cards-champions h3 {
 
 @media (min-width: 700px) {
   main .cards.cards-champions > ul > li img {
-    max-height: 355px;
+    height: 355px;
   }
 }

@@ -9,10 +9,10 @@ function transformBackgroundImage(section) {
 function wrapCredits(section) {
   const wrapper = document.createElement('div');
   wrapper.classList.add('player-feature-credits');
-  const credits = section.textContent.split('|').map((credit) => credit.trim());
+  const credits = section.innerHTML.split('|').map((credit) => credit.trim());
   credits.forEach((credit, i) => {
     const p = document.createElement('p');
-    p.textContent = credit;
+    p.innerHTML = credit;
     wrapper.append(p);
     if (i > 0) wrapper.classList.add('player-feature-credits-multi');
   });
@@ -21,11 +21,8 @@ function wrapCredits(section) {
 
 function buildVideoContent(section) {
   if (section) {
-    const a = section.querySelector('a');
-    if (a) {
-      const block = buildBlock('embed', a);
-      return block;
-    }
+    const id = section.textContent.trim();
+    if (id) return buildBlock('video', id);
   }
   return null;
 }
@@ -47,7 +44,7 @@ export default async function decorate(block) {
   // // transform content
   const backgroundImg = transformBackgroundImage(background);
   const wrappedCredits = wrapCredits(credits);
-  if (!video) video = buildVideoContent(button.nextElementSibling);
+  if (!video) video = buildVideoContent(block.querySelector('p > em'));
 
   // order content
   const content = [status, name, wrappedCredits];
