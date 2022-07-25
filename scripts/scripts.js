@@ -150,7 +150,8 @@ export function decorateIcons(element) {
   replaceIcons(element);
 
   element.querySelectorAll('span.icon').forEach((span) => {
-    const iconName = span.className.split('icon-')[1];
+    let iconName = span.className.split('icon-')[1];
+    if (iconName.startsWith('flag-')) iconName = iconName.replace('-', '/');
     fetch(`${window.hlx.codeBasePath}/icons/${iconName}.svg`).then((resp) => {
       if (resp.status === 200) resp.text().then((svg) => { span.innerHTML = svg; });
     });
