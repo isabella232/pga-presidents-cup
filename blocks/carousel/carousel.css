@@ -242,6 +242,18 @@ main .carousel.course > div {
   }
 }
 
+@media (min-width: 900px) {
+  main .carousel.course > div {
+    height: 505px;
+  }
+}
+
+@media (min-width: 1200px) {
+  main .carousel.course > div {
+    height: 740px;
+  }
+}
+
 main .carousel.course picture {
   z-index: 1;
 }
@@ -264,9 +276,39 @@ main .carousel.course div.course-text {
 
 @media (min-width: 700px) {
   main .carousel.course div.course-text {
-    /* display: grid; */
+    display: grid; 
+    grid-template-columns: 1fr 240px; 
+    grid-template-rows: 1fr 1fr; 
+    gap: 8px 16px; 
+    grid-template-areas: 
+      'overview stats'
+      'credits stats'; 
     height: 272px;
     margin-bottom: 0;
+  }
+}
+
+@media (min-width: 900px) {
+  main .carousel.course div.course-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 300px;
+    height: 473px;
+    background-color: var(--color-blue-95);
+    z-index: 1;
+  }
+}
+
+@media (min-width: 1200px) {
+  main .carousel.course div.course-text {
+    justify-content: flex-start;
+    top: 32px;
+    right: 32px;
+    height: 676px;
   }
 }
 
@@ -303,37 +345,60 @@ main .carousel.course div.course-text p {
 /* overview */
 @media (min-width: 700px) {
   main .carousel.course div.course-text .course-overview {
+    grid-area: overview;
     display: grid;
     grid-auto-columns: 1fr; 
     grid-template-columns: max-content 1fr; 
-    grid-template-rows: auto auto 1fr; 
-    gap: 0 8px; 
+    grid-template-rows: 45px 30px 132px; 
+    gap: 0 16px; 
     grid-template-areas: 
-      'title hole'
-      'subtitle hole'
+      'overview-title hole'
+      'overview-subtitle hole'
       'description description'; 
+      max-height: 242px;
   }
 
   main .carousel.course div.course-text .course-overview h2 {
-    grid-area: title;
+    grid-area: overview-title;
+    align-self: center;
   }
 
   main .carousel.course div.course-text .course-overview h3 {
-    grid-area: subtitle;
-    margin-bottom: 16px;
+    grid-area: overview-subtitle;
   }
 
   main .carousel.course div.course-text .course-hole {
+    align-self: center;
+  }
+
+  main .carousel.course div.course-text .course-hole picture {
     grid-area: hole;
   }
 
-  main .carousel.course div.course-text p:last-child {
+  main .carousel.course div.course-text .course-overview p:last-child {
     grid-area: description;
+    box-sizing: border-box;
     overflow-y: auto;
+    padding-right: 8px;
   }
 }
 
-main .carousel.course div.course-text .course-hole {
+@media (min-width: 900px) {
+  main .carousel.course div.course-text .course-overview {
+    grid-template-rows: 45px 30px 156px; 
+    margin-bottom: 16px;
+  }
+}
+
+@media (min-width: 1200px) {
+  main .carousel.course div.course-text .course-overview {
+    flex-grow: 1;
+    grid-template-rows: 45px 30px 1fr; 
+    max-height: unset;
+  }
+}
+
+main .carousel.course div.course-text .course-hole picture {
   display: none;
   visibility: hidden;
   position: initial;
@@ -347,20 +412,143 @@ main .carousel.course div.course-text .course-hole img {
 }
 
 @media (min-width: 700px) {
-  main .carousel.course div.course-text .course-hole {
+  main .carousel.course div.course-text .course-hole picture {
     display: block;
     visibility: visible;
   }
 }
 
+@media (min-width: 900px) {
+  main .carousel.course div.course-text .course-hole picture img {
+    max-width: 100%;
+  }
+}
+
 /* stats */
-main .carousel.course div.course-text .course-stats {
+main .carousel.course div.course-text .course-statistics {
+  grid-area: stats;
   display: none;
   visibility: hidden;
 }
 
+main .carousel.course div.course-text .course-statistics h3 {
+  border-bottom: 1px solid #fff4;
+  padding-bottom: 8px;
+  font-size: var(--heading-font-size-l);
+}
+
+main .carousel.course div.course-text .course-statistics .course-avg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  outline: 3px solid var(--color-white);
+  border: 3px solid var(--color-blue);
+  border-radius: 50%;
+  padding: 16px;
+  background-color: var(--color-white);
+  color: var(--color-blue);
+  font-size: var(--body-font-size-xl);
+  line-height: 1;
+  text-align: center;
+}
+
+main .carousel.course div.course-text .course-statistics .course-avg strong {
+  display: block;
+  font-size: var(--body-font-size-xxs);
+  font-weight: normal;
+}
+
+main .carousel.course div.course-text .course-statistics table {
+  align-self: flex-start;
+}
+
+main .carousel.course div.course-text .course-statistics table tr td.course-stat-graph {
+  width: 42%;
+  padding-right: 4px;
+}
+
+main .carousel.course div.course-text .course-statistics table tr.course-eagle .course-stat-bar {
+  background-color: #1c619b;
+}
+
+main .carousel.course div.course-text .course-statistics table tr.course-birdie .course-stat-bar {
+  background-color: #99d9f4;
+}
+
+main .carousel.course div.course-text .course-statistics table tr.course-par .course-stat-bar {
+  background-color: #a2a7ab;
+}
+
+main .carousel.course div.course-text .course-statistics table tr.course-bogey .course-stat-bar {
+  background-color: #f7b941;
+}
+
+main .carousel.course div.course-text .course-statistics table tr.course-2--bogey .course-stat-bar {
+  background-color: #ee5a00;
+}
+
+main .carousel.course div.course-text .course-statistics table tr td.course-stat-graph .course-stat-bar {
+  float: right;
+  height: 14px;
+}
+
+main .carousel.course div.course-text .course-statistics table tr td.course-stat-percent {
+  padding-right: 4px;
+  text-align: right;
+}
+
+main .carousel.course div.course-text .course-statistics table tr td.course-stat-title {
+  color: var(--color-gray);
+}
+
+@media (min-width: 700px) {
+  main .carousel.course div.course-text .course-statistics {
+    display: grid;
+    grid-template-columns: max-content 1fr; 
+    grid-template-rows: max-content 1fr; 
+    gap: 16px; 
+    grid-template-areas: 
+      'statistics-title statistics-title'
+      'avg stats'; 
+    visibility: visible;
+  }
+
+  main .carousel.course div.course-text .course-statistics h3 {
+    grid-area: statistics-title;
+  }
+
+  main .carousel.course div.course-text .course-statistics .course-avg {
+    grid-area: avg;
+  }
+
+  main .carousel.course div.course-text .course-statistics table {
+    grid-area: stats;
+  }
+}
+
+@media (min-width: 900px) {
+  main .carousel.course div.course-text .course-statistics {
+    gap: 0 16px;
+    border-top: 3px solid var(--color-white);
+    padding-top: 16px;
+  }
+
+  main .carousel.course div.course-text .course-statistics h3 {
+    display: none;
+    visibility: hidden;
+  }
+
+  main .carousel.course div.course-text .course-statistics table tr td.course-stat-graph {
+    width: 52%;
+  }
+  
+}
+
 /* credits */
 main .carousel.course div.course-text .course-credits {
+  grid-area: credits;
   width: 100%;
   border-top: 1px solid #fff8;
   padding: 5px 0;
@@ -370,6 +558,20 @@ main .carousel.course div.course-text .course-credits {
 
 main .carousel.course div.course-text .course-credits em {
   font-style: normal;
+}
+
+@media (min-width: 700px) {
+  main .carousel.course div.course-text .course-credits {
+    border-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+@media (min-width: 900px) {
+  main .carousel.course div.course-text .course-credits {
+    border-top: 1px solid #fff8;
+    padding-top: 16px;
+  }
 }
 
 /* nav buttons */
@@ -397,5 +599,19 @@ main .carousel-buttons.course-buttons button.selected {
     width: 10px;
     height: 10px;
     margin: 10px 4px;
+  }
+}
+
+@media (min-width: 900px) {
+  main .carousel-buttons.course-buttons {
+    bottom: 16px;
+    width: calc(100% - 300px - 16px);
+  }
+}
+
+@media (min-width: 1200px) {
+  main .carousel-buttons.course-buttons {
+    bottom: 32px;
+    width: calc(100% - 300px - 32px);
   }
 }

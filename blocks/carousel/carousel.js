@@ -1,3 +1,5 @@
+import { toClassName } from '../../scripts/scripts.js';
+
 export default function decorate(block) {
   const blockClasses = [...block.classList];
   const buttons = document.createElement('div');
@@ -22,15 +24,51 @@ export default function decorate(block) {
         text.querySelector('h2 + h3 + p + p'), // course desc
       );
       const holeImg = overview.querySelector('picture');
-      if (holeImg) holeImg.classList.add('course-hole');
+      if (holeImg) holeImg.parentNode.classList.add('course-hole');
       // setup stats
-      const stats = document.createElement('div');
-      stats.classList.add('course-stats');
-      stats.append(
-        text.querySelector('h3'), // stats heading
-        text.querySelector('h3 + ul'), // stats list
+      const statistics = document.createElement('div');
+      statistics.classList.add('course-statistics');
+      statistics.append(
+        text.querySelector('h3'), // statistics heading
+        text.querySelector('h3 + ul'), // statistics list
       );
-      text.prepend(overview, stats);
+      const statsTable = document.createElement('table');
+      const allStats = statistics.querySelector('ul');
+      let stats = [];
+      if (allStats) stats = allStats.querySelectorAll('li');
+      stats.forEach((s) => {
+        const stat = s.querySelector('strong').textContent;
+        // setup scoring average ring
+        if (stat.toUpperCase() === 'SCORING AVG') {
+          const avg = document.createElement('div');
+          avg.classList.add('course-avg');
+          avg.innerHTML = `<p>${s.innerHTML}</p>`;
+          allStats.parentNode.insertBefore(avg, allStats);
+          s.remove();
+        } else {
+          const tableRow = document.createElement('tr');
+          tableRow.classList.add(`course-${toClassName(stat)}`);
+          const val = s.textContent.match(/(\d+)/)[0];
+
+          const bar = document.createElement('td');
+          bar.classList.add('course-stat-graph');
+          bar.innerHTML = `<div class="course-stat-bar" style="width: ${val}%"></div>`;
+
+          const percent = document.createElement('td');
+          percent.classList.add('course-stat-percent');
+          percent.innerHTML = `${val}%`;
+
+          const thisStat = document.createElement('td');
+          thisStat.classList.add('course-stat-title');
+          thisStat.innerHTML = s.querySelector('strong').textContent;
+
+          tableRow.append(bar, percent, thisStat);
+          statsTable.append(tableRow);
+        }
+      });
+      if (allStats && statsTable) allStats.replaceWith(statsTable);
+
+      text.prepend(overview, statistics);
       // setup photo credits
       const credits = text.querySelector('p > em');
       if (credits) credits.parentNode.classList.add('course-credits');
