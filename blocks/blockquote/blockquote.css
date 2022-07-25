@@ -1,0 +1,16 @@
+main .blockquote blockquote {
+  margin-left: 0;
+  margin-right: 0;
+  font-size: var(--body-font-size-xs);
+}
+
+main .blockquote blockquote q {
+  quotes: "“" "”" "‘" "’" ;
+  color: var(--color-blue);
+}
+
+@media (min-width: 700px) {
+  main .blockquote blockquote {
+    font-size: var(--body-font-size-s);
+  }
+}
