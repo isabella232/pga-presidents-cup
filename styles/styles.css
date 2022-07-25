@@ -488,3 +488,8 @@ main .section.teaser picture.section-background img {
     height: 100%;
   }
 }
+
+/* icons */
+.icon[class*=icon-flag-] svg {
+  fill: #000;
+}
