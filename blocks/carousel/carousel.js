@@ -48,7 +48,7 @@ export default function decorate(block) {
         } else {
           const tableRow = document.createElement('tr');
           tableRow.classList.add(`course-${toClassName(stat)}`);
-          const val = s.textContent.match(/(\d+)/)[0];
+          const val = parseInt(s.textContent.split(' ')[s.textContent.split(' ').length - 1], 10);
 
           const bar = document.createElement('td');
           bar.classList.add('course-stat-graph');
