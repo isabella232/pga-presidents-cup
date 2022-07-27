@@ -1,0 +1,45 @@
+main .table {
+  max-width: 100%;
+  overflow-x: auto;
+  color: var(--color-blue);
+  font-size: var(--body-font-size-xs);
+  line-height: 1.2;
+}
+
+main .table table, main .table th, main .table td {
+  border: 1px solid var(--color-gray-light);
+  padding: 10px;
+  vertical-align: middle;
+}
+
+main .table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+main .table th, main .table td {
+  border-left: 0;
+  border-right: 0;
+}
+
+main .table td.table-cell-num {
+  text-align: center;
+}
+
+main .table table tbody tr:nth-child(odd) {
+  background-color: var(--color-white);
+}
+
+main .table table tbody tr:nth-child(even) {
+  background-color: var(--background-color);
+}
+
+@media (min-width: 700px) {
+  main .table {
+    font-size: unset;
+  }
+
+  main .table table, main .table th, main .table td {
+    padding: 10px 20px;
+  }
+}
