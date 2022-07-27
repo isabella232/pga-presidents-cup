@@ -4,7 +4,7 @@ export default async function decorate(block) {
   const damPrefix = 'https://www.pgatour.com';
   const config = readBlockConfig(block);
   const galleryURL = config.source;
-  const limit = config.limit || 8;
+  const limit = config.limit || 12;
   const buttons = document.createElement('div');
   buttons.className = 'gallery-buttons';
   block.textContent = '';
