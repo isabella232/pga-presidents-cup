@@ -379,6 +379,7 @@ main .carousel.course div.course-text p {
     grid-area: description;
     box-sizing: border-box;
     overflow-y: auto;
+    max-height: 362px;
     padding-right: 8px;
   }
 }
