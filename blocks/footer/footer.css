@@ -117,7 +117,9 @@ footer .footer .footer-nav li {
 
 /* links */
 footer .footer .footer-links img {
+  width: auto;
   max-width: 130px;
+  height: auto;
   max-height: 60px;
 }
 
