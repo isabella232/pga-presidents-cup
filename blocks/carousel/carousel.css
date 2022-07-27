@@ -381,6 +381,7 @@ main .carousel.course div.course-text p {
     overflow-y: auto;
     max-height: 362px;
     padding-right: 8px;
+    font-size: var(--body-font-size-xs);
   }
 }
 
