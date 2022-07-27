@@ -41,7 +41,7 @@ export default async function decorate(block) {
   const button = block.querySelector('.button-container');
   let video = block.querySelector('.embed, .video');
 
-  // // transform content
+  // transform content
   const backgroundImg = transformBackgroundImage(background);
   const wrappedCredits = wrapCredits(credits);
   if (!video) video = buildVideoContent(block.querySelector('p > em'));

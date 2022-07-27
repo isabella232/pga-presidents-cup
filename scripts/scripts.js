@@ -744,7 +744,7 @@ async function buildAutoBlocks(main) {
     const playerFeature = main.querySelector('.player-feature');
     if (playerFeature) {
       const a = playerFeature.querySelector('a');
-      if (a && (a.textContent === playerFeature.textContent)) {
+      if (a && (a.textContent === playerFeature.textContent.trim())) {
         await populatePlayerFeature(playerFeature, a);
       }
     }
