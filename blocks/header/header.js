@@ -113,6 +113,11 @@ export default async function decorate(block) {
     decorateLinkedPictures(nav);
     block.append(nav);
 
+    // build status bar
+    const statusBar = document.createElement('div');
+    statusBar.className = 'status-bar';
+    block.parentNode.append(statusBar);
+
     await setupPartners(nav.querySelector('.nav-brand'));
   }
 }
