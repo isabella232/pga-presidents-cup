@@ -73,17 +73,20 @@ async function populateStatusBar(statusBar) {
     data.className = 'status-bar-data';
     // fetch status
     try {
-      const resp = await fetch('/status-bar.json');
-      const json = await resp.json();
-      const statusData = {};
-      json.data.forEach((d) => {
-        statusData[toCamelCase(d.Key)] = d.Value;
-      });
-      if (statusData.course) data.insertAdjacentHTML('beforeend', `<div class="status-bar-course"><p>${statusData.course}</p></div>`);
-      if (statusData.dates) data.insertAdjacentHTML('beforeend', `<div class="status-bar-dates"><p>${statusData.dates}</p></div>`);
+      if (!window.statusData) {
+        const resp = await fetch('/status-bar.json');
+        const json = await resp.json();
+        const statusData = {};
+        json.data.forEach((d) => {
+          statusData[toCamelCase(d.Key)] = d.Value;
+        });
+        window.statusData = statusData;
+      }
+      if (window.statusData.course) data.insertAdjacentHTML('beforeend', `<div class="status-bar-course"><p>${window.statusData.course}</p></div>`);
+      if (window.statusData.dates) data.insertAdjacentHTML('beforeend', `<div class="status-bar-dates"><p>${window.statusData.dates}</p></div>`);
       // setup countdown
-      if (statusData.countdown) {
-        window.countdown = new Date(statusData.countdown);
+      if (window.statusData.countdown) {
+        window.countdown = new Date(window.statusData.countdown);
         const countdownData = parseCountdown(findTimeBetween(window.countdown));
         const countdown = `<div class="status-bar-countdown">
           <p>
