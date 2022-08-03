@@ -278,10 +278,10 @@ export function readBlockConfig(block) {
 
 /**
  * Decorates all sections in a container element.
- * @param {Element} $main The container element
+ * @param {Element} main The container element
  */
-export function decorateSections($main) {
-  $main.querySelectorAll(':scope > div').forEach((section) => {
+export function decorateSections(main) {
+  main.querySelectorAll(':scope > div').forEach((section) => {
     const wrappers = [];
     let defaultContent = false;
     [...section.children].forEach((e) => {
@@ -698,23 +698,23 @@ async function populatePlayerFeature(block, link) {
   }
 }
 
-export function linkPicture($picture) {
-  const $nextSib = $picture.parentNode.nextElementSibling;
-  if ($nextSib) {
-    const $a = $nextSib.querySelector('a');
-    if ($a && $a.textContent.startsWith('https://')) {
-      $a.innerHTML = '';
-      $a.className = '';
-      $a.appendChild($picture);
+export function linkPicture(picture) {
+  const nextSib = picture.parentNode.nextElementSibling;
+  if (nextSib) {
+    const a = nextSib.querySelector('a');
+    if (a && a.textContent.startsWith('https://')) {
+      a.innerHTML = '';
+      a.className = '';
+      a.appendChild(picture);
     }
   }
 }
 
-export function decorateLinkedPictures($main) {
+export function decorateLinkedPictures(main) {
   /* thanks to word online */
-  $main.querySelectorAll('picture').forEach(($picture) => {
-    if (!$picture.closest('div.block')) {
-      linkPicture($picture);
+  main.querySelectorAll('picture').forEach((picture) => {
+    if (!picture.closest('div.block')) {
+      linkPicture(picture);
     }
   });
 }
