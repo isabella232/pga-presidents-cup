@@ -4,10 +4,6 @@ main .section.player-feature-container {
   padding: 0;
 }
 
-main .section.player-feature-container + div {
-  margin-top: 0;
-}
-
 main .player-feature-wrapper {
   box-sizing: border-box;
   position: relative;
