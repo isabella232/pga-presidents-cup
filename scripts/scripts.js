@@ -690,10 +690,10 @@ async function populatePlayerFeature(block, link) {
     feature.innerHTML = html;
     block.innerHTML = `<div>${feature.querySelector('div').outerHTML}</div>`;
     const video = block.querySelector('.embed, .video');
+    decorateButtons(block);
     if (video) {
       decorateBlock(video);
       await loadBlock(video);
-      decorateButtons(block);
     }
   }
 }
