@@ -1,10 +1,41 @@
-import { toClassName } from '../../scripts/scripts.js';
+import { toClassName, readBlockConfig } from '../../scripts/scripts.js';
 
-export default function decorate(block) {
+async function insertGallerySlides(block) {
+  const damPrefix = 'https://www.pgatour.com';
+  const config = readBlockConfig(block);
+  const galleryURL = config.source;
+  const limit = config.limit || 12;
+  block.innerHTML = '';
+
+  const directURL = `${galleryURL}&size=${limit}`;
+  const resp = await fetch(`https://little-forest-58aa.david8603.workers.dev/?url=${encodeURIComponent(directURL)}`);
+  const json = await resp.json();
+
+  json.items.forEach((photo) => {
+    const div = document.createElement('div');
+    div.innerHTML = `
+      <div class="gallery-image"><picture><img src="${damPrefix}${photo.image}" alt="${photo.description}"/ ></picture></div>
+      <div class="gallery-text">
+        <p class="gallery-text-title">Photo Gallery${config.title ? `: ${config.title}` : ''}</p>
+        ${photo.description ? `<p class="gallery-text-desc">${photo.description}</p>` : ''}
+        ${photo.credit ? `<p class="gallery-text-credit">Photo by <strong>${photo.credit}</strong></p>` : ''}
+      </div>
+    `;
+    block.append(div);
+  });
+}
+
+export default async function decorate(block) {
   const blockClasses = [...block.classList];
   const buttons = document.createElement('div');
   buttons.className = 'carousel-buttons';
   if (blockClasses.includes('course')) buttons.classList.add('course-buttons');
+  /* gallery carousel */
+  if (blockClasses.includes('gallery')) {
+    buttons.classList.add('gallery-buttons');
+    block.closest('.carousel-container').classList.add('gallery-container');
+    await insertGallerySlides(block);
+  }
   [...block.children].forEach((row, i) => {
     const classes = ['image', 'text'];
     classes.forEach((e, j) => {

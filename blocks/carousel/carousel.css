@@ -617,3 +617,84 @@ main .carousel-buttons.course-buttons button.selected {
     width: calc(100% - 300px - 32px);
   }
 }
+
+/* gallery carousel */
+main .carousel-container.gallery-container {
+  padding: 0 16px;
+}
+
+main .carousel {
+  font-family: var(--body-font-family);
+  text-transform: unset;
+}
+
+main .carousel.gallery picture {
+  aspect-ratio: 16 / 9;
+}
+
+main .carousel.gallery > div {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  height: unset;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 700px) {
+  main .carousel.gallery > div {
+    height: unset;
+  }
+}
+
+main .carousel.gallery div.gallery-image {
+  line-height: 0;
+  aspect-ratio: 16 / 9;
+}
+
+main .carousel.gallery div.gallery-text {
+  box-sizing: border-box;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 16px;
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  font-size: var(--body-font-size-xxs);
+}
+
+main .carousel.gallery div.gallery-text p {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+}
+
+main .carousel.gallery div.gallery-text p.gallery-text-title {
+  flex: 0 0 28px;
+  margin-bottom: 8px;
+  font-size: var(--heading-font-size-xs);
+}
+
+main .carousel.gallery div.gallery-text p.gallery-text-desc {
+  flex: 1 1 auto;
+  font-weight: bold;
+  overflow-y: auto;
+}
+
+main .carousel.gallery div.gallery-text p.gallery-text-credit {
+  flex: 0 0 20px;
+  margin-top: 16px;
+}
+
+@media (min-width: 900px) {
+  main .carousel.gallery div.gallery-text {
+    padding: 16px 32px;
+  }
+
+  main .carousel.gallery div.gallery-text p.gallery-text-desc {
+    font-size: var(--body-font-size-xs);
+  }
+}
