@@ -19,12 +19,12 @@ function buildDefaultVideo(id) {
   </div>`;
 }
 
-export default function decorate(block) {
+function loadVideo(block) {
   const status = block.getAttribute('data-video-status');
   // eslint-disable-next-line no-useless-return
   if (status === 'loaded') return;
 
-  const id = block.textContent;
+  const id = block.textContent.trim();
   if (id) {
     const video = buildDefaultVideo(id);
     block.innerHTML = video;
@@ -46,4 +46,17 @@ export default function decorate(block) {
 
     block.setAttribute('data-video-status', 'loaded');
   }
+}
+
+function intersectHandler(entries) {
+  const entry = entries[0];
+  if (entry.isIntersecting) {
+    const block = entry.target;
+    loadVideo(block);
+  }
+}
+
+export default function decorate(block) {
+  const observer = new IntersectionObserver(intersectHandler, { threshold: 0 });
+  observer.observe(block);
 }

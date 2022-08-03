@@ -10,7 +10,7 @@ function buildDefaultEmbed(url) {
   </div>`;
 }
 
-export default function decorate(block) {
+function loadEmbed(block) {
   const status = block.getAttribute('data-embed-status');
   // eslint-disable-next-line no-useless-return
   if (status === 'loaded') return;
@@ -28,4 +28,17 @@ export default function decorate(block) {
 
     block.setAttribute('data-embed-status', 'loaded');
   }
+}
+
+function intersectHandler(entries) {
+  const entry = entries[0];
+  if (entry.isIntersecting) {
+    const block = entry.target;
+    loadEmbed(block);
+  }
+}
+
+export default function decorate(block) {
+  const observer = new IntersectionObserver(intersectHandler, { threshold: 0 });
+  observer.observe(block);
 }
