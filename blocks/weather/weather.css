@@ -109,10 +109,6 @@ main .weather .weather-grid img {
 }
 
 @media (min-width: 900px) {
-  main .weather .weather-grid .icon svg {
-    height: 45px;
-  }
-  
   main .weather .weather-grid img {
     height: 80px;
   }
