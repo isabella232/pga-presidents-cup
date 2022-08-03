@@ -80,6 +80,7 @@ main .weather .weather-grid p {
 main .weather .weather-grid .weather-data {
   font-size: var(--heading-font-size-xl);
   line-height: 1;
+  letter-spacing: -4px;
 }
 
 @media (min-width: 900px) {
@@ -109,11 +110,17 @@ main .weather .weather-grid img {
 
 @media (min-width: 900px) {
   main .weather .weather-grid .icon svg {
-    height: 72px;
+    height: 45px;
   }
   
   main .weather .weather-grid img {
     height: 80px;
+  }
+}
+
+@media (min-width: 1200px) {
+  main .weather .weather-grid .icon svg {
+    height: 72px;
   }
 }
 
@@ -131,6 +138,7 @@ main .weather .weather-grid .weather-wind span:not(.icon) {
   padding-left: 4px;
   font-size: 25%;
   line-height: 1.2;
+  letter-spacing: initial;
   text-align: left;
 }
 
