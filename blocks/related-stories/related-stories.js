@@ -5,7 +5,7 @@ export default async function decorate(block) {
   const videoPrefix = 'https://pga-tour-res.cloudinary.com/image/upload/c_fill,f_auto,g_face,h_311,q_auto,w_425/v1/';
   const damPrefix = 'https://www.pgatour.com';
   const config = readBlockConfig(block);
-  const storiesURL = config.source;
+  const storiesURL = 'https://www.pgatour.com/bin/data/feeds/relatedcontent.json';
   const limit = config.limit || 5;
   block.innerHTML = '';
 

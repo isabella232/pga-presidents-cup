@@ -678,7 +678,26 @@ function buildHeroBlock(main) {
 
     section.append(buildBlock('hero', { elems }));
     main.prepend(section);
+    const sibling = section.nextElementSibling;
+    if (sibling) { // remove empty sibling if exists
+      if (!sibling.textContent.trim().length) sibling.remove();
+    }
   }
+}
+
+function buildRelatedStoriesBlock(main, tags) {
+  const FULL_WIDTH_BLOCKS = ['carousel', 'carousel course', 'hero', 'news', 'player-feature', 'teaser', 'weather'];
+  const sections = main.querySelectorAll(':scope > div');
+  let storiesSection = [...sections] // section WITHOUT full-width content
+    .find((section) => ![...section.children] // check section
+      .find((child) => FULL_WIDTH_BLOCKS.includes(child.className))); // check content in section
+  if (!storiesSection) { // if no section without full-wdith content, create one
+    storiesSection = document.createElement('div');
+    main.append(storiesSection);
+  } else {
+    storiesSection.classList.add('related-stories-cols');
+  }
+  storiesSection.append(buildBlock('related-stories', [['<div>Tags</div>', `<div>${tags}</div>`]]));
 }
 
 async function populatePlayerFeature(block, link) {
@@ -740,6 +759,9 @@ async function loadFooter(footer) {
 async function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
+
+    const relatedStories = getMetadata('related-stories');
+    if (relatedStories) buildRelatedStoriesBlock(main, relatedStories);
 
     const playerFeature = main.querySelector('.player-feature');
     if (playerFeature) {
@@ -812,6 +834,12 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.ico`);
+
+  const template = getMetadata('template');
+  if (template === 'past-champions') {
+    const pic = main.querySelector('.default-content-wrapper p picture');
+    if (pic) pic.parentNode.classList.add('past-champions-float');
+  }
 
   doc.querySelectorAll('div:not([class]):empty').forEach((empty) => empty.remove());
 }
