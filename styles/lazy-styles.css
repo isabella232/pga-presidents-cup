@@ -1,4 +1,50 @@
 /* below the fold CSS goes here */
-
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
+
+/* gigya */
+/* top bar */
+body .gigya-style-modern div.gigya-screen-dialog-top {
+  background-color: var(--color-blue);
+  padding: 16px 32px;
+}
+
+body .gigya-style-modern div.gigya-screen-dialog-caption {
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-m);
+  text-transform: uppercase;
+}
+
+/* close button */
+body .gigya-style-modern div.gigya-screen-dialog-close > a > img {
+  filter: brightness(2) grayscale(1);
+}
+
+body .gigya-style-modern div.gigya-screen-dialog-close > a > img:hover {
+  filter: brightness(1) grayscale(1);
+}
+
+/* body */
+body .gigya-screen, body .gigya-screen *, body .gigya-screen .gigya-label-text {
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+}
+
+body .gigya-screen.portrait {
+  padding: 32px;
+}
+
+/* links */
+body .gigya-screen a, body .gigya-screen a:active, 
+body .gigya-screen a:link, body .gigya-screen a:visited {
+  color: var(--link-color);
+}
+
+/* button */
+body .gigya-screen input[type=submit] {
+  background-color: var(--link-color);
+}
+
+body .gigya-screen input[type=submit]:hover {
+  background-color: var(--link-hover-color);
+}
