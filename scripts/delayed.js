@@ -11,7 +11,6 @@ function loadScript(url, callback, type) {
     script.onload = callback;
     return script;
   }
-  console.log('already loaded');
   return head.querySelector(`script[src="${url}"]`);
 }
 
