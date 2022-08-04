@@ -518,6 +518,9 @@ header nav[aria-expanded=true] .nav-user {
 }
 
 header nav .nav-user button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   width: 100%;
   height: 100%;
@@ -535,8 +538,42 @@ header nav .nav-user button[data-status=loading] {
   visibility: hidden;
 }
 
+header nav[aria-expanded=true] .nav-user button {
+  justify-content: flex-start;
+}
+
 header nav .nav-user button:hover {
   background-color: var(--color-blue);
+}
+
+header nav .nav-user button .icon.icon-caret {
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  width: 12px;
+  height: 24px;
+  margin-left: 8px;
+  padding: 0;
+}
+
+header nav .nav-user button .icon.icon-caret::after {
+  content: '';
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  top: 7px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+  transform: rotate(45deg);
+}
+
+header nav[aria-expanded=true] .nav-user button img,
+header nav[aria-expanded=true] .nav-user button .icon.icon-caret {
+  display: none;
+  visibility: hidden;
 }
 
 header nav .nav-user span {
@@ -550,12 +587,19 @@ header nav .nav-user span:hover {
   cursor: pointer;
 }
 
-header nav .nav-user .icon {
+header nav .nav-user .icon.icon-user {
   display: none;
   text-align: center;
 }
 
-header nav .nav-user .icon svg {
+header nav .nav-user button img {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+header nav .nav-user button img,
+header nav .nav-user .icon.icon-user svg {
   height: 24px;
   width: 24px;
 }
@@ -570,7 +614,7 @@ header nav .nav-user .icon svg {
     background-color: unset;
   }
 
-  header nav[aria-expanded=false] .nav-user .icon {
+  header nav[aria-expanded=false] .nav-user .icon.icon-user {
     display: block;
     position: absolute;
     top: 50%;
