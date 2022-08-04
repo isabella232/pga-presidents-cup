@@ -3,12 +3,16 @@ import { sampleRUM, toCamelCase } from './scripts.js';
 
 function loadScript(url, callback, type) {
   const head = document.querySelector('head');
-  const script = document.createElement('script');
-  script.src = url;
-  if (type) script.setAttribute('type', type);
-  head.append(script);
-  script.onload = callback;
-  return script;
+  if (!head.querySelector(`script[src="${url}"]`)) {
+    const script = document.createElement('script');
+    script.src = url;
+    if (type) script.setAttribute('type', type);
+    head.append(script);
+    script.onload = callback;
+    return script;
+  }
+  console.log('already loaded');
+  return head.querySelector(`script[src="${url}"]`);
 }
 
 // Core Web Vitals RUM collection
@@ -32,6 +36,84 @@ window.pgatour.docWrite = document.write.bind(document);
 
 loadScript('https://assets.adobedtm.com/d17bac9530d5/90b3c70cfef1/launch-1ca88359b76c.min.js');
 
+/* setup user authentication */
+function logUser(res) {
+  return res.user || null;
+}
+
+function getUserInfo() {
+  // eslint-disable-next-line no-undef
+  return gigya.socialize.getUserInfo({ callback: logUser });
+}
+
+function showAccountMenu() {
+// eslint-disable-next-line no-undef
+  // gigya.accounts.showScreenSet({
+  //   screenSet: 'Website-ManageProfile',
+  //   startScreen: 'info-for-converted-users',
+  // });
+}
+
+function showLoginMenu() {
+// eslint-disable-next-line no-undef
+  gigya.accounts.showScreenSet({
+    screenSet: 'Website-RegistrationLogin',
+    startScreen: 'gigya-long-login-screen',
+    // eslint-disable-next-line no-use-before-define
+    onAfterSubmit: updateUserButton,
+  });
+}
+
+function updateUserButton(user) {
+  // eslint-disable-next-line no-param-reassign
+  if (!user) user = getUserInfo();
+  // eslint-disable-next-line no-param-reassign
+  if (user.eventName === 'afterSubmit') user = user.response.user;
+  const button = document.getElementById('nav-user-button');
+  if (user != null && user.isConnected) {
+    // add button caret
+    button.innerHTML = `${button.innerHTML}<span class="icon icon-caret"></span>`;
+    // update button text
+    const text = button.querySelector('span:not([class])');
+    text.textContent = 'Manage Profile';
+    // update button icon
+    if (user.thumbnailURL.length > 0) {
+      const icon = button.querySelector('span.icon');
+      const img = document.createElement('img');
+      img.src = user.thumbnailURL;
+      img.alt = 'User Profile Thumbnail';
+      icon.replaceWith(img);
+    }
+    // reset click to open manage account
+    button.removeEventListener('click', showLoginMenu);
+    button.addEventListener('click', showAccountMenu);
+  }
+}
+
+function setupUserButton() {
+  const button = document.getElementById('nav-user-button');
+  if (button) {
+    const user = getUserInfo();
+    if (user && user != null && user.isConnected) {
+      updateUserButton(user);
+    } else {
+      // set click to open login menu
+      button.addEventListener('click', showLoginMenu);
+    }
+    button.setAttribute('data-status', 'initialized');
+  }
+}
+
+function initGigya() {
+  loadScript(
+    'https://cdns.gigya.com/JS/socialize.js?apikey=3__4H034SWkmoUfkZ_ikv8tqNIaTA0UIwoX5rsEk96Ebk5vkojWtKRZixx60tZZdob',
+    setupUserButton,
+  );
+}
+
+initGigya();
+
+/* status bar countdown and weather */
 function parseCountdown(ms) {
   const dayMs = 24 * 60 * 60 * 1000;
   const hourMs = 60 * 60 * 1000;
@@ -129,6 +211,7 @@ async function populateStatusBar(statusBar) {
 
 populateStatusBar(document.querySelector('header > .status-bar'));
 
+/* open external links in new tab */
 function updateExternalLinks() {
   document.querySelectorAll('a[href]').forEach((a) => {
     try {
