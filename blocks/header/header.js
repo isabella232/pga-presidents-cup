@@ -48,7 +48,9 @@ async function setupPartners(section) {
 function setupUser(section) {
   const icon = section.querySelector('.icon');
   const text = section.textContent.trim();
-  section.innerHTML = `${icon.outerHTML}<span>${text}</span>`;
+  section.innerHTML = `<button id="nav-user-button" class="nav-user-button" data-status="loading">
+      ${icon.outerHTML}<span>${text}</span>
+    </button>`;
 }
 
 /**
