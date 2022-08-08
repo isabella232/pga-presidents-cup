@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { sampleRUM, toCamelCase } from './scripts.js';
+import { decorateIcons, sampleRUM, toCamelCase } from './scripts.js';
 
 function loadScript(url, callback, type) {
   const head = document.querySelector('head');
@@ -36,21 +36,145 @@ window.pgatour.docWrite = document.write.bind(document);
 loadScript('https://assets.adobedtm.com/d17bac9530d5/90b3c70cfef1/launch-1ca88359b76c.min.js');
 
 /* setup user authentication */
-function logUser(res) {
-  return res.user || null;
+function returnUser(res) {
+  console.log('res:', res);
+  return res.user || res.profile || null;
 }
 
 function getUserInfo() {
   // eslint-disable-next-line no-undef
-  return gigya.socialize.getUserInfo({ callback: logUser });
+  return gigya.socialize.getUserInfo({ callback: returnUser });
+}
+
+function getAccountInfo() {
+  // eslint-disable-next-line no-undef
+  gigya.accounts.getAccountInfo({
+    include: 'subscriptions, profile, data, emails',
+    callback: returnUser,
+  });
+}
+
+function alphabetize(a, b) {
+  if (a.nameL.toUpperCase() < b.nameL.toUpperCase()) return -1;
+  if (a.nameL.toUpperCase() > b.nameL.toUpperCase()) return 1;
+  return 0;
+}
+
+async function loadPlayers() {
+  if (!window.players) {
+    const resp = await fetch('https://statdata.pgatour.com/players/player.json');
+    if (resp.ok) {
+      const { plrs } = await resp.json();
+      const players = {
+        byId: {},
+        r: [],
+        s: [],
+        h: [],
+      };
+      plrs.forEach((p) => {
+        if (!players.byId[p.pid]) {
+          players.byId[p.pid] = p;
+          // display in pga tour (R)
+          if (p.disR === 'y') players.r.push(p);
+          // display in champions tour (S)
+          if (p.disS === 'y') players.s.push(p);
+          // display in korn ferry tour (H)
+          if (p.disH === 'y') players.h.push(p);
+        }
+      });
+      players.r.sort(alphabetize);
+      players.s.sort(alphabetize);
+      players.h.sort(alphabetize);
+      window.players = players;
+    }
+  }
+  return window.players || {};
+}
+
+function removeFavoritePlayer(e) {
+  e.preventDefault();
+  const id = e.target.closest('div').getAttribute('data-id');
+  console.log('id:', id);
+}
+
+function updateSelectPlayer(select, tour, players) {
+  select.innerHTML = '';
+  const defaultOption = document.createElement('option');
+  defaultOption.disabled = true;
+  defaultOption.selected = true;
+  defaultOption.textContent = 'Select Player';
+  select.prepend(defaultOption);
+  players.forEach((player) => {
+    const option = document.createElement('option');
+    option.setAttribute('data-tour', tour);
+    option.setAttribute('value', player.pid);
+    option.textContent = `${player.nameL}, ${player.nameF}`;
+    select.append(option);
+  });
+}
+
+async function setupFavoritePlayersScreen(userData) {
+  const players = await loadPlayers();
+  const wrapper = document.createElement('div');
+  wrapper.className = 'gigya-your-favorites';
+  const h2 = document.querySelector('h2[data-translation-key="HEADER_53211634253006840_LABEL"]');
+  if (h2) h2.after(wrapper);
+  // setup user favorites
+  if (userData && userData.favorites) {
+    userData.favorites.forEach((favorite) => {
+      const player = players.byId[favorite.playerId];
+      const row = document.createElement('div');
+      row.setAttribute('data-tour', favorite.tourCode);
+      row.setAttribute('data-id', favorite.playerId);
+      row.innerHTML = `<p>${player.nameF} ${player.nameL}</p>
+        <button><span class="icon icon-close"></span></button>`;
+      const button = row.querySelector('button');
+      button.addEventListener('click', removeFavoritePlayer);
+      wrapper.append(row);
+    });
+  }
+  // setup add more
+  const tourDropdown = document.querySelector('select[name="data.tour"]');
+  const findPlayer = document.querySelector('input[name="data.findPlayer"]');
+  const selectPlayer = document.querySelector('select[name="data.players"]');
+
+  if (tourDropdown) {
+    tourDropdown.addEventListener('change', () => {
+      const { value } = tourDropdown;
+      findPlayer.setAttribute('data-filter', value);
+      selectPlayer.setAttribute('data-filter', value);
+      updateSelectPlayer(selectPlayer, value, players[value]);
+    });
+    updateSelectPlayer(selectPlayer, tourDropdown.value, players[tourDropdown.value]);
+  }
+  // typeahead
+  // if (findPlayer) {}
+  // full dropdown
+  // if (selectPlayer) {}
+}
+
+function setupAccountMenu(res) {
+  console.log('res from setup account:', res);
+  // setup favorite players
+  if (res.currentScreen === 'gigya-players-screen') {
+    setupFavoritePlayersScreen(res.data);
+  }
+  // setup logout
+  const logoutBtn = document.querySelector('a[href="javascript:pgatour.GigyaSocialize.logout()"]');
+  if (logoutBtn) {
+    logoutBtn.removeAttribute('href');
+    // eslint-disable-next-line no-use-before-define
+    logoutBtn.addEventListener('click', logout);
+    logoutBtn.style.cursor = 'pointer';
+  }
 }
 
 function showAccountMenu() {
-// eslint-disable-next-line no-undef
-  // gigya.accounts.showScreenSet({
-  //   screenSet: 'Website-ManageProfile',
-  //   startScreen: 'info-for-converted-users',
-  // });
+  // eslint-disable-next-line no-undef
+  gigya.accounts.showScreenSet({
+    screenSet: 'Website-ManageProfile',
+    onAfterScreenLoad: setupAccountMenu,
+  });
 }
 
 function showLoginMenu() {
@@ -64,8 +188,9 @@ function showLoginMenu() {
 }
 
 function updateUserButton(user) {
+  console.log('user in update user button:', user);
   // eslint-disable-next-line no-param-reassign
-  if (!user) user = getUserInfo();
+  if (!user) user = getAccountInfo();
   // eslint-disable-next-line no-param-reassign
   if (user.eventName === 'afterSubmit') user = user.response.user;
   const button = document.getElementById('nav-user-button');
@@ -89,11 +214,42 @@ function updateUserButton(user) {
   }
 }
 
+function clearUserButton() {
+  const button = document.getElementById('nav-user-button');
+  if (button) {
+    // remove caret
+    button.querySelector('.icon.icon-caret').remove();
+    // update button text
+    const text = button.querySelector('span:not([class])');
+    text.textContent = 'Login/Register';
+    // update button icon
+    const img = button.querySelector('img');
+    if (img) {
+      const icon = document.createElement('span');
+      icon.classList.add('icon', 'icon-user');
+      img.replaceWith(icon);
+      decorateIcons(button);
+    }
+    // reset click to open login menu
+    button.removeEventListener('click', showAccountMenu);
+    button.addEventListener('click', showLoginMenu);
+  }
+}
+
+function logout() {
+  // eslint-disable-next-line no-undef
+  gigya.accounts.hideScreenSet({ screenSet: 'Website-ManageProfile' });
+  // eslint-disable-next-line no-undef
+  gigya.socialize.logout({ callback: clearUserButton });
+}
+
 function setupUserButton() {
   const button = document.getElementById('nav-user-button');
   if (button) {
-    const user = getUserInfo();
-    if (user && user != null && user.isConnected) {
+    const account = getAccountInfo();
+    if (account && account != null && account.errorCode === 0) {
+      const user = account.profile;
+      user.isConnected = true;
       updateUserButton(user);
     } else {
       // set click to open login menu
@@ -103,10 +259,19 @@ function setupUserButton() {
   }
 }
 
+function setupGigya() {
+  // eslint-disable-next-line no-undef
+  gigya.socialize.addEventHandlers({
+    onConnectionAdded: setupUserButton,
+    onConnectionRemoved: setupUserButton,
+  });
+  setupUserButton();
+}
+
 function initGigya() {
   loadScript(
     'https://cdns.gigya.com/JS/socialize.js?apikey=3__4H034SWkmoUfkZ_ikv8tqNIaTA0UIwoX5rsEk96Ebk5vkojWtKRZixx60tZZdob',
-    setupUserButton,
+    setupGigya,
   );
 }
 

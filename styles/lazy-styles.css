@@ -2,6 +2,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
 
+/* icons */
+.icon.icon-close {
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  width: 22px;
+  height: 22px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  color: var(--color-white);
+}
+
+.icon.icon-close::after,
+.icon.icon-close::before {
+  content: '';
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  top: 8px;
+  left: 1px;
+  transform: rotate(45deg);
+  width: 16px;
+  height: 2px;
+  background: currentColor;
+}
+
+.icon.icon-close::after {
+  transform: rotate(-45deg)
+}
+
 /* gigya */
 /* top bar */
 body .gigya-style-modern div.gigya-screen-dialog-top {
@@ -41,10 +71,42 @@ body .gigya-screen a:link, body .gigya-screen a:visited {
 }
 
 /* button */
-body .gigya-screen input[type=submit] {
+body .gigya-screen input[type=submit],
+body .gigya-screen input[type=button] {
   background-color: var(--link-color);
+  text-transform: uppercase;
 }
 
+body .gigya-screen input[type=button]:hover,
 body .gigya-screen input[type=submit]:hover {
   background-color: var(--link-hover-color);
+}
+
+/* favorite players */
+body .gigya-your-favorites > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 4px 4px 8px;
+  background-color: var(--background-color);
+}
+
+body .gigya-your-favorites > div:not(:last-of-type) {
+  margin-bottom: 4px;
+}
+
+body .gigya-your-favorites > div p {
+  flex: 1 0;
+  justify-self: start;
+}
+
+body .gigya-your-favorites > div button {
+  height: 30px;
+  width: 30px;
+  border-radius: 1.79px;
+  background-color: var(--color-tan);
+}
+
+body .gigya-your-favorites > div button:hover {
+  filter: brightness(.85);
 }
