@@ -147,6 +147,8 @@ function setupAccountMenu(res) {
 
 /* setup user authentication */
 function showAccountMenu() {
+  console.log('LOG: > showAccountMenu > showAccountMenu running');
+
   // eslint-disable-next-line no-undef
   gigya.accounts.showScreenSet({
     screenSet: 'Website-ManageProfile',
@@ -155,7 +157,9 @@ function showAccountMenu() {
 }
 
 function showLoginMenu() {
-// eslint-disable-next-line no-undef
+  console.log('LOG: > showLoginMenu > showLoginMenu running');
+
+  // eslint-disable-next-line no-undef
   gigya.accounts.showScreenSet({
     screenSet: 'Website-RegistrationLogin',
     startScreen: 'gigya-long-login-screen',
@@ -165,6 +169,8 @@ function showLoginMenu() {
 }
 
 function updateUserButton(user) {
+  console.log('      LOG: > updateUserButton running > user', user);
+
   // eslint-disable-next-line no-param-reassign
   if (user.eventName === 'afterSubmit') user = user.response.user;
   const button = document.getElementById('nav-user-button');
@@ -189,6 +195,8 @@ function updateUserButton(user) {
 }
 
 function clearUserButton() {
+  console.log('LOG: > clearUserButton > clearUserButton running');
+
   const button = document.getElementById('nav-user-button');
   if (button) {
     // remove caret
@@ -211,6 +219,8 @@ function clearUserButton() {
 }
 
 function logout() {
+  console.log('LOG: > logout > logout running');
+
   // eslint-disable-next-line no-undef
   gigya.accounts.hideScreenSet({ screenSet: 'Website-ManageProfile' });
   // eslint-disable-next-line no-undef
@@ -218,6 +228,8 @@ function logout() {
 }
 
 function setupUserButton(res) {
+  console.log('    LOG: > setupUserButton running > res', res);
+
   const button = document.getElementById('nav-user-button');
   if (button) {
     if (res && res != null && res.errorCode === 0) { // user is logged in
@@ -233,11 +245,15 @@ function setupUserButton(res) {
 }
 
 function setupGigya() {
+  console.log('  LOG: > setupGigya > setupGigya running');
+
   // eslint-disable-next-line no-undef
   gigya.accounts.getAccountInfo({ callback: setupUserButton });
 }
 
 function initGigya() {
+  console.log('LOG: > initGigya > initGigya running');
+
   loadScript(
     'https://cdns.gigya.com/JS/socialize.js?apikey=3__4H034SWkmoUfkZ_ikv8tqNIaTA0UIwoX5rsEk96Ebk5vkojWtKRZixx60tZZdob',
     setupGigya,
