@@ -241,10 +241,12 @@ function setupUserButton() {
     getAccountInfo();
     const account = window.pgatour.user;
     if (account && account != null && account.errorCode === 0) {
+      console.log('valid account:', account);
       const user = account.profile;
       user.isConnected = true;
       updateUserButton(user);
     } else {
+      console.log('invalid account:', account);
       // set click to open login menu
       button.addEventListener('click', showLoginMenu);
     }
