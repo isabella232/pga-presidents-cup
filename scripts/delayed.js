@@ -37,13 +37,19 @@ loadScript('https://assets.adobedtm.com/d17bac9530d5/90b3c70cfef1/launch-1ca8835
 
 /* setup user authentication */
 function returnUser(res) {
-  if (res && res != null && res.errorCode === 0) window.pgatour.user = res;
+  console.log('LOG: > returnUser > res', res);
+  window.pgatour.user = res.profile;
   return res.profile || null;
 }
 
-async function getAccountInfo() {
+/* function getUserInfo() {
   // eslint-disable-next-line no-undef
-  await gigya.accounts.getAccountInfo({
+  return gigya.socialize.getUserInfo({ callback: returnUser });
+} */
+
+function getAccountInfo() {
+  // eslint-disable-next-line no-undef
+  return gigya.accounts.getAccountInfo({
     include: 'subscriptions, profile, data, emails',
     callback: returnUser,
   });
@@ -133,7 +139,7 @@ async function setupFavoritePlayersScreen(userData) {
   const findPlayer = document.querySelector('input[name="data.findPlayer"]');
   const selectPlayer = document.querySelector('select[name="data.players"]');
 
-  if (tourDropdown && findPlayer && selectPlayer) {
+  if (tourDropdown) {
     tourDropdown.addEventListener('change', () => {
       const { value } = tourDropdown;
       findPlayer.setAttribute('data-filter', value);
@@ -142,6 +148,10 @@ async function setupFavoritePlayersScreen(userData) {
     });
     updateSelectPlayer(selectPlayer, tourDropdown.value, players[tourDropdown.value]);
   }
+  // typeahead
+  // if (findPlayer) {}
+  // full dropdown
+  // if (selectPlayer) {}
 }
 
 function setupAccountMenu(res) {
@@ -230,23 +240,25 @@ function clearUserButton() {
 function logout() {
   // eslint-disable-next-line no-undef
   gigya.accounts.hideScreenSet({ screenSet: 'Website-ManageProfile' });
-  window.pgatour.user = null;
   // eslint-disable-next-line no-undef
   gigya.socialize.logout({ callback: clearUserButton });
 }
 
-async function setupUserButton() {
+function setupUserButton() {
   const button = document.getElementById('nav-user-button');
   if (button) {
-    await getAccountInfo();
-    const account = window.pgatour.user;
+    // eslint-disable-next-line no-undef
+    const account = gigya.accounts.getAccountInfo({
+      include: 'subscriptions, profile, data, emails',
+      callback: returnUser,
+    });
+    console.log('LOG: > setupUserButton > account', account);
+
     if (account && account != null && account.errorCode === 0) {
-      console.log('valid account:', account);
       const user = account.profile;
       user.isConnected = true;
       updateUserButton(user);
     } else {
-      console.log('invalid account:', account);
       // set click to open login menu
       button.addEventListener('click', showLoginMenu);
     }
@@ -256,10 +268,16 @@ async function setupUserButton() {
 
 function setupGigya() {
   // eslint-disable-next-line no-undef
-  gigya.socialize.addEventHandlers({
-    onConnectionAdded: setupUserButton,
-    onConnectionRemoved: setupUserButton,
+  gigya.accounts.addEventHandlers({
+    onLogin: getAccountInfo,
+    onLogout: logout,
   });
+  // eslint-disable-next-line no-undef
+  gigya.socialize.addEventHandlers({
+    onConnectionAdded: getAccountInfo,
+    onConnectionRemoved: logout,
+  });
+  console.log('window.pgatour.user:', window.pgatour.user);
   setupUserButton();
 }
 
