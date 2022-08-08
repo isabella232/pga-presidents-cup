@@ -38,7 +38,7 @@ loadScript('https://assets.adobedtm.com/d17bac9530d5/90b3c70cfef1/launch-1ca8835
 /* setup user authentication */
 function returnUser(res) {
   console.log('res:', res);
-  return res.user || res.profile || null;
+  return res.profile || null;
 }
 
 function getUserInfo() {
