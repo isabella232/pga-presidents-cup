@@ -41,9 +41,9 @@ function returnUser(res) {
   return res.profile || null;
 }
 
-function getAccountInfo() {
+async function getAccountInfo() {
   // eslint-disable-next-line no-undef
-  gigya.accounts.getAccountInfo({
+  await gigya.accounts.getAccountInfo({
     include: 'subscriptions, profile, data, emails',
     callback: returnUser,
   });
@@ -235,10 +235,10 @@ function logout() {
   gigya.socialize.logout({ callback: clearUserButton });
 }
 
-function setupUserButton() {
+async function setupUserButton() {
   const button = document.getElementById('nav-user-button');
   if (button) {
-    getAccountInfo();
+    await getAccountInfo();
     const account = window.pgatour.user;
     if (account && account != null && account.errorCode === 0) {
       console.log('valid account:', account);
