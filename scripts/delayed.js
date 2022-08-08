@@ -37,13 +37,8 @@ loadScript('https://assets.adobedtm.com/d17bac9530d5/90b3c70cfef1/launch-1ca8835
 
 /* setup user authentication */
 function returnUser(res) {
-  console.log('res:', res);
+  if (res && res != null && res.errorCode === 0) window.pgatour.user = res;
   return res.profile || null;
-}
-
-function getUserInfo() {
-  // eslint-disable-next-line no-undef
-  return gigya.socialize.getUserInfo({ callback: returnUser });
 }
 
 function getAccountInfo() {
@@ -235,6 +230,7 @@ function clearUserButton() {
 function logout() {
   // eslint-disable-next-line no-undef
   gigya.accounts.hideScreenSet({ screenSet: 'Website-ManageProfile' });
+  window.pgatour.user = null;
   // eslint-disable-next-line no-undef
   gigya.socialize.logout({ callback: clearUserButton });
 }
@@ -242,8 +238,8 @@ function logout() {
 function setupUserButton() {
   const button = document.getElementById('nav-user-button');
   if (button) {
-    const account = getAccountInfo();
-    console.log('account in SETUP:', account);
+    getAccountInfo();
+    const account = window.pgatour.user;
     if (account && account != null && account.errorCode === 0) {
       const user = account.profile;
       user.isConnected = true;
