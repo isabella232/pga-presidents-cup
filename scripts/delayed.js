@@ -94,7 +94,7 @@ async function loadPlayers() {
 function removeFavoritePlayer(e) {
   e.preventDefault();
   const id = e.target.closest('div').getAttribute('data-id');
-  console.log('id:', id);
+  // console.log('remove pid:', id);
 }
 
 function updateSelectPlayer(select, tour, players) {
@@ -138,7 +138,7 @@ async function setupFavoritePlayersScreen(userData) {
   const findPlayer = document.querySelector('input[name="data.findPlayer"]');
   const selectPlayer = document.querySelector('select[name="data.players"]');
 
-  if (tourDropdown) {
+  if (tourDropdown && findPlayer && selectPlayer) {
     tourDropdown.addEventListener('change', () => {
       const { value } = tourDropdown;
       findPlayer.setAttribute('data-filter', value);
@@ -147,10 +147,6 @@ async function setupFavoritePlayersScreen(userData) {
     });
     updateSelectPlayer(selectPlayer, tourDropdown.value, players[tourDropdown.value]);
   }
-  // typeahead
-  // if (findPlayer) {}
-  // full dropdown
-  // if (selectPlayer) {}
 }
 
 function setupAccountMenu(res) {
@@ -247,6 +243,7 @@ function setupUserButton() {
   const button = document.getElementById('nav-user-button');
   if (button) {
     const account = getAccountInfo();
+    console.log('account in SETUP:', account);
     if (account && account != null && account.errorCode === 0) {
       const user = account.profile;
       user.isConnected = true;
