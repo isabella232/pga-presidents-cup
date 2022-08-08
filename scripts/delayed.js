@@ -35,26 +35,7 @@ window.pgatour.docWrite = document.write.bind(document);
 
 loadScript('https://assets.adobedtm.com/d17bac9530d5/90b3c70cfef1/launch-1ca88359b76c.min.js');
 
-/* setup user authentication */
-function returnUser(res) {
-  console.log('LOG: > returnUser > res', res);
-  window.pgatour.user = res.profile;
-  return res.profile || null;
-}
-
-/* function getUserInfo() {
-  // eslint-disable-next-line no-undef
-  return gigya.socialize.getUserInfo({ callback: returnUser });
-} */
-
-function getAccountInfo() {
-  // eslint-disable-next-line no-undef
-  return gigya.accounts.getAccountInfo({
-    include: 'subscriptions, profile, data, emails',
-    callback: returnUser,
-  });
-}
-
+/* setup favorite players */
 function alphabetize(a, b) {
   if (a.nameL.toUpperCase() < b.nameL.toUpperCase()) return -1;
   if (a.nameL.toUpperCase() > b.nameL.toUpperCase()) return 1;
@@ -116,11 +97,11 @@ function updateSelectPlayer(select, tour, players) {
 
 async function setupFavoritePlayersScreen(userData) {
   const players = await loadPlayers();
+  // setup user favorites
   const wrapper = document.createElement('div');
   wrapper.className = 'gigya-your-favorites';
   const h2 = document.querySelector('h2[data-translation-key="HEADER_53211634253006840_LABEL"]');
   if (h2) h2.after(wrapper);
-  // setup user favorites
   if (userData && userData.favorites) {
     userData.favorites.forEach((favorite) => {
       const player = players.byId[favorite.playerId];
@@ -138,8 +119,7 @@ async function setupFavoritePlayersScreen(userData) {
   const tourDropdown = document.querySelector('select[name="data.tour"]');
   const findPlayer = document.querySelector('input[name="data.findPlayer"]');
   const selectPlayer = document.querySelector('select[name="data.players"]');
-
-  if (tourDropdown) {
+  if (tourDropdown && findPlayer && selectPlayer) {
     tourDropdown.addEventListener('change', () => {
       const { value } = tourDropdown;
       findPlayer.setAttribute('data-filter', value);
@@ -148,14 +128,9 @@ async function setupFavoritePlayersScreen(userData) {
     });
     updateSelectPlayer(selectPlayer, tourDropdown.value, players[tourDropdown.value]);
   }
-  // typeahead
-  // if (findPlayer) {}
-  // full dropdown
-  // if (selectPlayer) {}
 }
 
 function setupAccountMenu(res) {
-  console.log('res from setup account:', res);
   // setup favorite players
   if (res.currentScreen === 'gigya-players-screen') {
     setupFavoritePlayersScreen(res.data);
@@ -170,6 +145,7 @@ function setupAccountMenu(res) {
   }
 }
 
+/* setup user authentication */
 function showAccountMenu() {
   // eslint-disable-next-line no-undef
   gigya.accounts.showScreenSet({
@@ -189,13 +165,10 @@ function showLoginMenu() {
 }
 
 function updateUserButton(user) {
-  console.log('user in update user button:', user);
-  // eslint-disable-next-line no-param-reassign
-  if (!user) user = getAccountInfo();
   // eslint-disable-next-line no-param-reassign
   if (user.eventName === 'afterSubmit') user = user.response.user;
   const button = document.getElementById('nav-user-button');
-  if (user != null && user.isConnected) {
+  if (user && user != null && user.isConnected) {
     // add button caret
     button.innerHTML = `${button.innerHTML}<span class="icon icon-caret"></span>`;
     // update button text
@@ -244,18 +217,11 @@ function logout() {
   gigya.socialize.logout({ callback: clearUserButton });
 }
 
-function setupUserButton() {
+function setupUserButton(res) {
   const button = document.getElementById('nav-user-button');
   if (button) {
-    // eslint-disable-next-line no-undef
-    const account = gigya.accounts.getAccountInfo({
-      include: 'subscriptions, profile, data, emails',
-      callback: returnUser,
-    });
-    console.log('LOG: > setupUserButton > account', account);
-
-    if (account && account != null && account.errorCode === 0) {
-      const user = account.profile;
+    if (res && res != null && res.errorCode === 0) { // user is logged in
+      const user = res.profile;
       user.isConnected = true;
       updateUserButton(user);
     } else {
@@ -268,17 +234,7 @@ function setupUserButton() {
 
 function setupGigya() {
   // eslint-disable-next-line no-undef
-  gigya.accounts.addEventHandlers({
-    onLogin: getAccountInfo,
-    onLogout: logout,
-  });
-  // eslint-disable-next-line no-undef
-  gigya.socialize.addEventHandlers({
-    onConnectionAdded: getAccountInfo,
-    onConnectionRemoved: logout,
-  });
-  console.log('window.pgatour.user:', window.pgatour.user);
-  setupUserButton();
+  gigya.accounts.getAccountInfo({ callback: setupUserButton });
 }
 
 function initGigya() {
