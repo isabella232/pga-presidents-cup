@@ -1,13 +1,12 @@
 // eslint-disable-next-line import/no-cycle
 import { decorateIcons, sampleRUM, toCamelCase } from './scripts.js';
 
-function loadScript(url, callback, type, attr) {
+function loadScript(url, callback, type) {
   const head = document.querySelector('head');
   if (!head.querySelector(`script[src="${url}"]`)) {
     const script = document.createElement('script');
     script.src = url;
     if (type) script.setAttribute('type', type);
-    if (attr) script.setAttribute(Object.keys(attr)[0], attr[Object.keys(attr)[0]]);
     head.append(script);
     script.onload = callback;
     return script;
@@ -373,12 +372,8 @@ async function populateStatusBar(statusBar) {
 populateStatusBar(document.querySelector('header > .status-bar'));
 
 /* setup cookie preferences */
-loadScript(
-  'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js',
-  null,
-  null,
-  { 'data-domain-script': '262c6c79-a114-41f0-9c07-52cb1fb7390c' },
-);
+const cookieScript = loadScript('https://cdn.cookielaw.org/scripttemplates/otSDKStub.js');
+cookieScript.setAttribute('data-domain-script', '262c6c79-a114-41f0-9c07-52cb1fb7390c');
 
 /* open external links in new tab */
 function updateExternalLinks() {
