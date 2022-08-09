@@ -228,7 +228,7 @@ function logout() {
 }
 
 function setupUserButton(res) {
-  console.log('    LOG: > setupUserButton running > res', res);
+  console.log('      LOG: > setupUserButton running > res', res);
 
   const button = document.getElementById('nav-user-button');
   if (button) {
@@ -244,11 +244,22 @@ function setupUserButton(res) {
   }
 }
 
+function checkIfLoggedIn(res) {
+  console.log('    LOG: > checkIfLoggedIn running > res', res);
+
+  if (res && res != null && res.errorCode === 0) { // user is logged in
+    // eslint-disable-next-line no-undef
+    gigya.accounts.getAccountInfo({ callback: setupUserButton });
+  } else {
+    setupUserButton();
+  }
+}
+
 function setupGigya() {
-  console.log('  LOG: > setupGigya > setupGigya running');
+  console.log('  LOG: > setupGigya running');
 
   // eslint-disable-next-line no-undef
-  gigya.accounts.getAccountInfo({ callback: setupUserButton });
+  gigya.accounts.session.verify({ callback: checkIfLoggedIn });
 }
 
 function initGigya() {
