@@ -118,6 +118,7 @@ body #onetrust-pc-sdk :not(.ot-leg-btn-container) > button {
   background-color: var(--link-color);
   font-size: var(--body-font-size-xs);
   font-weight: normal;
+  letter-spacing: normal;
 }
 
 body #onetrust-consent-sdk #onetrust-pc-sdk button:not(#clear-filters-handler):not(.ot-close-icon):not(#filter-btn-handler):not(.ot-remove-objection-handler):not(.ot-obj-leg-btn-handler):hover,
