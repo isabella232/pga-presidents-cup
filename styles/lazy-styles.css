@@ -110,3 +110,19 @@ body .gigya-your-favorites > div button {
 body .gigya-your-favorites > div button:hover {
   filter: brightness(.85);
 }
+
+/* one trust */
+body #onetrust-consent-sdk #onetrust-pc-sdk button:not(#clear-filters-handler):not(.ot-close-icon):not(#filter-btn-handler):not(.ot-remove-objection-handler):not(.ot-obj-leg-btn-handler),
+body #onetrust-consent-sdk #onetrust-pc-sdk .ot-leg-btn-container .ot-active-leg-btn,
+body #onetrust-pc-sdk :not(.ot-leg-btn-container) > button {
+  background-color: var(--link-color);
+  font-size: var(--body-font-size-xs);
+  font-weight: normal;
+}
+
+body #onetrust-consent-sdk #onetrust-pc-sdk button:not(#clear-filters-handler):not(.ot-close-icon):not(#filter-btn-handler):not(.ot-remove-objection-handler):not(.ot-obj-leg-btn-handler):hover,
+body #onetrust-consent-sdk #onetrust-pc-sdk .ot-leg-btn-container .ot-active-leg-btn:hover,
+body #onetrust-pc-sdk :not(.ot-leg-btn-container) > button:hover {
+  opacity: 1;
+  background-color: var(--link-hover-color);
+}

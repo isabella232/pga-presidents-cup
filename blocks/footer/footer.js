@@ -12,7 +12,8 @@ function setupCookieChoices(section) {
   const cookieLink = section.querySelector('a[href*="onetrust-link"]');
   if (cookieLink) {
     cookieLink.removeAttribute('href');
-    cookieLink.id = 'onetrust-link';
+    cookieLink.className = 'ot-sdk-show-settings';
+    cookieLink.parentNode.className = 'onetrust-link';
   }
 }
 
@@ -32,7 +33,7 @@ async function setupPartners(section) {
     const partner = document.createElement('div');
     partner.className = 'footer-partner';
     const link = document.createElement('a');
-    link.href = sponsor.link || sponsor.path; // TODO: fix with metadata link
+    link.href = sponsor.link;
     link.append(createOptimizedPicture(sponsor.image, sponsor.title, false, [{ width: '300' }]));
     partner.append(link);
     wrapper.append(partner);
