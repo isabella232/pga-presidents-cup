@@ -147,8 +147,6 @@ function setupAccountMenu(res) {
 
 /* setup user authentication */
 function showAccountMenu() {
-  console.log('LOG: > showAccountMenu running');
-
   // eslint-disable-next-line no-undef
   gigya.accounts.showScreenSet({
     screenSet: 'Website-ManageProfile',
@@ -157,8 +155,6 @@ function showAccountMenu() {
 }
 
 function showLoginMenu() {
-  console.log('LOG: > showLoginMenu running');
-
   // eslint-disable-next-line no-undef
   gigya.accounts.showScreenSet({
     screenSet: 'Website-RegistrationLogin',
@@ -169,8 +165,6 @@ function showLoginMenu() {
 }
 
 function updateUserButton(user) {
-  console.log('      LOG: > updateUserButton running > user:', user);
-
   // eslint-disable-next-line no-param-reassign
   if (user.eventName === 'afterSubmit') user = user.response.user;
   const button = document.getElementById('nav-user-button');
@@ -195,8 +189,6 @@ function updateUserButton(user) {
 }
 
 function clearUserButton() {
-  console.log('LOG: > clearUserButton running');
-
   const button = document.getElementById('nav-user-button');
   if (button) {
     // remove caret
@@ -219,8 +211,6 @@ function clearUserButton() {
 }
 
 function logout() {
-  console.log('LOG: > logout running');
-
   // eslint-disable-next-line no-undef
   gigya.accounts.hideScreenSet({ screenSet: 'Website-ManageProfile' });
   // eslint-disable-next-line no-undef
@@ -228,8 +218,6 @@ function logout() {
 }
 
 function setupUserButton(res) {
-  console.log('      LOG: > setupUserButton running > res:', res);
-
   const button = document.getElementById('nav-user-button');
   if (button) {
     if (res && res != null && res.errorCode === 0) { // user is logged in
@@ -245,8 +233,6 @@ function setupUserButton(res) {
 }
 
 function checkIfLoggedIn(res) {
-  console.log('    LOG: > checkIfLoggedIn running > res:', res);
-
   if (res && res != null && res.errorCode === 0) { // user is logged in
     // eslint-disable-next-line no-undef
     gigya.accounts.getAccountInfo({ callback: setupUserButton });
@@ -256,15 +242,11 @@ function checkIfLoggedIn(res) {
 }
 
 function setupGigya() {
-  console.log('  LOG: > setupGigya running');
-
   // eslint-disable-next-line no-undef
   gigya.accounts.session.verify({ callback: checkIfLoggedIn });
 }
 
 function initGigya() {
-  console.log('LOG: > initGigya running');
-
   loadScript(
     'https://cdns.gigya.com/JS/socialize.js?apikey=3__4H034SWkmoUfkZ_ikv8tqNIaTA0UIwoX5rsEk96Ebk5vkojWtKRZixx60tZZdob',
     setupGigya,
