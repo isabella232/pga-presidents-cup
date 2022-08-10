@@ -482,5 +482,119 @@ main .section.teaser picture.section-background img {
 
 /* icons */
 .icon[class*=icon-flag-] svg {
-  fill: #000;
+  fill: #000; 
+  box-shadow: 0 0 2px #0002;
+}
+
+.icon, .icon::after, .icon::before {
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+}
+
+.icon::after, .icon::before {
+  position: absolute;
+}
+
+.icon.icon-plus, .icon.icon-minus {
+  width: 15px;
+  height: 15px;
+  border: 1px solid;
+  border-radius: 50%;
+}
+
+.icon.icon-plus::after,
+.icon.icon-plus::before,
+.icon.icon-minus::before {
+  top: 6px;
+  left: 2px;
+  width: 9px;
+  height: 1px;
+  background: currentColor;
+  content: '';
+}
+
+.icon.icon-plus::after {
+  width: 1px;
+  height: 9px;
+  top: 2px;
+  left: 6px;
+}
+
+.icon.icon-up, .icon.icon-down {
+  width: 10px;
+  height: 10px;
+}
+
+.icon.icon-up::after,
+.icon.icon-up::before,
+.icon.icon-down::after,
+.icon.icon-down::before {
+  content: '';
+}
+
+.icon.icon-up::after,
+.icon.icon-up::before {
+  bottom: 0;
+}
+
+.icon.icon-down::after,
+.icon.icon-down::before {
+  top: 0;
+}
+
+.icon.icon-up::after {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 6px;
+  height: 6px;
+  border-top: 3px solid;
+  border-left: 3px solid;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+}
+
+.icon.icon-down::after {
+  top: unset;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 6px;
+  height: 6px;
+  border-top: 3px solid transparent;
+  border-left: 3px solid transparent;
+  border-right: 3px solid;
+  border-bottom: 3px solid;
+}
+
+.icon.icon-up::before, .icon.icon-down::before {
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 8px;
+  background: currentColor;
+}
+
+.icon.icon-close {
+  width: 22px;
+  height: 22px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  color: var(--color-white);
+}
+
+.icon.icon-close::after,
+.icon.icon-close::before {
+  content: '';
+  top: 8px;
+  left: 1px;
+  transform: rotate(45deg);
+  width: 16px;
+  height: 2px;
+  background: currentColor;
+}
+
+.icon.icon-close::after {
+  transform: rotate(-45deg)
 }
