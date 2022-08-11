@@ -103,7 +103,7 @@ async function populateLeaderboard() {
           const scorecard = document.createElement('a');
           scorecard.className = 'button primary';
           scorecard.textContent = 'View full scorecard';
-          scorecard.href = `https://www.pgatour.com/players/player.${player.player_id}.${bio.first_name}-${bio.last_name}.html/scorecards/${json.tournament_id}`.toLowerCase();
+          scorecard.href = `https://www.pgatour.com/players/player.${player.player_id}.${bio.first_name}-${bio.last_name}.html/scorecards/${json.leaderboard.tournament_id}`.toLowerCase();
           buttons.prepend(scorecard);
           decorateIcons(leader);
           leader.append(buttons);
@@ -112,9 +112,11 @@ async function populateLeaderboard() {
         }
         const row = buildRow();
         const favoriteButtonCell = buildCell();
+        favoriteButtonCell.className = 'leaderboard-favorite';
         favoriteButtonCell.innerHTML = `<button data-tour="${json.leaderboard.tour_code}" data-id="${player.player_id}">
           <span class="icon icon-plus"></span>
-        </button>`;
+        </button>
+        <span class="tooltip">Add to <br /><strong>Favorite Players</strong></span>`;
         row.append(favoriteButtonCell);
         const playerData = [
           player.current_position,
