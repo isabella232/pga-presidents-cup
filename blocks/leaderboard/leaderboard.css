@@ -1,7 +1,14 @@
 main .leaderboard {
-  min-height: 660px;
-  line-height: 1.2;
   max-width: 100%;
+  min-height: 558px; /* update after ads */
+  line-height: 1.2;
+}
+
+
+@media (min-width: 700px) {
+  main .leaderboard {
+    min-height: 637px; /* update after ads */
+  }
 }
 
 @media (min-width: 900px) {
@@ -9,7 +16,7 @@ main .leaderboard {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    min-height: 372px;
+    min-height: 366px;
   }
 }
 
@@ -286,7 +293,6 @@ main .leaderboard table tbody p.leaderboard-player {
     gap: 10px;
   }
 }
-
 
 main .leaderboard .icon[class*=icon-flag] {
   height: 18px;

@@ -152,6 +152,13 @@ async function populateLeaderboard() {
   }
 }
 
+function intersectHandler(entries) {
+  const entry = entries[0];
+  if (entry.isIntersecting) {
+    loadScript('https://microservice.pgatour.com/js', populateLeaderboard);
+  }
+}
+
 export default async function decorate(block) {
   const config = readBlockConfig(block);
   TRACKING_ID = config.id;
@@ -159,5 +166,6 @@ export default async function decorate(block) {
   BLOCK = block;
   block.textContent = '';
 
-  loadScript('https://microservice.pgatour.com/js', populateLeaderboard);
+  const observer = new IntersectionObserver(intersectHandler, { threshold: 0 });
+  observer.observe(block);
 }
