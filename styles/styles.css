@@ -202,8 +202,22 @@ a.button.secondary, button.secondary {
   color: var(--text-color)
 } 
 
-.button-container > * {
-  margin: 5px;
+.button-container > a.button,
+.button-container > strong,
+.button-container > em {
+  margin: 4px;
+}
+
+.button-container > a.button:first-of-type,
+.button-container > strong:first-of-type,
+.button-container > em:first-of-type {
+  margin-left: 0;
+}
+
+.button-container > a.button:last-of-type,
+.button-container > strong:last-of-type,
+.button-container > em:last-of-type {
+  margin-right: 0;
 }
 
 main input {
