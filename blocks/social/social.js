@@ -32,7 +32,7 @@ function wrapInLinks(tweet) {
   const words = tweet.textContent.replace(/\n/g, ' ').split(' ').filter((w) => w);
   words.forEach((word, i) => {
     if (word.startsWith('#')) { // setup hashtag
-      words[i] = `<a href="${TWITTER_URL}search?=${word}">${word}</a>`;
+      words[i] = `<a href="${TWITTER_URL}search?=${word.replace('#', '')}">${word}</a>`;
     } else if (word.startsWith('@')) { // setup mention
       words[i] = `<a href="${TWITTER_URL}${word.replace('@', '')}">${word}</a>`;
     } else if (word.startsWith('http')) { // setup link
