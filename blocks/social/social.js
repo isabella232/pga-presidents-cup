@@ -35,6 +35,8 @@ function wrapInLinks(tweet) {
       words[i] = `<a href="${TWITTER_URL}search?=${word.replace('#', '')}">${word}</a>`;
     } else if (word.startsWith('@')) { // setup mention
       words[i] = `<a href="${TWITTER_URL}${word.replace('@', '')}">${word}</a>`;
+    } else if (word.startsWith('.@')) { // setup mention at beginning of tweet
+      words[i] = `.<a href="${TWITTER_URL}${word.replace('.@', '')}">${word.replace('.', '')}</a>`;
     } else if (word.startsWith('http')) { // setup link
       words[i] = `<a href="${word}">${word}</a>`;
     }
