@@ -40,6 +40,10 @@ export default async function decorate(block) {
       if (div.children.length === 1 && div.querySelector('picture')) div.className = 'cards-card-image';
       else {
         div.className = 'cards-card-body';
+        const bubble = div.querySelector('u');
+        if (bubble) {
+          bubble.className = 'cards-card-bubble';
+        }
         const list = div.querySelector('ul, ol');
         if (list) {
           const links = document.createElement('div');

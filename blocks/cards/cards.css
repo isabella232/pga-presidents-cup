@@ -56,12 +56,13 @@ main .cards .cards-card-bubble {
   position: absolute;
   top: 16px;
   left: 16px;
-  min-width: 40px;
+  width: 40px;
   min-height: 40px;
   border-radius: 20px;
   background-color: var(--color-tan);
   color: var(--color-white);
   font-size: var(--body-font-size-xxs);
+  text-decoration: none;
 }
 
 @media (min-width: 700px) {
