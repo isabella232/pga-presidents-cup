@@ -108,6 +108,7 @@ main .player-feature .player-feature-credits .icon {
 main .player-feature .player-feature-credits svg {
   position: absolute;
   top: 50%;
+  left: 0;
   transform: translateY(-50%);
   width: 24px;
 }
