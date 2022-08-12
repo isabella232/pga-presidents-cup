@@ -146,7 +146,6 @@ main .hero p.button-container {
 
 main .hero a.button {
   min-width: 115px;
-  margin: 0;
   color: var(--color-white);
   font-family: var(--body-font-family);
 }

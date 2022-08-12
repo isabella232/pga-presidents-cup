@@ -91,10 +91,6 @@ main .columns .button-container {
   font-size: var(--body-font-size-s);
 }
 
-main .columns .button-container a {
-  margin: 0;
-}
-
 @media (min-width: 1200px) {
   main .columns h2 {
     font-size: var(--heading-font-size-l);

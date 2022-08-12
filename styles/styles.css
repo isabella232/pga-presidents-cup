@@ -207,21 +207,15 @@ a.button.secondary:hover, button.secondary:hover {
   color: var(--link-hover-color);
 }
 
-.button-container > a.button,
-.button-container > strong,
-.button-container > em {
+.button-container > a.button {
   margin: 4px;
 }
 
-.button-container > a.button:first-of-type,
-.button-container > strong:first-of-type,
-.button-container > em:first-of-type {
+.button-container > a.button:first-of-type {
   margin-left: 0;
 }
 
-.button-container > a.button:last-of-type,
-.button-container > strong:last-of-type,
-.button-container > em:last-of-type {
+.button-container > a.button:last-of-type {
   margin-right: 0;
 }
 
