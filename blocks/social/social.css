@@ -1,0 +1,32 @@
+main .social-container {
+  background-color: var(--color-blue);
+  color: var(--color-white);
+}
+
+main .social-container > .default-content-wrapper h2 {
+  padding-top: 16px;
+  color: var(--color-white);
+}
+
+main .social-wrapper {
+  padding-bottom: 16px;
+}
+
+main .social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 128px;
+  border: 1px solid #0008;
+  background-color: var(--color-blue-dark);
+}
+
+@media (min-width: 900px) {
+  main .social-container > .default-content-wrapper h2 {
+    padding-top: 32px;
+  }
+
+  main .social-wrapper {
+    padding-bottom: 32px;
+  }
+}
