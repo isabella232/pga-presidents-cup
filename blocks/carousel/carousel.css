@@ -148,7 +148,6 @@ main .carousel p.button-container {
 
 main .carousel a.button {
   min-width: 115px;
-  margin: 0;
   color: var(--color-white);
   font-family: var(--body-font-family);
 }
@@ -165,7 +164,7 @@ main .carousel a.button.primary:any-link {
 
 main .carousel a.button.secondary:any-link {
   background-color: var(--color-blue);
-  font-size: var(--body-font-size-m);
+  font-size: var(--body-font-size-xs);
 }
 
 @media (min-width: 700px) {
@@ -173,7 +172,8 @@ main .carousel a.button.secondary:any-link {
     min-width: 200px;
   }
 
-  main .carousel a.button.primary:any-link {
+  main .carousel a.button.primary:any-link,
+  main .carousel a.button.secondary:any-link {
     font-size: var(--body-font-size-l);
   }
 }
@@ -185,6 +185,7 @@ main .carousel a.button.secondary:any-link {
 
   main .carousel a.button {
     min-width: 300px;
+    margin: 0;
   }
 
   main .carousel p.button-container  {
