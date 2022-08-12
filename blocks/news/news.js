@@ -65,9 +65,10 @@ export default async function decorate(block) {
   /* TODO: add CORS header, to be replaced with direct API */
   let directURL;
   if (config.tags) {
-    directURL = `${newsURL}/tags=${config.tags.replace(/ /g, '')}&size=${limit}`;
+    const tags = config.tags.replace(/ /g, '').split(',').join('+');
+    directURL = `${newsURL}/tags=${tags}&size=${limit}`;
   } else {
-    directURL = `${newsURL}/lang=LANG_NOT_DEFINED&path=/content&tags=PGATOUR:Tournaments/2018/r011+PGATOUR:Tournaments/2020/r011+PGATOUR:Tournaments/2019/r011+PGATOUR:Tournaments/2021/r011+PGATOUR:Tournaments/2022/r011&size=${limit}`;
+    directURL = `${newsURL}/path=/content&tags=PGATOUR:Tournaments/2018/r011+PGATOUR:Tournaments/2020/r011+PGATOUR:Tournaments/2019/r011+PGATOUR:Tournaments/2021/r011+PGATOUR:Tournaments/2022/r011&size=${limit}`;
   }
   const resp = await fetch(`https://little-forest-58aa.david8603.workers.dev/?url=${encodeURIComponent(directURL)}`);
   const json = await resp.json();
