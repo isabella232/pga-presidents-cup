@@ -11,11 +11,17 @@
     width: 100%;
 }
 
+.ads-right-column {
+    width: 100%;
+}
+
 @media (min-width: 768px) {
     .ads-columns > div {
         flex: 320px 1 1;
     }
+    
     .ads-right-column {
         padding: 0 16px;
+        width: unset;
     }
 }
