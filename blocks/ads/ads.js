@@ -15,8 +15,40 @@ function loadScript(url, callback, type) {
 
 export default function decorate(block) {
   const config = readBlockConfig(block);
-  block.innerHTML = '<div class="parsys"><div class="ad section"></div></div>';
-  const inner = block.querySelector('.ad');
+  console.log(config);
+  window.rolexNCVHdBD = [
+    {
+      city: 'Ponte Vedra Beach',
+      local: 'Your Time',
+      cdtext: 'Change countdown values',
+      startDate: '20170605',
+      endDate: '20240611',
+      cdyear: '2020',
+      cdmonth: '06',
+      cdday: '11',
+      cdhour: '08',
+      cdmin: '0',
+      offset: -4,
+      dst: '0',
+    },
+  ];
+
+  block.innerHTML = `
+  <div class="ads-columns">
+    <div class="ads-left-column"></div>
+    <div class="ads-right-column">
+      <iframe 
+      id="rolexFrameNCVHdBD" 
+      class="rolex-frame" 
+      data-src="/blocks/ads/rolex/rolex.frame.html?cities=rolexNCVHdBD" 
+      style="width:100%;height:90px;border:0;padding:0;overflow:hidden;scroll:none" 
+      scrolling="NO" 
+      frameborder="NO" 
+      allowtrasnparecy="true" 
+      src="/blocks/ads/rolex/rolex.frame.html?cities=rolexNCVHdBD">
+    </iframe></div>
+  </div>`;
+  const inner = block.querySelector('.ads-left-column');
   window.pgatour = window.pgatour || {};
   loadScript('/blocks/ads/jquery-3.6.0.min.js', () => {
     loadScript('/blocks/ads/react-cq.min.js', () => {

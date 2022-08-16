@@ -1,7 +1,21 @@
 .ads {
-    background-color: lightgray;
-    min-height: 128px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.ads-columns {
+    display: flex;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .ads-columns > div {
+        flex: 320px 1 1;
+    }
+    .ads-right-column {
+        padding: 0 16px;
+    }
 }
