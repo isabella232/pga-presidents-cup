@@ -18,7 +18,6 @@ main .ads {
 
 main .ads-columns {
   display: flex;
-  gap: 16px;
   width: 100%;
 }
 
@@ -27,6 +26,10 @@ main .ads-right-column {
 }
 
 @media (min-width: 768px) {
+  main .ads-columns {
+    gap: 16px;
+  }
+
   main .ads-columns > div {
     flex: 320px 1 1;
   }
