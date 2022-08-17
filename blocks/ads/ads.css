@@ -1,27 +1,38 @@
-.ads {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-top: 8px;
+main .section.ads-container {
+  padding: 0;
 }
 
-.ads-columns {
-    display: flex;
-    width: 100%;
+@media (min-width: 700px) {
+  main .section.ads-container {
+    padding: 16px;
+  }
 }
 
-.ads-right-column {
-    width: 100%;
+main .ads {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 8px;
+}
+
+main .ads-columns {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+main .ads-right-column {
+  width: 100%;
 }
 
 @media (min-width: 768px) {
-    .ads-columns > div {
-        flex: 320px 1 1;
-    }
-    
-    .ads-right-column {
-        padding: 0 16px;
-        width: unset;
-    }
+  main .ads-columns > div {
+    flex: 320px 1 1;
+  }
+
+  main .ads-right-column {
+    width: unset;
+    padding: 0;
+  }
 }
