@@ -46,7 +46,8 @@ export default async function decorate(block) {
   block.textContent = '';
 
   if (config.source) {
-    const resp = await fetch(config.source);
+    const source = config.source.endsWith('.json') ? config.source : `${config.source}.json`;
+    const resp = await fetch(source);
     if (resp.ok) {
       const json = await resp.json();
       if (json.data) {
