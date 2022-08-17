@@ -80,7 +80,7 @@ async function populateLeaderboard() {
           leader.innerHTML = `
           <div class="leaderboard-leader-img">
             <img
-              src="https://pga-tour-res.cloudinary.com/image/upload/f_auto,q_auto,c_fill,r_max,dpr_2.0,g_face:center,h_260,w_260,d_headshots_default.png/headshots_35891.png"
+              src="https://pga-tour-res.cloudinary.com/image/upload/f_auto,q_auto,c_fill,r_max,dpr_2.0,g_face:center,h_260,w_260,d_headshots_default.png/headshots_${player.player_id}.png"
               alt="${bio.first_name} ${bio.last_name}"
             />
           </div>
