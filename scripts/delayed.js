@@ -360,15 +360,20 @@ function getCookie(cookieName) {
 }
 
 async function setGeoCookies() {
-  const resp = await fetch('https://geolocation.onetrust.com/cookieconsentpub/v1/geo/location');
-  if (resp.ok) {
-    const text = await resp.text();
-    const json = JSON.parse(text.replace('jsonFeed(', '').replace('"});', '"}'));
-    Object.keys(json).forEach((key) => {
-      const cookieName = `PGAT_${key.charAt(0).toUpperCase() + key.slice(1)}`;
-      const cookie = getCookie(cookieName);
-      if (!cookie || cookie !== json[key]) document.cookie = `${cookieName}=${json[key]}`;
-    });
+  try {
+    const resp = await fetch('https://geolocation.onetrust.com/cookieconsentpub/v1/geo/location');
+    if (resp.ok) {
+      const text = await resp.text();
+      const json = JSON.parse(text.replace('jsonFeed(', '').replace('"});', '"}'));
+      Object.keys(json).forEach((key) => {
+        const cookieName = `PGAT_${key.charAt(0).toUpperCase() + key.slice(1)}`;
+        const cookie = getCookie(cookieName);
+        if (!cookie || cookie !== json[key]) document.cookie = `${cookieName}=${json[key]}`;
+      });
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Setting geo cookies failed', error);
   }
 }
 
