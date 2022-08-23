@@ -1,7 +1,49 @@
-.ads {
-    background-color: lightgray;
-    min-height: 128px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+main .ads {
+  display: flex;
+}
+
+/* leftpromo */
+main .ads-container.ads-container-leftpromo-clock {
+  margin: 0;
+  padding: 16px 0;
+  background-color: var(--highlight-background-color);
+}
+
+main .ads.ads-leftpromo-clock {
+  height: 90px;
+}
+
+main .ads-columns {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+main .ads-columns > div {
+  text-align: center;
+}
+
+main .ads-right-column {
+  width: 100%;
+  /* background-color: #01613A; */
+}
+
+@media (min-width: 768px) {
+  main .ads-container.ads-container-leftpromo-clock {
+    padding: 32px 16px;
+  }
+
+  main .ads-columns {
+    gap: 16px;
+  }
+
+  main .ads-right-column {
+    width: 380px;
+  }
+}
+
+@media (min-width: 980px) {
+  main .ads-right-column {
+    width: 420px;
+  }
 }

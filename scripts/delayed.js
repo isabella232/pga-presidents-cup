@@ -346,7 +346,38 @@ async function populateStatusBar(statusBar) {
 populateStatusBar(document.querySelector('header > .status-bar'));
 
 /* setup cookie preferences */
-const cookieScript = loadScript('https://cdn.cookielaw.org/scripttemplates/otSDKStub.js');
+function getCookie(cookieName) {
+  const name = `${cookieName}=`;
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const split = decodedCookie.split(';');
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < split.length; i++) {
+    let c = split[i];
+    while (c.charAt(0) === ' ') c = c.substring(1);
+    if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+  }
+  return null;
+}
+
+async function setGeoCookies() {
+  try {
+    const resp = await fetch('https://geolocation.onetrust.com/cookieconsentpub/v1/geo/location');
+    if (resp.ok) {
+      const text = await resp.text();
+      const json = JSON.parse(text.replace('jsonFeed(', '').replace('"});', '"}'));
+      Object.keys(json).forEach((key) => {
+        const cookieName = `PGAT_${key.charAt(0).toUpperCase() + key.slice(1)}`;
+        const cookie = getCookie(cookieName);
+        if (!cookie || cookie !== json[key]) document.cookie = `${cookieName}=${json[key]}`;
+      });
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Setting geo cookies failed', error);
+  }
+}
+
+const cookieScript = loadScript('https://cdn.cookielaw.org/scripttemplates/otSDKStub.js', setGeoCookies);
 cookieScript.setAttribute('data-domain-script', '262c6c79-a114-41f0-9c07-52cb1fb7390c');
 
 /* open external links in new tab */

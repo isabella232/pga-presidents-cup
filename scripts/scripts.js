@@ -687,13 +687,18 @@ function buildHeroBlock(main) {
   }
 }
 
-function buildRelatedStoriesBlock(main, tags) {
+function findNonFullWidthSection(main) {
   const FULL_WIDTH_BLOCKS = ['carousel', 'carousel course', 'hero', 'news', 'player-feature', 'teaser', 'weather'];
   const sections = main.querySelectorAll(':scope > div');
-  let storiesSection = [...sections] // section WITHOUT full-width content
+  const nonFullWidthSection = [...sections]
     .find((section) => ![...section.children] // check section
       .find((child) => FULL_WIDTH_BLOCKS.includes(child.className))); // check content in section
-  if (!storiesSection) { // if no section without full-wdith content, create one
+  return nonFullWidthSection;
+}
+
+function buildRelatedStoriesBlock(main, tags) {
+  let storiesSection = findNonFullWidthSection(main);
+  if (!storiesSection) { // if no section without full-width content, create one
     storiesSection = document.createElement('div');
     main.append(storiesSection);
   } else {
@@ -752,6 +757,60 @@ async function loadFooter(footer) {
   footer.append(footerBlock);
   decorateBlock(footerBlock);
   await loadBlock(footerBlock);
+}
+
+async function loadAds(doc) {
+  window.ads = window.ads || {};
+  // fetch ads
+  const { loaded } = window.ads;
+  if (!loaded) {
+    window.ads.loaded = new Promise((resolve, reject) => {
+      try {
+        fetch('/ads.json')
+          .then((resp) => resp.json())
+          .then((json) => {
+            const ads = [];
+            json.data.forEach((ad) => {
+              ads.push({
+                URL: ad.URL,
+                positions: ad.Position.split(',').map((a) => a.trim()),
+              });
+            });
+            window.ads.locations = ads;
+            resolve();
+          });
+      } catch (e) {
+        // error loading placeholders
+        window.ads.locations = [];
+        reject();
+      }
+    });
+  }
+  await window.ads.loaded;
+  // find if add on page
+  const { pathname } = window.location;
+  const adOnPage = window.ads.locations.find((ad) => ad.URL === pathname);
+  if (adOnPage) {
+    // find ad location
+    adOnPage.positions.forEach((position) => {
+      let block;
+      if (position.includes('leftpromo')) {
+        const sectionBefore = doc.querySelector('.leaderboard-container, .tee-times-container');
+        if (sectionBefore) {
+          const adSection = document.createElement('div');
+          adSection.className = `section ads-container ads-container-${toClassName(position)}`;
+          block = buildBlock('ads', [['<div>Position</div>', `<div>${position}</div>`]]);
+          block.classList.add(`ads-${toClassName(position)}`);
+          adSection.append(block);
+          sectionBefore.parentNode.insertBefore(adSection, sectionBefore);
+        }
+      }
+      if (block) {
+        decorateBlock(block);
+        loadBlock(block);
+      }
+    });
+  }
 }
 
 /**
@@ -817,6 +876,7 @@ async function loadEager(doc) {
   if (main) {
     await decorateMain(main);
     await waitForLCP();
+    loadHeader(doc.querySelector('header'));
   }
 }
 
@@ -831,11 +891,12 @@ async function loadLazy(doc) {
   const element = hash ? main.querySelector(hash) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadHeader(doc.querySelector('header'));
   loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.ico`);
+
+  loadAds(doc);
 
   const template = getMetadata('template');
   if (template === 'past-champions') {
