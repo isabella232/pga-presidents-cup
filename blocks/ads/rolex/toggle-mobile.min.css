@@ -30,6 +30,14 @@ html {
   border: 0
 }
 
+#title {
+  display: none
+}
+
+.label {
+  display: none
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   font-smooth: always;
@@ -48,67 +56,117 @@ body {
   height: 100px
 }
 
-[aria-hidden='true'] {
-  display: none
+@keyframes fadein {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+}
+
+@-moz-keyframes fadein {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+}
+
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+}
+
+@-ms-keyframes fadein {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+}
+
+@-o-keyframes fadein {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
 }
 
 .rlxmain {
   background-color: transparent;
-  position: relative
+  position: relative;
+  -webkit-animation: fadein 1s;
+  -moz-animation: fadein 1s;
+  -ms-animation: fadein 1s;
+  -o-animation: fadein 1s;
+  animation: fadein 1s
 }
 
 .container {
-  width: 450px;
-  height: 100px;
+  width: 300px;
+  height: 58px;
   margin: 0 auto;
-  position: relative
+  position: relative;
+  overflow: hidden
 }
 
 .teetime-toogle {
   position: absolute;
-  left: 0;
-  width: 225px;
+  right: 0;
+  width: 157px;
   height: 100%;
   font-family: 'roboto', arial, 'Lucida Grande', sans-serif;
-  font-size: 14px;
+  font-size: 10px;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  letter-spacing: -0.3px
+  letter-spacing: -0.3px;
+  background-color: #006039;
+  z-index: 50
 }
 
 .teetime-toogle .title {
   display: block;
   position: absolute;
-  color: #006039;
+  color: #fff;
   font-weight: bold;
   width: 100%;
-  height: 55px;
-  line-height: 55px;
+  height: 18px;
+  line-height: 25px;
   text-align: center;
   pointer-events: none
 }
 
 .fr .teetime-toogle .event,
 .fr .teetime-toogle .mytime {
-  font-size: 12px;
-  width: 35%
+  font-size: 9px;
+  width: 33%;
+  line-height: 10px
 }
 
 .event,
 .mytime {
   display: block;
   position: absolute;
-  top: 58px;
-  width: 33%;
+  top: 31px;
+  width: 30%;
   pointer-events: none
 }
 
 .event {
-  color: #006039;
+  color: #fff;
   position: absolute;
   text-align: right;
   display: block
@@ -116,38 +174,51 @@ body {
 
 .mytime {
   right: 0;
-  color: #333
+  color: rgba(255, 255, 255, .75)
+}
+
+[aria-hidden='true'] {
+  display: none
 }
 
 .switch {
   position: absolute;
-  width: 51px;
+  width: 46px;
   height: 24px;
-  top: 55px;
-  transform: translateX(88px);
-  border: 0;
+  top: 26px;
+  transform: translateX(55px);
   background-color: transparent
 }
 
 .switch input {
   opacity: 0;
-  width: 51px;
-  height: 100%
+  width: 0;
+  height: 0
 }
 
-#title {
-  display: none
+button {
+  display: inline-block;
+  border: 0;
+  margin: 0;
+  text-decoration: none;
+  background: #0069ed;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none
 }
 
 .slider {
-  pointer-events: none;
+  position: absolute;
   position: absolute;
   cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(180deg, #c5c5c5 0, #e4e0e0 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, rgba(0, 0, 0, 0) 100%);
   background-size: 100%;
   -webkit-transition: .4s;
   transition: .4s
@@ -160,28 +231,28 @@ body {
   width: 20px;
   left: 2px;
   bottom: 2px;
-  background: url('toggle/img/btn.png') no-repeat scroll 0 0 white;
+  background: url('toggle-mobile/img/btn.png') no-repeat scroll 0 0 white;
   background-size: 100%;
   -webkit-transition: .4s;
   transition: .4s
 }
 
-.active .slider {
-  background: linear-gradient(180deg, #c5c5c5 0, #e4e0e0 100%)
-}
-
-.label {
-  display: none
+.slider input {
+  display: block
 }
 
 .switch:focus+.slider {
+  background: linear-gradient(180deg, rgba(0, 0, 0, .5) 0, rgba(0, 0, 0, 0) 100%)
+}
+
+input:focus+.slider {
   box-shadow: 0 0 1px #dedede
 }
 
 .active .slider:before {
-  -webkit-transform: translateX(27px);
-  -ms-transform: translateX(27px);
-  transform: translateX(27px)
+  -webkit-transform: translateX(22px);
+  -ms-transform: translateX(22px);
+  transform: translateX(22px)
 }
 
 .slider.round {
@@ -267,8 +338,7 @@ body {
   overflow: hidden;
   padding: 0;
   position: absolute;
-  width: 1px;
-  color: #fff
+  width: 1px
 }
 
 .no-border {
@@ -317,7 +387,7 @@ body {
 
 .logo {
   margin-top: 0;
-  background: url('toggle/img/logo/white/logo_rolex.svg') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/logo/white/logo_rolex.svg') no-repeat scroll 0 0 transparent;
   display: block;
   position: relative;
   top: 50%;
@@ -383,15 +453,15 @@ body {
 }
 
 .retina .logo {
-  background: url('toggle/img/logo/white/logo_rolex.svg') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/logo/white/logo_rolex.svg') no-repeat scroll 0 0 transparent;
   background-size: 100%;
   background-position: 50%
 }
 
 #logo {
   position: absolute;
-  left: 19px;
-  top: 9px
+  left: 34px;
+  top: 3px
 }
 
 .block {
@@ -426,7 +496,7 @@ body {
 }
 
 .clock {
-  background: url('toggle/img/clock/white/90.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/100.png') no-repeat scroll 0 0 transparent;
   width: 100px;
   height: 100px;
   margin-top: -50px;
@@ -439,14 +509,19 @@ body {
   overflow: hidden
 }
 
+.retina .clock {
+  background: url('toggle-mobile/img/clock/white/100_retina.png') no-repeat scroll 0 0 transparent;
+  background-size: 100% 100%
+}
+
 @media only screen and (-webkit-min-device-pixel-ratio:1),
 only screen and (min-device-pixel-ratio:1) {
-  .clock.clock-90 {
-    background: url('toggle/img/clock/white/90.png') no-repeat scroll 0 0 transparent;
-    width: 90px;
-    height: 90px;
-    margin-top: -45px;
-    margin-left: -45px
+  .clock.clock-50 {
+    background: url('toggle-mobile/img/clock/white/50.png') no-repeat scroll 0 0 transparent;
+    width: 50px;
+    height: 50px;
+    margin-top: -25px;
+    margin-left: -25px
   }
 }
 
@@ -457,14 +532,14 @@ only screen and (-o-min-device-pixel-ratio:2/1),
 only screen and (min-device-pixel-ratio:2),
 only screen and (min-resolution:192dpi),
 only screen and (min-resolution:2dppx) {
-  .clock.clock-90 {
-    background: url('toggle/img/clock/white/90_retina.png') no-repeat scroll 0 0 transparent;
+  .clock.clock-50 {
+    background: url('toggle-mobile/img/clock/white/50_retina.png') no-repeat scroll 0 0 transparent;
     background-size: 100% 100%
   }
 }
 
 .clock.clock-60 {
-  background: url('toggle/img/clock/white/60.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/60.png') no-repeat scroll 0 0 transparent;
   width: 60px;
   height: 60px;
   margin-top: -30px;
@@ -472,12 +547,12 @@ only screen and (min-resolution:2dppx) {
 }
 
 .retina .clock.clock-60 {
-  background: url('toggle/img/clock/white/60_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/60_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100% 100%
 }
 
 .clock.clock-65 {
-  background: url('toggle/img/clock/white/65.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/65.png') no-repeat scroll 0 0 transparent;
   width: 65px;
   height: 65px;
   margin-top: -32.5px;
@@ -485,12 +560,12 @@ only screen and (min-resolution:2dppx) {
 }
 
 .retina .clock.clock-65 {
-  background: url('toggle/img/clock/white/65_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/65_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100% 100%
 }
 
 .clock.clock-70 {
-  background: url('toggle/img/clock/white/70.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/70.png') no-repeat scroll 0 0 transparent;
   width: 70px;
   height: 70px;
   margin-top: -35px;
@@ -498,12 +573,12 @@ only screen and (min-resolution:2dppx) {
 }
 
 .retina .clock.clock-70 {
-  background: url('toggle/img/clock/white/70_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/70_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100% 100%
 }
 
 .clock.clock-75 {
-  background: url('toggle/img/clock/white/75.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/75.png') no-repeat scroll 0 0 transparent;
   width: 75px;
   height: 75px;
   margin-top: -37.5px;
@@ -511,12 +586,12 @@ only screen and (min-resolution:2dppx) {
 }
 
 .retina .clock.clock-75 {
-  background: url('toggle/img/clock/white/75_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/75_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100% 100%
 }
 
 .clock.clock-80 {
-  background: url('toggle/img/clock/white/80.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/80.png') no-repeat scroll 0 0 transparent;
   width: 80px;
   height: 80px;
   margin-top: -40px;
@@ -524,12 +599,25 @@ only screen and (min-resolution:2dppx) {
 }
 
 .retina .clock.clock-80 {
-  background: url('toggle/img/clock/white/80_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/80_retina.png') no-repeat scroll 0 0 transparent;
+  background-size: 100% 100%
+}
+
+.clock.clock-90 {
+  background: url('toggle-mobile/img/clock/white/90.png') no-repeat scroll 0 0 transparent;
+  width: 90px;
+  height: 90px;
+  margin-top: -45px;
+  margin-left: -45px
+}
+
+.retina .clock.clock-90 {
+  background: url('toggle-mobile/img/clock/white/90_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100% 100%
 }
 
 .clock.clock-100 {
-  background: url('toggle/img/clock/white/100.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/100.png') no-repeat scroll 0 0 transparent;
   width: 100px;
   height: 100px;
   margin-top: -50px;
@@ -537,12 +625,12 @@ only screen and (min-resolution:2dppx) {
 }
 
 .retina .clock.clock-100 {
-  background: url('toggle/img/clock/white/100_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/100_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100% 100%
 }
 
 .clock.clock-110 {
-  background: url('toggle/img/clock/white/110.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/110.png') no-repeat scroll 0 0 transparent;
   width: 110px;
   height: 110px;
   margin-top: -50px;
@@ -550,12 +638,12 @@ only screen and (min-resolution:2dppx) {
 }
 
 .retina .clock.clock-110 {
-  background: url('toggle/img/clock/white/110_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/110_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100% 100%
 }
 
 .clock.clock-120 {
-  background: url('toggle/img/clock/white/120.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/120.png') no-repeat scroll 0 0 transparent;
   width: 120px;
   height: 120px;
   margin-top: -60px;
@@ -563,12 +651,12 @@ only screen and (min-resolution:2dppx) {
 }
 
 .retina .clock.clock-120 {
-  background: url('toggle/img/clock/white/120_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/120_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100% 100%
 }
 
 .clock.clock-130 {
-  background: url('toggle/img/clock/white/130.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/130.png') no-repeat scroll 0 0 transparent;
   width: 130px;
   height: 130px;
   margin-top: -65px;
@@ -576,12 +664,12 @@ only screen and (min-resolution:2dppx) {
 }
 
 .retina .clock.clock-130 {
-  background: url('toggle/img/clock/white/130_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/130_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100% 100%
 }
 
 .clock.clock-140 {
-  background: url('toggle/img/clock/white/140.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/140.png') no-repeat scroll 0 0 transparent;
   width: 140px;
   height: 140px;
   margin-top: -70px;
@@ -589,12 +677,12 @@ only screen and (min-resolution:2dppx) {
 }
 
 .retina .clock.clock-140 {
-  background: url('toggle/img/clock/white/140_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/140_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100% 100%
 }
 
 .clock.clock-150 {
-  background: url('toggle/img/clock/white/150.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/150.png') no-repeat scroll 0 0 transparent;
   width: 150px;
   height: 150px;
   margin-top: -75px;
@@ -602,7 +690,7 @@ only screen and (min-resolution:2dppx) {
 }
 
 .retina .clock.clock-150 {
-  background: url('toggle/img/clock/white/150_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/clock/white/150_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100% 100%
 }
 
@@ -613,7 +701,7 @@ only screen and (min-resolution:2dppx) {
   height: 54px;
   top: 50%;
   left: 50%;
-  background: url('toggle/img/needles/static/needles_100.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_100.png') no-repeat scroll 0 0 transparent;
   margin-top: -17px;
   margin-left: -23px;
   background-size: 100%;
@@ -621,16 +709,16 @@ only screen and (min-resolution:2dppx) {
 }
 
 .clock-needle .clock-needle-black {
-  background-image: url('toggle/img/needles/static/needles_100_black.png')
+  background-image: url('toggle-mobile/img/needles/static/needles_100_black.png')
 }
 
 .retina .clock-needle {
-  background: url('toggle/img/needles/static/needles_100_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_100_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
 .retina .clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_100_retina_black.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_100_retina_black.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
@@ -639,20 +727,20 @@ only screen and (min-resolution:2dppx) {
   height: 34px;
   margin-top: -9px;
   margin-left: -15px;
-  background: url('toggle/img/needles/static/needles_60.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_60.png') no-repeat scroll 0 0 transparent
 }
 
 .clock-60.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_60_black.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_60_black.png') no-repeat scroll 0 0 transparent
 }
 
 .retina .clock-60.clock-needle {
-  background: url('toggle/img/needles/static/needles_60_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_60_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
 .retina .clock-60.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_60_retina_black.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_60_retina_black.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
@@ -661,20 +749,20 @@ only screen and (min-resolution:2dppx) {
   height: 37px;
   margin-top: -11px;
   margin-left: -16px;
-  background: url('toggle/img/needles/static/needles_65.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_65.png') no-repeat scroll 0 0 transparent
 }
 
 .clock-65.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_65_black.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_65_black.png') no-repeat scroll 0 0 transparent
 }
 
 .retina .clock-65.clock-needle {
-  background: url('toggle/img/needles/static/needles_65_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_65_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
 .retina .clock-65.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_65_retina_black.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_65_retina_black.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
@@ -683,20 +771,20 @@ only screen and (min-resolution:2dppx) {
   height: 40px;
   margin-top: -12px;
   margin-left: -17px;
-  background: url('toggle/img/needles/static/needles_70.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_70.png') no-repeat scroll 0 0 transparent
 }
 
 .clock-70.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_70_black.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_70_black.png') no-repeat scroll 0 0 transparent
 }
 
 .retina .clock-70.clock-needle {
-  background: url('toggle/img/needles/static/needles_70_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_70_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
 .retina .clock-70.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_70_retina_black.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_70_retina_black.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
@@ -705,20 +793,20 @@ only screen and (min-resolution:2dppx) {
   height: 42px;
   margin-top: -13px;
   margin-left: -18px;
-  background: url('toggle/img/needles/static/needles_75.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_75.png') no-repeat scroll 0 0 transparent
 }
 
 .clock-75.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_75_black.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_75_black.png') no-repeat scroll 0 0 transparent
 }
 
 .retina .clock-75.clock-needle {
-  background: url('toggle/img/needles/static/needles_75_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_75_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
 .retina .clock-75.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_75_retina_black.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_75_retina_black.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
@@ -727,20 +815,20 @@ only screen and (min-resolution:2dppx) {
   height: 44px;
   margin-top: -13px;
   margin-left: -19px;
-  background: url('toggle/img/needles/static/needles_80.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_80.png') no-repeat scroll 0 0 transparent
 }
 
 .clock-80.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_80_black.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_80_black.png') no-repeat scroll 0 0 transparent
 }
 
 .retina .clock-80.clock-needle {
-  background: url('toggle/img/needles/static/needles_80_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_80_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
 .retina .clock-80.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_80_retina_black.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_80_retina_black.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
@@ -749,20 +837,20 @@ only screen and (min-resolution:2dppx) {
   height: 50px;
   margin-top: -16px;
   margin-left: -21px;
-  background: url('toggle/img/needles/static/needles_90.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_90.png') no-repeat scroll 0 0 transparent
 }
 
 .clock-90.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_90_black.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_90_black.png') no-repeat scroll 0 0 transparent
 }
 
 .retina .clock-90.clock-needle {
-  background: url('toggle/img/needles/static/needles_90_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_90_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
 .retina .clock-90.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_90_retina_black.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_90_retina_black.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
@@ -771,20 +859,20 @@ only screen and (min-resolution:2dppx) {
   height: 54px;
   margin-top: -17px;
   margin-left: -23px;
-  background: url('toggle/img/needles/static/needles_100.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_100.png') no-repeat scroll 0 0 transparent
 }
 
 .clock-100.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_100_black.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_100_black.png') no-repeat scroll 0 0 transparent
 }
 
 .retina .clock-100.clock-needle {
-  background: url('toggle/img/needles/static/needles_100_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_100_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
 .retina .clock-100.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_100_retina_black.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_100_retina_black.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
@@ -793,20 +881,20 @@ only screen and (min-resolution:2dppx) {
   height: 59px;
   margin-top: -17px;
   margin-left: -23px;
-  background: url('toggle/img/needles/static/needles_110.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_110.png') no-repeat scroll 0 0 transparent
 }
 
 .clock-110.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_110_black.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_110_black.png') no-repeat scroll 0 0 transparent
 }
 
 .retina .clock-110.clock-needle {
-  background: url('toggle/img/needles/static/needles_110_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_110_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
 .retina .clock-110.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_110_retina_black.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_110_retina_black.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
@@ -815,27 +903,27 @@ only screen and (min-resolution:2dppx) {
   height: 107px;
   margin-top: -3.34375em;
   margin-left: -3.34375em;
-  background: url('toggle/img/needles/static/needles_120.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_120.png') no-repeat scroll 0 0 transparent
 }
 
 .clock-120.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_120_black.png') no-repeat scroll 0 0 transparent
+  background: url('toggle-mobile/img/needles/static/needles_120_black.png') no-repeat scroll 0 0 transparent
 }
 
 .retina .clock-120.clock-needle {
-  background: url('toggle/img/needles/static/needles_120_retina.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_120_retina.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
 .retina .clock-120.clock-needle .clock-needle-black {
-  background: url('toggle/img/needles/static/needles_120_retina_black.png') no-repeat scroll 0 0 transparent;
+  background: url('toggle-mobile/img/needles/static/needles_120_retina_black.png') no-repeat scroll 0 0 transparent;
   background-size: 100%
 }
 
 #clock {
   position: relative;
-  left: 158px;
-  top: 50px
+  left: 119px;
+  top: 29px
 }
 
 .focus-background,
@@ -876,7 +964,7 @@ only screen and (min-resolution:2dppx) {
 }
 
 .glyph:after {
-  content: '•'
+  content: 'â€¢'
 }
 
 .active .glyph {
@@ -933,9 +1021,9 @@ only screen and (min-resolution:2dppx) {
 }
 
 #rolexClockWim-container {
-  width: 225px;
+  width: 150px;
   position: absolute;
-  right: 0
+  left: 0
 }
 
 .clearfix {
