@@ -69,7 +69,7 @@ function buildLeftPromoToggleEl(block) {
       <div class="ads-right-column">
         <iframe
           id="rolexFrame1txbOyjg"
-          class="rolex-frame hidden-small"
+          class="rolex-frame rolex-frame-medium"
           data-src="/blocks/ads/rolex/rolex.frameToggle.html?eventcity=Ponte+Vedra+Beach&utc=-4&lang=en"
           style="width:450px;height:100px;border:0;margin:0;padding:0;overflow:hidden;scroll:none"
           scrolling="NO"
@@ -79,7 +79,7 @@ function buildLeftPromoToggleEl(block) {
         </iframe>
         <iframe
           id="rolexFrame1txbOyjg"
-          class="rolex-frame visible-small"
+          class="rolex-frame rolex-frame-small"
           data-src="/blocks/ads/rolex/rolex.frameToggleMobile.html?eventcity=Ponte+Vedra+Beach&utc=-4&lang=en"
           style="width:100%;height:58px;border:0px;margin:0px;padding:0px;overflow:hidden;background-color:rgb(0,96,57);"
           scrolling="NO"

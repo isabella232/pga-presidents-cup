@@ -2,8 +2,9 @@ main .ads {
   display: flex;
 }
 
-/* leftpromo */
-main .ads-container.ads-container-leftpromo-clock {
+/* leftpromo clock */
+main .ads-container.ads-container-leftpromo-clock,
+main .ads-container.ads-container-leftpromo-toggle {
   margin: 0;
   padding: 16px 0;
   background-color: var(--highlight-background-color);
@@ -20,16 +21,20 @@ main .ads-columns {
 }
 
 main .ads-columns > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
 main .ads-right-column {
   width: 100%;
-  /* background-color: #01613A; */
+  background-color: #01613A;
 }
 
 @media (min-width: 768px) {
-  main .ads-container.ads-container-leftpromo-clock {
+  main .ads-container.ads-container-leftpromo-clock,
+  main .ads-container.ads-container-leftpromo-toggle {
     padding: 32px 16px;
   }
 
@@ -37,13 +42,36 @@ main .ads-right-column {
     gap: 16px;
   }
 
-  main .ads-right-column {
+  main .ads.ads-leftpromo-clock .ads-right-column {
     width: 380px;
   }
 }
 
 @media (min-width: 980px) {
-  main .ads-right-column {
+  main .ads.ads-leftpromo-clock .ads-right-column {
     width: 420px;
+  }
+}
+
+/* leftpromo toggle */
+main .ads.ads-leftpromo-toggle .rolex-frame-medium {
+  display: none;
+  visibility: hidden;
+}
+
+@media (min-width: 900px) {
+  main .ads.ads-leftpromo-toggle .rolex-frame-medium {
+    display: unset;
+    visibility: unset;
+  }
+
+  main .ads.ads-leftpromo-toggle .rolex-frame-small {
+    display: none;
+    visibility: hidden;
+  }
+
+  main .ads.ads-leftpromo-toggle .ads-right-column {
+    background-color: unset;
+    width: max-content;
   }
 }
