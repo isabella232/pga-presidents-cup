@@ -35,17 +35,19 @@ function buildVideoContent(section) {
 export default async function decorate(block) {
   const link = block.querySelector('a');
   const source = link.getAttribute('href');
-  const resp = await fetch(`${source}.plain.html`);
-  if (resp.ok) {
-    const html = await resp.text();
-    const feature = document.createElement('div');
-    feature.innerHTML = html;
-    block.innerHTML = `<div>${feature.querySelector('div').outerHTML}</div>`;
-    const video = block.querySelector('.embed, .video');
-    decorateButtons(block);
-    if (video) {
-      decorateBlock(video);
-      await loadBlock(video);
+  if (source && link.textContent === link.getAttribute('href')) {
+    const resp = await fetch(`${source}.plain.html`);
+    if (resp.ok) {
+      const html = await resp.text();
+      const feature = document.createElement('div');
+      feature.innerHTML = html;
+      block.innerHTML = `<div>${feature.querySelector('div').outerHTML}</div>`;
+      const video = block.querySelector('.embed, .video');
+      decorateButtons(block);
+      if (video) {
+        decorateBlock(video);
+        await loadBlock(video);
+      }
     }
   }
 
