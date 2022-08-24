@@ -707,23 +707,6 @@ function buildRelatedStoriesBlock(main, tags) {
   storiesSection.append(buildBlock('related-stories', [['<div>Tags</div>', `<div>${tags}</div>`]]));
 }
 
-async function populatePlayerFeature(block, link) {
-  const source = link.getAttribute('href');
-  const resp = await fetch(`${source}.plain.html`);
-  if (resp.ok) {
-    const html = await resp.text();
-    const feature = document.createElement('div');
-    feature.innerHTML = html;
-    block.innerHTML = `<div>${feature.querySelector('div').outerHTML}</div>`;
-    const video = block.querySelector('.embed, .video');
-    decorateButtons(block);
-    if (video) {
-      decorateBlock(video);
-      await loadBlock(video);
-    }
-  }
-}
-
 export function linkPicture(picture) {
   const nextSib = picture.parentNode.nextElementSibling;
   if (nextSib) {
@@ -823,14 +806,6 @@ async function buildAutoBlocks(main) {
 
     const relatedStories = getMetadata('related-stories');
     if (relatedStories) buildRelatedStoriesBlock(main, relatedStories);
-
-    const playerFeature = main.querySelector('.player-feature');
-    if (playerFeature) {
-      const a = playerFeature.querySelector('a');
-      if (a && (a.textContent === playerFeature.textContent.trim())) {
-        await populatePlayerFeature(playerFeature, a);
-      }
-    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
