@@ -241,7 +241,7 @@ export default function decorate(block) {
         });
       });
     }
-  });
+  }, { threshold: 0 });
 
   observer.observe(block.parentElement);
 }
