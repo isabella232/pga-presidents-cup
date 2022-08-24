@@ -24,6 +24,7 @@ main .ad-columns > div {
 /* leftpromo clock */
 main .ad-container-leftpromo-clock,
 main .ad-container-leftpromo-toggle {
+  min-height: 90px;
   margin: 0;
   padding: 16px 0;
   background-color: var(--highlight-background-color);
@@ -72,10 +73,16 @@ main .ad-container-leftpromo-toggle .rolex-frame-medium {
   }
 }
 
+/* top */
+main .ad-container-top {
+  min-height: 90px;
+}
+
 /* right */
 main .ad-container-right {
   display: none;
   visibility: hidden;
+  min-height: 250px;
 }
 
 @media (min-width: 980px) {
