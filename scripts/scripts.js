@@ -687,17 +687,13 @@ function buildHeroBlock(main) {
   }
 }
 
-function findNonFullWidthSection(main) {
+function buildRelatedStoriesBlock(main, tags) {
   const FULL_WIDTH_BLOCKS = ['carousel', 'carousel course', 'hero', 'news', 'player-feature', 'teaser', 'weather'];
   const sections = main.querySelectorAll(':scope > div');
   const nonFullWidthSection = [...sections]
     .find((section) => ![...section.children] // check section
       .find((child) => FULL_WIDTH_BLOCKS.includes(child.className))); // check content in section
-  return nonFullWidthSection;
-}
-
-function buildRelatedStoriesBlock(main, tags) {
-  let storiesSection = findNonFullWidthSection(main);
+  let storiesSection = nonFullWidthSection;
   if (!storiesSection) { // if no section without full-width content, create one
     storiesSection = document.createElement('div');
     main.append(storiesSection);
@@ -756,7 +752,7 @@ async function loadAds(doc) {
             json.data.forEach((ad) => {
               ads.push({
                 URL: ad.URL,
-                positions: ad.Position.split(',').map((a) => a.trim()),
+                positions: ad.Position,
               });
             });
             window.ads.locations = ads;
@@ -774,25 +770,13 @@ async function loadAds(doc) {
   const { pathname } = window.location;
   const adOnPage = window.ads.locations.find((ad) => ad.URL === pathname);
   if (adOnPage) {
-    // find ad location
-    adOnPage.positions.forEach((position) => {
-      let block;
-      if (position.includes('leftpromo')) {
-        const sectionBefore = doc.querySelector('.leaderboard-container, .tee-times-container');
-        if (sectionBefore) {
-          const adSection = document.createElement('div');
-          adSection.className = `section ads-container ads-container-${toClassName(position)}`;
-          block = buildBlock('ads', [['<div>Position</div>', `<div>${position}</div>`]]);
-          block.classList.add(`ads-${toClassName(position)}`);
-          adSection.append(block);
-          sectionBefore.parentNode.insertBefore(adSection, sectionBefore);
-        }
-      }
-      if (block) {
-        decorateBlock(block);
-        loadBlock(block);
-      }
-    });
+    // build ad block
+    const adContainer = document.createElement('div');
+    const block = buildBlock('ads', [['<div>Position</div>', `<div>${adOnPage.positions}</div>`]]);
+    adContainer.append(block);
+    decorateBlock(block);
+    loadBlock(block);
+    doc.querySelector('main').append(block);
   }
 }
 
