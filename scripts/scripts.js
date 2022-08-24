@@ -687,8 +687,15 @@ function buildHeroBlock(main) {
   }
 }
 
+function buildShareBlock(main) {
+  const firstSection = main.querySelector('div');
+  const section = document.createElement('div');
+  section.append(buildBlock('share', ''));
+  firstSection.after(section);
+}
+
 function buildRelatedStoriesBlock(main, tags) {
-  const FULL_WIDTH_BLOCKS = ['carousel', 'carousel course', 'hero', 'news', 'player-feature', 'teaser', 'weather'];
+  const FULL_WIDTH_BLOCKS = ['carousel', 'carousel course', 'hero', 'news', 'player-feature', 'share', 'teaser', 'weather'];
   const sections = main.querySelectorAll(':scope > div');
   const nonFullWidthSection = [...sections]
     .find((section) => ![...section.children] // check section
@@ -804,6 +811,11 @@ async function loadAds(doc) {
 async function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
+
+    const template = getMetadata('template');
+    if (template === 'left-align' || template === 'past-champions') {
+      buildShareBlock(main);
+    }
 
     const relatedStories = getMetadata('related-stories');
     if (relatedStories) buildRelatedStoriesBlock(main, relatedStories);
