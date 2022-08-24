@@ -1,77 +1,112 @@
-main .ads {
+main .ads-container {
+  display: none;
+  visibility: hidden;
+}
+
+main .ad {
   display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  main .ad-columns {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 16px;
+  }
+}
+
+main .ad-columns > div {
+  display: flex;
+  align-items: center;
 }
 
 /* leftpromo clock */
-main .ads-container.ads-container-leftpromo-clock,
-main .ads-container.ads-container-leftpromo-toggle {
+main .ad-container-leftpromo-clock,
+main .ad-container-leftpromo-toggle {
   margin: 0;
   padding: 16px 0;
   background-color: var(--highlight-background-color);
 }
 
-main .ads.ads-leftpromo-clock {
-  height: 90px;
-}
-
-main .ads-columns {
-  display: flex;
-  justify-content: space-evenly;
-  width: 100%;
-}
-
-main .ads-columns > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-main .ads-right-column {
-  width: 100%;
+main .ad-container-leftpromo-clock .ad-column-right,
+main .ad-container-leftpromo-toggle .ad-column-right {
   background-color: #01613A;
 }
 
 @media (min-width: 768px) {
-  main .ads-container.ads-container-leftpromo-clock,
-  main .ads-container.ads-container-leftpromo-toggle {
+  main .ad-container-leftpromo-clock {
     padding: 32px 16px;
   }
 
-  main .ads-columns {
-    gap: 16px;
-  }
-
-  main .ads.ads-leftpromo-clock .ads-right-column {
+  main .ad-container-leftpromo-clock .ad-column-right {
     width: 380px;
   }
 }
 
 @media (min-width: 980px) {
-  main .ads.ads-leftpromo-clock .ads-right-column {
+  main .ad-container-leftpromo-clock .ad-column-right {
     width: 420px;
   }
 }
 
 /* leftpromo toggle */
-main .ads.ads-leftpromo-toggle .rolex-frame-medium {
+main .ad-container-leftpromo-toggle .rolex-frame-medium {
   display: none;
   visibility: hidden;
 }
 
 @media (min-width: 900px) {
-  main .ads.ads-leftpromo-toggle .rolex-frame-medium {
+  main .ad-container-leftpromo-toggle .rolex-frame-medium {
     display: unset;
-    visibility: unset;
+    visibility: visible;
   }
 
-  main .ads.ads-leftpromo-toggle .rolex-frame-small {
+  main .ad-container-leftpromo-toggle .rolex-frame-small {
     display: none;
     visibility: hidden;
   }
 
-  main .ads.ads-leftpromo-toggle .ads-right-column {
+  main .ad-container-leftpromo-toggle .ad-column-right {
     background-color: unset;
-    width: max-content;
+  }
+}
+
+/* right */
+main .ad-container-right {
+  display: none;
+  visibility: hidden;
+}
+
+@media (min-width: 980px) {
+  main .ad-container-right {
+    display: unset;
+    visibility: visible;
+  }
+
+  main .ad-cols {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 32px;
+    align-items: start;
+    width: calc(100% - 64px);
+    max-width: 1290px;
+    margin: 32px auto;
+    padding: 0;
+  }
+
+  main .ad-cols > * {
+    grid-column-start: 1;
+    width: 100%;
+  }
+
+  main .ad-cols > .ad-container-right {
+    box-sizing: border-box;
+    grid-column-start: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    align-self: start;
+    position: sticky;
+    top: 32px;
   }
 }
