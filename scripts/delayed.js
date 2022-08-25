@@ -255,69 +255,10 @@ function initGigya() {
 
 initGigya();
 
-/* status bar countdown and weather */
-function parseCountdown(ms) {
-  const dayMs = 24 * 60 * 60 * 1000;
-  const hourMs = 60 * 60 * 1000;
-  let days = Math.floor(ms / dayMs);
-  let hours = Math.floor((ms - days * dayMs) / hourMs);
-  let minutes = Math.round((ms - days * dayMs - hours * hourMs) / 60000);
-  if (minutes === 60) {
-    hours += 1;
-    minutes = 0;
-  } else if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
-  if (hours === 24) {
-    days += 1;
-    hours = 0;
-  } else if (hours < 10) {
-    hours = `0${hours}`;
-  }
-  return { days, hours, minutes };
-}
-
-function findTimeBetween(date, now = new Date()) {
-  return Math.abs(date - now);
-}
-
-function updateCountdown() {
-  const days = document.getElementById('countdown-days');
-  const hours = document.getElementById('countdown-hours');
-  const minutes = document.getElementById('countdown-minutes');
-  const countdownData = parseCountdown(findTimeBetween(window.placeholders.countdown));
-  days.textContent = countdownData.days;
-  hours.textContent = countdownData.hours;
-  minutes.textContent = countdownData.minutes;
-}
-
+/* status bar weather */
 async function populateStatusBar(statusBar) {
   if (statusBar) {
-    const data = document.createElement('div');
-    data.className = 'status-bar-data';
-    // fetch placeholders
-    try {
-      const placeholders = await fetchPlaceholders();
-      if (placeholders.course) data.insertAdjacentHTML('beforeend', `<div class="status-bar-course"><p>${placeholders.course}</p></div>`);
-      if (placeholders.dates) data.insertAdjacentHTML('beforeend', `<div class="status-bar-dates"><p>${placeholders.dates}</p></div>`);
-      // setup countdown
-      if (placeholders.countdown) {
-        window.placeholders.countdown = new Date(placeholders.countdown);
-        const countdownData = parseCountdown(findTimeBetween(window.placeholders.countdown));
-        const countdown = `<div class="status-bar-countdown">
-          <p>
-            <span id="countdown-days">${countdownData.days}</span> days : 
-            <span id="countdown-hours">${countdownData.hours}</span> hours : 
-            <span id="countdown-minutes">${countdownData.minutes}</span> minutes
-          </p>
-        </div>`;
-        data.insertAdjacentHTML('beforeend', countdown);
-        setInterval(updateCountdown, 60 * 1000); // update countdown every minute
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('failed to load placeholders', error);
-    }
+    const statusBarData = document.querySelector('.status-bar-data');
     // fetch weather
     try {
       const resp = await fetch('https://www.pgatour.com/bin/data/feeds/weather.json/r011');
@@ -334,12 +275,11 @@ async function populateStatusBar(statusBar) {
             <span class="status-bar-temp">${temp}</span>
           </a>
         </p>`;
-      data.append(weather);
+      statusBarData.append(weather);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log('failed to load weather', error);
     }
-    if (data.hasChildNodes()) statusBar.append(data);
   }
 }
 
