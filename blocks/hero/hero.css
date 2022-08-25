@@ -190,6 +190,11 @@ main .hero a.button.secondary:any-link {
   font-size: var(--body-font-size-m);
 }
 
+main .carousel a.button.secondary:any-link:hover {
+  color: var(--color-white);
+  border-color: var(--color-white);
+}
+
 @media (min-width: 700px) {
   main .hero p.button-container {
     margin-top: 32px;
