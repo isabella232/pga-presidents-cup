@@ -9,18 +9,16 @@ main .carousel-wrapper {
 
 main .carousel {
   display: flex;
-  font-family: var(--heading-font-family);
-  text-transform: uppercase;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   overflow-x: scroll;
 }
 
 main .carousel h2 {
-  color: var(--color-white);
+  margin: .25em 0;
+  color: var(--overlay-text-color);
   font-size: var(--heading-font-size-l);
-  font-weight: 400;
-  line-height: .8;
+  line-height: .9;
   text-shadow: 0 0 10px #0008;
 }
 
@@ -43,7 +41,7 @@ main .carousel h2 {
 }
 
 main .carousel a:any-link {
-  color: var(--color-white);
+  color: var(--overlay-text-color);
 }
 
 main .carousel a:hover {
@@ -52,12 +50,13 @@ main .carousel a:hover {
 
 main .carousel picture {
   box-sizing: border-box;
+  z-index: -1;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: -1;
+  object-fit: cover;
 }
 
 main .carousel img {
@@ -68,19 +67,39 @@ main .carousel img {
 
 /* carousel slide */
 main .carousel > div {
+  box-sizing: border-box;
   display: flex;
+  align-items: center;
   flex-shrink: 0;
   position: relative;
   width: 100%;
   height: 420px;
+  padding-top: 75px;
   background-image: linear-gradient(#0002, #0006);
   scroll-snap-align: start;
 }
 
+main .carousel div.carousel-image { /* bg img wrapper */
+  margin: 0;
+  line-height: 0;
+}
+
+main .carousel div.carousel-text {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 0 16px;
+}
+
 @media (min-width: 700px) {
   main .carousel > div {
-    height: calc(100vh - 10px - var(--nav-height));
-    min-height: 420px;
+    height: 700px;
+  }
+
+  main .carousel div.carousel-text {
+    padding: 0 32px;
   }
 }
 
@@ -88,68 +107,38 @@ main .carousel > div {
   main .carousel > div {
     height: 600px;
   }
+
+  main .carousel div.carousel-text {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    grid-auto-rows: min-content;
+    align-items: center;
+    justify-content: center;
+    gap: 0 16px;
+    height: unset;
+  }
 }
 
 @media (min-width: 1200px) {
   main .carousel > div {
     height: 700px;
+    padding-top: 46px;
   }
-}
 
-
-main .carousel div.carousel-image {
-  line-height: 0;
-}
-
-main .carousel div.carousel-text {
-  box-sizing: border-box;
-  display: flex;
-  flex-flow: row wrap;
-  align-content: center;
-  justify-content: center;
-  margin: 0 auto;
-  padding: 0 10px;
-  color: var(--color-white);
-}
-
-main .carousel div.carousel-text h2 {
-  flex-basis: 100%;
-}
-
-@media (min-width: 700px) {
   main .carousel div.carousel-text {
-    padding: 0 30px;
-  }
-}
-
-@media (min-width: 900px) {
-  main .carousel div.carousel-text {
-    justify-content: flex-end;
-  }
-
-  main .carousel div.carousel-text h2 {
-    margin-right: 30%;
-    margin-bottom: 0;
-  }
-}
-
-@media (min-width: 1200px) {
-  main .carousel div.carousel-text {
-    padding: 0 60px;
+    padding-top: 46px;
   }
 }
 
 /* carousel content buttons */
 main .carousel p.button-container {
-  margin: 5px;
-  font-weight: lighter;
+  margin: 0;
   text-align: center;
 }
 
 main .carousel a.button {
   min-width: 115px;
-  color: var(--color-white);
-  font-family: var(--body-font-family);
+  font-weight: lighter;
 }
 
 main .carousel a.button:hover {
@@ -168,6 +157,10 @@ main .carousel a.button.secondary:any-link {
 }
 
 @media (min-width: 700px) {
+  main .carousel p.button-container {
+    margin-top: 32px;
+  }
+
   main .carousel a.button {
     min-width: 200px;
   }
@@ -180,8 +173,7 @@ main .carousel a.button.secondary:any-link {
 
 @media (min-width: 900px) {
   main .carousel p.button-container {
-    margin-left: 70%;
-    text-align: right;
+    margin-top: 0;
   }
 
   main .carousel a.button {
@@ -222,6 +214,7 @@ main .carousel-buttons button {
   background-color: transparent;
 }
 
+main .carousel-buttons button:hover,
 main .carousel-buttons button.selected {
   background-color: currentcolor;
 }
@@ -547,7 +540,6 @@ main .carousel.course div.course-text .course-statistics table tr td.course-stat
   main .carousel.course div.course-text .course-statistics table tr td.course-stat-graph {
     width: 52%;
   }
-  
 }
 
 /* credits */
@@ -625,8 +617,7 @@ main .carousel-container.gallery-container {
   padding: 0 16px;
 }
 
-/* stylelint-disable-next-line no-duplicate-selectors */
-main .carousel {
+main .carousel.gallery {
   font-family: var(--body-font-family);
   text-transform: unset;
 }
