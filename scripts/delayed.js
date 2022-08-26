@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { decorateIcons, sampleRUM, fetchPlaceholders } from './scripts.js';
+import { decorateIcons, sampleRUM } from './scripts.js';
 
 function loadScript(url, callback, type) {
   const head = document.querySelector('head');
