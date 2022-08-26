@@ -283,7 +283,7 @@ main .carousel.course div.course-text {
     grid-template-areas: 
       'overview stats'
       'credits stats'; 
-    height: 272px;
+    height: 256px;
     margin-bottom: 0;
   }
 }
@@ -345,8 +345,8 @@ main .carousel.course div.course-text h3 {
     display: grid;
     grid-auto-columns: 1fr; 
     grid-template-columns: max-content 1fr; 
-    grid-template-rows: 45px 30px 132px; 
-    gap: 0 16px; 
+    grid-template-rows: auto auto 132px; 
+    gap: 0 32px; 
     /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
     grid-template-areas: 
       'overview-title hole'
@@ -365,18 +365,17 @@ main .carousel.course div.course-text h3 {
   }
 
   main .carousel.course div.course-text .course-hole {
-    align-self: center;
-  }
-
-  main .carousel.course div.course-text .course-hole picture {
     grid-area: hole;
+    align-self: center;
   }
 
   main .carousel.course div.course-text .course-overview p:last-child {
     grid-area: description;
     box-sizing: border-box;
     overflow-y: auto;
-    max-height: 362px;
+    max-height: 116px;
+    margin-top: 8px;
+    margin-bottom: 0;
     padding-right: 8px;
     font-size: var(--body-font-size-xs);
   }
@@ -387,6 +386,10 @@ main .carousel.course div.course-text h3 {
     grid-template-rows: 45px 30px 156px; 
     margin-bottom: 16px;
   }
+
+  main .carousel.course div.course-text .course-overview p:last-child {
+    max-height: 139px;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -394,6 +397,10 @@ main .carousel.course div.course-text h3 {
     flex-grow: 1;
     grid-template-rows: 45px 30px 1fr; 
     max-height: unset;
+  }
+
+  main .carousel.course div.course-text .course-overview p:last-child {
+    max-height: 363px;
   }
 }
 
@@ -405,8 +412,7 @@ main .carousel.course div.course-text .course-hole picture {
 
 main .carousel.course div.course-text .course-hole img {
   width: unset;
-  max-width: 150px;
-  height: unset;
+  height: 42px;
   margin: 0;
 }
 
@@ -451,6 +457,7 @@ main .carousel.course div.course-text .course-statistics .course-avg {
   font-size: var(--body-font-size-xl);
   line-height: 1;
   text-align: center;
+  text-transform: uppercase;
 }
 
 main .carousel.course div.course-text .course-statistics .course-avg strong {
@@ -501,6 +508,7 @@ main .carousel.course div.course-text .course-statistics table tr td.course-stat
 
 main .carousel.course div.course-text .course-statistics table tr td.course-stat-title {
   color: var(--color-gray);
+  text-transform: uppercase;
 }
 
 @media (min-width: 700px) {
@@ -508,7 +516,7 @@ main .carousel.course div.course-text .course-statistics table tr td.course-stat
     display: grid;
     grid-template-columns: max-content 1fr; 
     grid-template-rows: max-content 1fr; 
-    gap: 16px; 
+    gap: 24px 16px; 
     /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
     grid-template-areas: 
       'statistics-title statistics-title'
@@ -550,10 +558,12 @@ main .carousel.course div.course-text .course-statistics table tr td.course-stat
 main .carousel.course div.course-text .course-credits {
   grid-area: credits;
   width: 100%;
+  margin: 0;
   border-top: 1px solid #fff8;
   padding: 5px 0;
   font-style: normal;
   text-align: right;
+  text-transform: uppercase;
 }
 
 main .carousel.course div.course-text .course-credits em {
@@ -564,6 +574,7 @@ main .carousel.course div.course-text .course-credits em {
   main .carousel.course div.course-text .course-credits {
     border-top: 0;
     padding-bottom: 0;
+    text-align: left;
   }
 }
 
