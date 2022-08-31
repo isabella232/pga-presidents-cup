@@ -53,6 +53,9 @@ export default async function decorate(block) {
       if (json.data) {
         const data = formatTeeTimesData(json.data);
         // setup dropdown
+        const header = document.createElement('div');
+        header.className = 'tee-times-header';
+        header.innerHTML = '<p>All tee times are local</p>';
         const dropdown = document.createElement('select');
         dropdown.addEventListener('change', () => {
           const { value } = dropdown;
@@ -61,7 +64,8 @@ export default async function decorate(block) {
           const selectedRounds = [...allTimes].filter((time) => time.getAttribute('data-round') === value);
           selectedRounds.forEach((time) => time.classList.remove('filtered'));
         });
-        block.prepend(dropdown);
+        header.append(dropdown);
+        block.prepend(header);
         let currentRound = '';
         Object.keys(data).forEach((round) => { // iterate through rounds
           // populate round dropdown

@@ -13,10 +13,32 @@ main .tee-times h4 {
   font-size: var(--heading-font-size-xs);
 }
 
+/* header */
+main .tee-times .tee-times-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0 64px;
+  margin-bottom: 16px;
+}
+
+main .tee-times .tee-times-header p {
+  flex-basis: max-content;
+  color: var(--text-color);
+  font-size: var(--body-font-size-xxs);
+  text-align: left;
+  text-transform: uppercase;
+}
+
+main .tee-times .tee-times-header p[aria-hidden=true] {
+  visibility: hidden;
+}
+
 /* dropdown */
 main .tee-times select {
+  flex: 1 1 230px;
   width: 100%;
-  margin-bottom: 16px;
   border: 0;
   padding: 8px;
   font-family: inherit;
