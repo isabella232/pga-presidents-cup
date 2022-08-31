@@ -41,6 +41,22 @@ main .carousel h2 {
   }
 }
 
+main .carousel h2 + p:not(.button-container) {
+  display: none;
+  visibility: hidden;
+  margin: 0;
+  font-size: var(--heading-font-size-m);
+  line-height: 1.4;
+  text-shadow: 0 0 10px #0008;
+}
+
+@media (min-width: 700px) {
+  main .carousel h2 + p:not(.button-container) {
+    display: unset;
+    visibility: visible;
+  }
+}
+
 main .carousel a:any-link {
   color: var(--overlay-text-color);
 }
