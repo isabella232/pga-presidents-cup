@@ -341,6 +341,7 @@ main .section.highlight {
   text-align: left;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .left-align main .default-content-wrapper h2,
 .left-align main .default-content-wrapper h3,
 .left-align main .default-content-wrapper h4 {
@@ -350,6 +351,7 @@ main .section.highlight {
   text-transform: initial;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .left-align main .default-content-wrapper h2 {
   font-size: var(--heading-font-size-l);
 }
