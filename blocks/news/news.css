@@ -8,6 +8,12 @@ main .news-container {
   }
 }
 
+main .section.news-container h2 {
+  font-family: var(--heading-font-family);
+  text-align: center;
+  text-transform: uppercase;
+}
+
 main .news {
   font-size: var(--body-font-size-s);
 }

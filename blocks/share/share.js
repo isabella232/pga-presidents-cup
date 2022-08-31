@@ -9,7 +9,8 @@ function openPopup(e) {
 
 function setupClick(btn, type) {
   const url = encodeURIComponent(window.location.href);
-  const title = encodeURIComponent(document.querySelector('h1').textContent);
+  const h1 = document.querySelector('h1');
+  const title = h1 ? encodeURIComponent(h1.textContent) : '';
   switch (type) {
     case 'facebook':
       btn.setAttribute('data-href', `https://www.facebook.com/sharer/sharer.php?u=${url}`);

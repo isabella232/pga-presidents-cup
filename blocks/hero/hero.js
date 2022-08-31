@@ -10,4 +10,14 @@ export default async function decorate(block) {
     decorateBlock(video);
     await loadBlock(video);
   }
+  const em = block.querySelector('em');
+  if (em) {
+    const caption = document.createElement('div');
+    caption.className = 'section';
+    caption.innerHTML = `<p class="hero-caption">
+      ${em.innerHTML}
+    </p>`;
+    em.remove();
+    block.parentNode.append(caption);
+  }
 }

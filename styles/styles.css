@@ -341,15 +341,20 @@ main .section.highlight {
   text-align: left;
 }
 
-.left-align main .section > .default-content-wrapper h3,
-.left-align main .section > .default-content-wrapper h4 {
+.left-align main .default-content-wrapper h2,
+.left-align main .default-content-wrapper h3,
+.left-align main .default-content-wrapper h4 {
   font-family: var(--body-font-family);
-  font-weight: bold;
+  font-weight: light;
   text-align: left;
   text-transform: initial;
 }
 
-.left-align main .section > .default-content-wrapper h4 {
+.left-align main .default-content-wrapper h2 {
+  font-size: var(--heading-font-size-l);
+}
+
+.left-align main .default-content-wrapper h4 {
   color: var(--color-gray-dark);
 }
 

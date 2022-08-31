@@ -775,7 +775,13 @@ async function loadAds(doc) {
   await window.ads.loaded;
   // find if add on page
   const { pathname } = window.location;
-  const adOnPage = window.ads.locations.find((ad) => ad.URL === pathname);
+  const adOnPage = window.ads.locations.find((ad) => {
+    if (ad.URL.includes('**')) { // wildcard selector
+      const folder = ad.URL.replace('**', '');
+      return pathname.startsWith(folder);
+    }
+    return ad.URL === pathname;
+  });
   if (adOnPage) {
     // build ad block
     const adContainer = document.createElement('div');
