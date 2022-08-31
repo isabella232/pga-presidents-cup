@@ -104,7 +104,7 @@ main .ad-container-right {
     align-items: start;
     width: calc(100% - 64px);
     max-width: 1290px;
-    margin: 32px auto;
+    margin: 16px auto;
     padding: 0;
   }
 
