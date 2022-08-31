@@ -22,8 +22,16 @@ main .table th, main .table td {
   border-right: 0;
 }
 
+main .table th {
+  text-transform: uppercase;
+}
+
 main .table td.table-cell-num {
   text-align: center;
+}
+
+main .table td:not(.table-cell-num) {
+  font-weight: bold;
 }
 
 main .table table tbody tr:nth-child(odd) {
