@@ -123,7 +123,7 @@ function getAdSize(position) {
 }
 
 function buildLeftPromoClockAd(position) {
-  const sectionBefore = document.querySelector('.leaderboard-container, .tee-times-container');
+  const sectionBefore = document.querySelector('.leaderboard-container, .columns-container, .tee-times-container');
   if (sectionBefore) {
     // setup clock
     window.rolexNCVHdBD = [{
@@ -167,7 +167,7 @@ function buildLeftPromoClockAd(position) {
 }
 
 function buildLeftPromoToggleAd(position) {
-  const sectionBefore = document.querySelector('.leaderboard-container, .tee-times-container');
+  const sectionBefore = document.querySelector('.tee-times-container');
   if (sectionBefore) {
     // build ad section
     const adSection = document.createElement('div');
@@ -322,8 +322,8 @@ export default function decorate(block) {
   }, { threshold: 0 });
 
   const triggerBlocks = {
-    'leftpromo clock': '.leaderboard, .tee-times',
-    'leftpromo toggle': '.leaderboard, .tee-times',
+    'leftpromo clock': '.leaderboard, .columns',
+    'leftpromo toggle': '.tee-times',
     top: '.carousel, .hero',
     right: '.carousel, .hero',
   };
