@@ -535,12 +535,36 @@ header nav .nav-user button {
   cursor: pointer;
 }
 
-header nav .nav-user button[data-status=loading] {
+header nav .nav-user button[data-status=loading] .icon.icon-user {
+  /* display: none; */
+  visibility: hidden;
+}
+
+header nav .nav-user button[data-status=loading] .icon.icon-spinner svg {
+  animation: spinner linear 3s infinite;
+  opacity: .5;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+header nav .nav-user button[data-status=initialized] .icon.icon-spinner {
   display: none;
   visibility: hidden;
 }
 
+header nav .nav-user button[data-status=initialized] .icon.icon-spinner svg {
+  animation: unset;
+}
+
 header nav[aria-expanded=true] .nav-user button {
+  display: block;
   justify-content: flex-start;
 }
 
@@ -573,6 +597,7 @@ header nav .nav-user button .icon.icon-caret::after {
 }
 
 header nav[aria-expanded=true] .nav-user button img,
+header nav[aria-expanded=true] .nav-user button .icon.icon-spinner,
 header nav[aria-expanded=true] .nav-user button .icon.icon-caret {
   display: none;
   visibility: hidden;
@@ -601,7 +626,8 @@ header nav .nav-user button img {
 }
 
 header nav .nav-user button img,
-header nav .nav-user .icon.icon-user svg {
+header nav .nav-user .icon.icon-user svg,
+header nav .nav-user .icon.icon-spinner svg {
   height: 24px;
   width: 24px;
 }

@@ -50,7 +50,7 @@ function setupUser(section) {
   const icon = section.querySelector('.icon');
   const text = section.textContent.trim();
   section.innerHTML = `<button id="nav-user-button" class="nav-user-button" data-status="loading">
-      ${icon.outerHTML}<span>${text}</span>
+      ${icon.outerHTML}<span class="icon icon-spinner"></span><span>${text}</span>
     </button>`;
 }
 
