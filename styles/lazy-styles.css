@@ -55,6 +55,12 @@ body .gigya-screen input[type=submit]:hover {
   background-color: var(--link-hover-color);
 }
 
+/* this button does NOTHING */
+body #gigya-players-screen.gigya-screen input[type=submit].gigya-input-submit { 
+  display: none;
+  visibility: hidden;
+}
+
 /* favorite players */
 body .gigya-your-favorites > div {
   display: flex;
@@ -99,15 +105,23 @@ body .gigya-find-player-options {
   display: none;
   visibility: hidden;
   position: absolute;
-  top: calc(100% - 19px);
+  top: calc(100% - 21px);
   left: 0;
   right: 0;
   max-height: 161px;
   overflow-y: auto;
   border: 1px solid #b6bdc5;
-  border-radius: 4.5px;
+  border-top: 0;
+  border-radius: 0 0 4.5px 4.5px;
+  box-shadow: 0 5px 5px 0 #0008;
   background-color: var(--highlight-background-color);
   list-style: none;
+}
+
+body .gigya-find-player-options[data-options="0"]::before {
+  display: block;
+  padding: 8px;
+  content: 'No matches';
 }
 
 body .gigya-find-player-options li {

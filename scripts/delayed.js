@@ -92,14 +92,10 @@ async function loadPlayers() {
   return window.players || {};
 }
 
-function removeFavoritePlayer(e) {
-  e.preventDefault();
-  // const id = e.target.closest('div').getAttribute('data-id');
-  // console.log('remove pid:', id);
-}
-
 function updateSelectPlayer(select, tour, players) {
   select.innerHTML = '';
+  // eslint-disable-next-line no-use-before-define
+  select.addEventListener('change', clearFindPlayer);
   const defaultOption = document.createElement('option');
   defaultOption.disabled = true;
   defaultOption.selected = true;
@@ -119,6 +115,8 @@ function updateFindPlayerInput(e) {
   const input = target.parentNode.parentNode.querySelector('input');
   input.value = target.textContent;
   input.setAttribute('data-value', target.getAttribute('value'));
+  // eslint-disable-next-line no-use-before-define
+  clearSelectPlayer();
 }
 
 function updateFindPlayer(input, tour, players) {
@@ -136,15 +134,18 @@ function updateFindPlayer(input, tour, players) {
 
 function filterFindPlayer(e) {
   const { target } = e;
-  const value = target.value.toLowerCase();
+  const value = target.value.trim().toLowerCase();
   const parent = target.parentNode.querySelector('.gigya-find-player-options');
+  let visibleOptions = 0;
   parent.querySelectorAll('li').forEach((option) => {
-    if (option.textContent.toLowerCase().includes(value)) {
+    if (value.length && option.textContent.toLowerCase().includes(value)) {
       option.classList.remove('hide');
+      visibleOptions += 1;
     } else {
       option.classList.add('hide');
     }
   });
+  parent.setAttribute('data-options', visibleOptions);
 }
 
 function setupFindPlayer(input) {
@@ -152,6 +153,115 @@ function setupFindPlayer(input) {
   options.className = 'gigya-find-player-options';
   input.after(options);
   input.addEventListener('keyup', filterFindPlayer);
+}
+
+function getPlayerIdFromForm() {
+  const findPlayer = document.querySelector('input[name="data.findPlayer"]');
+  const findValue = findPlayer.getAttribute('data-value');
+  const selectPlayer = document.querySelector('select[name="data.players"]');
+  const selectValue = selectPlayer.value === 'Select Player' ? null : selectPlayer.value;
+  return findValue || selectValue;
+}
+
+function getTourCodeFromForm() {
+  return document.querySelector('select[name="data.tour"]').value;
+}
+
+function clearFindPlayer() {
+  const findPlayer = document.querySelector('input[name="data.findPlayer"]');
+  if (findPlayer) {
+    findPlayer.value = '';
+    findPlayer.removeAttribute('data-value');
+  }
+}
+
+function clearSelectPlayer() {
+  const selectPlayer = document.querySelector('select[name="data.players"]');
+  if (selectPlayer) selectPlayer.selectedIndex = 0;
+}
+
+async function updateFavoritePlayersAfterAdd(res) {
+  // eslint-disable-next-line no-use-before-define
+  await writeFavoritePlayers(res.requestParams.data.favorites);
+  clearFindPlayer();
+  clearSelectPlayer();
+}
+
+async function updateFavoritePlayersAfterRemove(res) {
+  // eslint-disable-next-line no-use-before-define
+  await writeFavoritePlayers(res.requestParams.data.favorites);
+}
+
+function addFavoritePlayer(res) {
+  const { favorites } = res.data;
+  const playerId = getPlayerIdFromForm();
+  const tourCode = getTourCodeFromForm();
+  const alreadyInFavorites = favorites.find((fave) => fave.playerId === playerId);
+  if (!alreadyInFavorites) {
+    favorites.push({
+      createdDate: new Date().toISOString(),
+      tourCode,
+      playerId,
+    });
+    // eslint-disable-next-line no-undef
+    gigya.accounts.setAccountInfo({
+      data: { favorites },
+      callback: updateFavoritePlayersAfterAdd,
+    });
+  } else {
+    clearFindPlayer();
+    clearSelectPlayer();
+  }
+}
+
+function removeFavoritePlayer(res) {
+  const { favorites } = res.data;
+  const favoritesList = document.querySelector('.gigya-your-favorites');
+  const selectedPlayer = favoritesList.querySelector('[data-selected="true"]');
+  selectedPlayer.removeAttribute('data-selected');
+  const playerId = selectedPlayer.getAttribute('data-id');
+  const playerToRemove = favorites.find((fave) => fave.playerId === playerId);
+  if (playerToRemove) {
+    const newFavorites = favorites.filter((fave) => fave !== playerToRemove);
+    // eslint-disable-next-line no-undef
+    gigya.accounts.setAccountInfo({
+      data: { favorites: newFavorites },
+      callback: updateFavoritePlayersAfterRemove,
+    });
+  }
+}
+
+function updateFavoritePlayers(e, operation, id) {
+  e.preventDefault();
+  if (id && operation === 'add') {
+    // eslint-disable-next-line no-undef
+    gigya.accounts.getAccountInfo({ callback: addFavoritePlayer });
+  } else if (id && operation === 'remove') {
+    // eslint-disable-next-line no-undef
+    gigya.accounts.getAccountInfo({ callback: removeFavoritePlayer });
+  }
+}
+
+async function writeFavoritePlayers(favorites) {
+  const wrapper = document.querySelector('.gigya-your-favorites');
+  wrapper.innerHTML = '';
+  const players = await loadPlayers();
+  favorites.forEach((favorite) => {
+    const player = players.byId[favorite.playerId];
+    const row = document.createElement('div');
+    row.setAttribute('data-tour', favorite.tourCode);
+    row.setAttribute('data-id', favorite.playerId);
+    row.innerHTML = `<p>${player.nameF} ${player.nameL}</p>
+      <button><span class="icon icon-close"></span></button>`;
+    const button = row.querySelector('button');
+    button.addEventListener('click', (e) => {
+      const target = e.target.closest('[data-id]');
+      target.setAttribute('data-selected', true);
+      const id = target.getAttribute('data-id');
+      updateFavoritePlayers(e, 'remove', id);
+    });
+    wrapper.append(row);
+  });
 }
 
 async function setupFavoritePlayersScreen(userData) {
@@ -162,33 +272,34 @@ async function setupFavoritePlayersScreen(userData) {
   const h2 = document.querySelector('h2[data-translation-key="HEADER_53211634253006840_LABEL"]');
   if (h2) h2.after(wrapper);
   if (userData && userData.favorites) {
-    userData.favorites.forEach((favorite) => {
-      const player = players.byId[favorite.playerId];
-      const row = document.createElement('div');
-      row.setAttribute('data-tour', favorite.tourCode);
-      row.setAttribute('data-id', favorite.playerId);
-      row.innerHTML = `<p>${player.nameF} ${player.nameL}</p>
-        <button><span class="icon icon-close"></span></button>`;
-      const button = row.querySelector('button');
-      button.addEventListener('click', removeFavoritePlayer);
-      wrapper.append(row);
-    });
+    await writeFavoritePlayers(userData.favorites);
   }
   // setup add more
   const tourDropdown = document.querySelector('select[name="data.tour"]');
   const findPlayer = document.querySelector('input[name="data.findPlayer"]');
   const selectPlayer = document.querySelector('select[name="data.players"]');
-  if (tourDropdown && findPlayer && selectPlayer) {
+  const addButton = document.querySelector('.js-add-player.gigya-add-player');
+  if (tourDropdown && findPlayer && selectPlayer && addButton) {
     tourDropdown.addEventListener('change', () => {
       const { value } = tourDropdown;
       findPlayer.setAttribute('data-filter', value);
+      clearFindPlayer();
+      updateFindPlayer(findPlayer, value, players[value]);
       selectPlayer.setAttribute('data-filter', value);
+      clearSelectPlayer();
       updateSelectPlayer(selectPlayer, value, players[value]);
     });
-    updateSelectPlayer(selectPlayer, tourDropdown.value, players[tourDropdown.value]);
     setupFindPlayer(findPlayer);
     updateFindPlayer(findPlayer, tourDropdown.value, players[tourDropdown.value]);
+    updateSelectPlayer(selectPlayer, tourDropdown.value, players[tourDropdown.value]);
+    addButton.addEventListener('click', (e) => {
+      const id = getPlayerIdFromForm();
+      updateFavoritePlayers(e, 'add', id);
+    });
   }
+  // remove non-submit button
+  const submit = document.querySelector('#gigya-players-screen.gigya-screen input[type=submit].gigya-input-submit');
+  if (submit) submit.remove();
 }
 
 function setupAccountMenu(res) {
