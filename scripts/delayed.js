@@ -114,6 +114,46 @@ function updateSelectPlayer(select, tour, players) {
   });
 }
 
+function updateFindPlayerInput(e) {
+  const target = e.target.closest('li');
+  const input = target.parentNode.parentNode.querySelector('input');
+  input.value = target.textContent;
+  input.setAttribute('data-value', target.getAttribute('value'));
+}
+
+function updateFindPlayer(input, tour, players) {
+  const wrapper = input.parentNode.querySelector('.gigya-find-player-options');
+  players.forEach((player) => {
+    const option = document.createElement('li');
+    option.className = 'hide';
+    option.setAttribute('data-tour', tour);
+    option.setAttribute('value', player.pid);
+    option.textContent = `${player.nameL}, ${player.nameF}`;
+    option.addEventListener('click', updateFindPlayerInput);
+    wrapper.append(option);
+  });
+}
+
+function filterFindPlayer(e) {
+  const { target } = e;
+  const value = target.value.toLowerCase();
+  const parent = target.parentNode.querySelector('.gigya-find-player-options');
+  parent.querySelectorAll('li').forEach((option) => {
+    if (option.textContent.toLowerCase().includes(value)) {
+      option.classList.remove('hide');
+    } else {
+      option.classList.add('hide');
+    }
+  });
+}
+
+function setupFindPlayer(input) {
+  const options = document.createElement('ul');
+  options.className = 'gigya-find-player-options';
+  input.after(options);
+  input.addEventListener('keyup', filterFindPlayer);
+}
+
 async function setupFavoritePlayersScreen(userData) {
   const players = await loadPlayers();
   // setup user favorites
@@ -146,6 +186,8 @@ async function setupFavoritePlayersScreen(userData) {
       updateSelectPlayer(selectPlayer, value, players[value]);
     });
     updateSelectPlayer(selectPlayer, tourDropdown.value, players[tourDropdown.value]);
+    setupFindPlayer(findPlayer);
+    updateFindPlayer(findPlayer, tourDropdown.value, players[tourDropdown.value]);
   }
 }
 
