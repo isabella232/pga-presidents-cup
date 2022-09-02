@@ -159,6 +159,36 @@ export function decorateIcons(element) {
 }
 
 /**
+ * Sets external target and rel for links in a container element.
+ * @param {Element} container The container element
+ */
+function updateExternalLinks(container) {
+  const REFERERS = [
+    'http://pubads.g.doubleclick.net',
+    'https://googleads.g.doubleclick.net',
+    'https://adclick.g.doubleclick.net',
+    'https://www.pgatour.com',
+    'https://www.pgatourfanshop.com',
+    'https://www.grantthornton.com',
+    'http://www.morganstanley.com',
+    'http://www.optum.com',
+    'https://www.rolex.com',
+  ];
+  container.querySelectorAll('a[href]').forEach((a) => {
+    try {
+      const { origin } = new URL(a.href, window.location.href);
+      if (origin && origin !== window.location.origin) {
+        a.setAttribute('target', '_blank');
+        if (!REFERERS.includes('origin')) a.setAttribute('rel', 'noopener');
+      }
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.warn(`Invalid link in ${container}: ${a.href}`);
+    }
+  });
+}
+
+/**
  * Wraps images followed by links within a matching <a> tag.
  * @param {Element} container The container element
  */
@@ -295,6 +325,7 @@ export function decorateSections(main) {
     });
     wrappers.forEach((wrapper) => section.append(wrapper));
     section.classList.add('section');
+    updateExternalLinks(section);
     section.setAttribute('data-section-status', 'initialized');
 
     /* process section metadata */
@@ -404,6 +435,7 @@ export async function loadBlock(block, eager = false) {
       // eslint-disable-next-line no-console
       console.log(`failed to load block ${blockName}`, err);
     }
+    updateExternalLinks(block);
     block.setAttribute('data-block-status', 'loaded');
   }
 }
@@ -736,6 +768,7 @@ async function loadHeader(header) {
   header.append(headerBlock);
   decorateBlock(headerBlock);
   await loadBlock(headerBlock);
+  updateExternalLinks(headerBlock);
 }
 
 async function loadFooter(footer) {
@@ -743,6 +776,7 @@ async function loadFooter(footer) {
   footer.append(footerBlock);
   decorateBlock(footerBlock);
   await loadBlock(footerBlock);
+  updateExternalLinks(footerBlock);
 }
 
 async function loadAds(doc) {
