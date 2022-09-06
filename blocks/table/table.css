@@ -6,6 +6,10 @@ main .table {
   line-height: 1.2;
 }
 
+main .table.light {
+  color: var(--color-text);
+}
+
 main .table table, main .table th, main .table td {
   border: 1px solid var(--color-gray-light);
   padding: 10px;
@@ -26,6 +30,11 @@ main .table th {
   text-transform: uppercase;
 }
 
+main .table.light th, main .table.light td {
+  border: 1px solid var(--color-gray);
+  text-align: left;
+}
+
 main .table td.table-cell-num {
   text-align: center;
 }
@@ -34,12 +43,20 @@ main .table td:not(.table-cell-num) {
   font-weight: bold;
 }
 
+main .table.light td {
+  font-weight: normal;
+}
+
 main .table table tbody tr:nth-child(odd) {
   background-color: var(--color-white);
 }
 
 main .table table tbody tr:nth-child(even) {
   background-color: var(--background-color);
+}
+
+main .table.light table tbody tr {
+  background-color: transparent;
 }
 
 @media (min-width: 700px) {
