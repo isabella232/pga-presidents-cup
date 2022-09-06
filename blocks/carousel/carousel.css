@@ -224,20 +224,19 @@ main .carousel::-webkit-scrollbar {
 
 /* carousel nav buttons */
 main .carousel-wrapper .carousel-buttons {
-  display: none;
-  visibility: hidden;
-}
-
-main .carousel-wrapper .carousel-buttons.carousel-buttons-multi {
   display: flex;
   justify-content: center;
-  visibility: visible;
   position: absolute;
   bottom: 10px;
   right: 0;
   left: 0;
   text-align: center;
   z-index: 1;
+}
+
+main .carousel-wrapper .carousel-buttons[aria-hidden=true] {
+  display: none;
+  visibility: hidden;
 }
 
 main .carousel-buttons button {
