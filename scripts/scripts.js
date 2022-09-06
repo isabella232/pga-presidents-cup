@@ -499,6 +499,39 @@ export function createOptimizedPicture(src, alt = '', eager = false, breakpoints
 }
 
 /**
+ * returns an image caption of a picture element
+ * @param {Element} picture picture element
+ */
+function getImageCaption(picture) {
+  const parent = picture.parentNode;
+  const parentSibling = parent.nextElementSibling;
+  return parentSibling && parentSibling.firstChild.nodeName === 'EM' ? parentSibling : undefined;
+}
+
+/**
+ * builds images blocks from default content.
+ * @param {Element} main The container element
+ */
+function buildImageBlocks(main) {
+  // select all non-featured, default (non-images block) images
+  const imgs = [...main.querySelectorAll(':scope > div > p > picture')];
+  let lastImagesBlock;
+  imgs.forEach((img) => {
+    const parent = img.parentNode;
+    const imgBlock = buildBlock('images', {
+      elems: [img.cloneNode(true), getImageCaption(img)],
+    });
+    if (parent.parentNode) {
+      parent.replaceWith(imgBlock);
+      lastImagesBlock = imgBlock;
+    } else {
+      // same parent, add image to last images block
+      lastImagesBlock.firstChild.append(imgBlock.firstChild.firstChild);
+    }
+  });
+}
+
+/**
  * Normalizes all headings within a container element.
  * @param {Element} el The container element
  * @param {[string]} allowedHeadings The list of allowed headings (h1 ... h6)
@@ -838,10 +871,14 @@ async function loadAds(doc) {
 async function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
-
+    buildImageBlocks(main);
     const template = getMetadata('template');
     if (template === 'left-align' || template === 'past-champions') {
       buildShareBlock(main);
+    }
+    if (template === 'past-champions') {
+      const image = main.querySelector('.images');
+      if (image) image.classList.add('float');
     }
 
     const relatedStories = getMetadata('related-stories');
@@ -912,12 +949,6 @@ async function loadLazy(doc) {
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.ico`);
 
   loadAds(doc);
-
-  const template = getMetadata('template');
-  if (template === 'past-champions') {
-    const pic = main.querySelector('.default-content-wrapper p picture');
-    if (pic) pic.parentNode.classList.add('past-champions-float');
-  }
 
   doc.querySelectorAll('div:not([class]):empty').forEach((empty) => empty.remove());
 }

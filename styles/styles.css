@@ -328,14 +328,6 @@ main .section.highlight {
   margin-top: 0;
 }
 
-@media (min-width: 900px) {
-  .past-champions main .default-content-wrapper .past-champions-float {
-    float: right;
-    max-width: 50%;
-    margin: 10px 0 10px 20px;
-  }
-}
-
 .past-champions main .section > .default-content-wrapper,
 .left-align main .section > .default-content-wrapper {
   text-align: left;
