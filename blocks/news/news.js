@@ -1,4 +1,4 @@
-import { readBlockConfig, toClassName } from '../../scripts/scripts.js';
+import { readBlockConfig, toClassName, updateExternalLinks } from '../../scripts/scripts.js';
 
 function filterNews(e) {
   const button = e.target.closest('button');
@@ -123,6 +123,7 @@ export default async function decorate(block) {
         });
         block.append(container);
       }
+      updateExternalLinks(block);
     }
   }, { threshold: 0 });
 

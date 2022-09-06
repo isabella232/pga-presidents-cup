@@ -162,7 +162,7 @@ export function decorateIcons(element) {
  * Sets external target and rel for links in a container element.
  * @param {Element} container The container element
  */
-function updateExternalLinks(container) {
+export function updateExternalLinks(container) {
   const REFERERS = [
     'http://pubads.g.doubleclick.net',
     'https://googleads.g.doubleclick.net',
