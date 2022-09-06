@@ -129,9 +129,9 @@ export default async function decorate(block) {
         const bgConditions = ['cloudy', 'fair', 'fog', 'rain', 'snow', 'sunny', 'thunderstorm'];
         let bgImg;
         if (bgConditions.includes(condition)) {
-          bgImg = createOptimizedPicture(`blocks/weather/weather-${condition}.png`);
+          bgImg = createOptimizedPicture(`/blocks/weather/weather-${condition}.png`);
         } else {
-          bgImg = createOptimizedPicture('blocks/weather/weather-fair.png');
+          bgImg = createOptimizedPicture('/blocks/weather/weather-fair.png');
         }
         bgImg.className = 'weather-background';
         block.prepend(bgImg);
