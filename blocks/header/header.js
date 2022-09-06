@@ -47,11 +47,19 @@ async function setupPartners(section) {
 }
 
 function setupUser(section) {
+  const isStored = sessionStorage.getItem('gigyaAccount');
   const icon = section.querySelector('.icon');
   const text = section.textContent.trim();
-  section.innerHTML = `<button id="nav-user-button" class="nav-user-button" data-status="loading">
-      ${icon.outerHTML}<span class="icon icon-spinner"></span><span>${text}</span>
-    </button>`;
+  if (isStored) {
+    const user = JSON.parse(isStored);
+    section.innerHTML = `<button id="nav-user-button" class="nav-user-button" data-status="loading">
+        <img src="${user.thumbnailURL}" alt="User Profile Thumbnail"/></span><span>${text}</span>
+      </button>`;
+  } else {
+    section.innerHTML = `<button id="nav-user-button" class="nav-user-button" data-status="loading">
+        ${icon.outerHTML}<span class="icon icon-spinner"></span><span>${text}</span>
+      </button>`;
+  }
 }
 
 function parseCountdown(ms) {
@@ -185,3 +193,8 @@ export default async function decorate(block) {
     await setupPartners(nav.querySelector('.nav-brand'));
   }
 }
+
+/* {
+  "isConnected":true,
+  "thumbnailURL":"https://cdns.gigya.com/photos/7834081/2208c9f2f57049889e9378ad8a22bd1c/thumbnail?ts=637952981134401936"
+} */

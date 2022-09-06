@@ -318,6 +318,14 @@ function setupAccountMenu(res) {
 }
 
 /* setup user authentication */
+function saveUserInfo(userInfo) {
+  sessionStorage.setItem('gigyaAccount', JSON.stringify(userInfo));
+}
+
+function removeUserInfo() {
+  sessionStorage.removeItem('gigyaAccount');
+}
+
 function showAccountMenu() {
   // eslint-disable-next-line no-undef
   gigya.accounts.showScreenSet({
@@ -341,14 +349,18 @@ function updateUserButton(user) {
   if (user.eventName === 'afterSubmit') user = user.response.user;
   const button = document.getElementById('nav-user-button');
   if (user && user != null && user.isConnected) {
+    saveUserInfo({
+      isConnected: user.isConnected,
+      thumbnailURL: user.thumbnailURL,
+    });
     // add button caret
     button.innerHTML = `${button.innerHTML}<span class="icon icon-caret"></span>`;
     // update button text
     const text = button.querySelector('span:not([class])');
     text.textContent = 'Manage Profile';
     // update button icon
-    if (user.thumbnailURL.length > 0) {
-      const icon = button.querySelector('span.icon');
+    if (user.thumbnailURL.length > 0 && !button.querySelector('img')) {
+      const icon = button.querySelector('span.icon.icon-user');
       const img = document.createElement('img');
       img.src = user.thumbnailURL;
       img.alt = 'User Profile Thumbnail';
@@ -364,7 +376,8 @@ function clearUserButton() {
   const button = document.getElementById('nav-user-button');
   if (button) {
     // remove caret
-    button.querySelector('.icon.icon-caret').remove();
+    const caret = button.querySelector('.icon.icon-caret');
+    if (caret) caret.remove();
     // update button text
     const text = button.querySelector('span:not([class])');
     text.textContent = 'Login/Register';
@@ -383,10 +396,11 @@ function clearUserButton() {
 }
 
 function logout() {
+  clearUserButton();
   // eslint-disable-next-line no-undef
   gigya.accounts.hideScreenSet({ screenSet: 'Website-ManageProfile' });
   // eslint-disable-next-line no-undef
-  gigya.socialize.logout({ callback: clearUserButton });
+  gigya.socialize.logout({ callback: removeUserInfo });
 }
 
 function setupUserButton(res) {
@@ -397,6 +411,8 @@ function setupUserButton(res) {
       user.isConnected = true;
       updateUserButton(user);
     } else {
+      clearUserButton();
+      removeUserInfo();
       // set click to open login menu
       button.addEventListener('click', showLoginMenu);
     }
@@ -409,6 +425,8 @@ function checkIfLoggedIn(res) {
     // eslint-disable-next-line no-undef
     gigya.accounts.getAccountInfo({ callback: setupUserButton });
   } else {
+    clearUserButton();
+    removeUserInfo();
     setupUserButton();
   }
 }
