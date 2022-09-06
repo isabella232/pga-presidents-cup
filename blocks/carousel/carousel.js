@@ -232,6 +232,7 @@ export default async function decorate(block) {
     /* buttons */
     const button = document.createElement('button');
     if (!i) button.classList.add('selected');
+    if (i) buttons.classList.add('carousel-buttons-multi');
     button.addEventListener('click', () => {
       block.scrollTo({ top: 0, left: row.offsetLeft - row.parentNode.offsetLeft, behavior: 'smooth' });
       [...buttons.children].forEach((r) => r.classList.remove('selected'));
