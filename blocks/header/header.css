@@ -6,6 +6,13 @@ header {
   color: var(--color-white);
 }
 
+header .header {
+  display: none;
+}
+header .header.appear {
+  display: unset;
+}
+
 header nav {
   box-sizing: border-box;
   display: grid;
