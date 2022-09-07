@@ -948,7 +948,7 @@ async function loadLazy(doc) {
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.ico`);
 
-  loadAds(doc);
+  // loadAds(doc);
 
   doc.querySelectorAll('div:not([class]):empty').forEach((empty) => empty.remove());
 }

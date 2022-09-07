@@ -251,86 +251,86 @@ export default function decorate(block) {
   const config = readBlockConfig(block);
   block.innerHTML = '';
 
-  const observer = new IntersectionObserver((entries) => {
-    if (entries.some((entry) => entry.isIntersecting)) {
-      observer.disconnect();
-      window.pgatour = window.pgatour || {};
+  // const observer = new IntersectionObserver((entries) => {
+  //   if (entries.some((entry) => entry.isIntersecting)) {
+  //     observer.disconnect();
+  //     window.pgatour = window.pgatour || {};
 
-      loadScript('/blocks/ads/jquery-3.6.0.min.js', () => {
-        loadScript('/blocks/ads/react-cq.min.js', () => {
-          loadScript('/blocks/ads/pgatour.min.js', () => {
-            // setup ads
-            window.pgatour.EngageTimer.setup();
-            window.pgatour.Ad.setup({
-              site: 'pgat',
-              refreshDisabled: false,
-              trackBrowserActivity: true,
-              justInTime: true,
-              refreshOnScroll: 'none',
-              useEngageTime: true,
-              options: {
-                s1: 'pgatour',
-                s2: 'tournaments',
-                s3: 'the-players',
-                s4: 'landing',
-              },
-              enableSingleRequest: true,
-              networkCode: '9517547',
-              refreshInterval: 20,
-            });
-            const positions = config.position.split(',').map((p) => p.trim());
-            positions.forEach((position) => {
-              // setup ad wrapper
-              let wrapper;
-              let pos = config.position;
-              switch (position) {
-                case 'leftpromo clock':
-                  wrapper = buildLeftPromoClockAd(position);
-                  pos = 'leftpromo';
-                  break;
-                case 'leftpromo toggle':
-                  wrapper = buildLeftPromoToggleAd(position);
-                  pos = 'leftpromo';
-                  break;
-                case 'top':
-                  wrapper = buildTopAd(position);
-                  break;
-                case 'right':
-                  wrapper = buildRightAd(position);
-                  break;
-                default:
-                  break;
-              }
-              // create new ad
-              if (wrapper) {
-                // eslint-disable-next-line no-new
-                new window.pgatour.Ad(wrapper, {
-                  trackBrowserActivity: true,
-                  options: { pos },
-                  refreshOnResize: false,
-                  companionAd: false,
-                  justOnScroll: false,
-                  suspended: false,
-                  size: getAdSize(position),
-                });
-              }
-            });
-          });
-        });
-      });
-    }
-  }, { threshold: 0 });
+  //     loadScript('/blocks/ads/jquery-3.6.0.min.js', () => {
+  //       loadScript('/blocks/ads/react-cq.min.js', () => {
+  //         loadScript('/blocks/ads/pgatour.min.js', () => {
+  //           // setup ads
+  //           window.pgatour.EngageTimer.setup();
+  //           window.pgatour.Ad.setup({
+  //             site: 'pgat',
+  //             refreshDisabled: false,
+  //             trackBrowserActivity: true,
+  //             justInTime: true,
+  //             refreshOnScroll: 'none',
+  //             useEngageTime: true,
+  //             options: {
+  //               s1: 'pgatour',
+  //               s2: 'tournaments',
+  //               s3: 'the-players',
+  //               s4: 'landing',
+  //             },
+  //             enableSingleRequest: true,
+  //             networkCode: '9517547',
+  //             refreshInterval: 20,
+  //           });
+  //           const positions = config.position.split(',').map((p) => p.trim());
+  //           positions.forEach((position) => {
+  //             // setup ad wrapper
+  //             let wrapper;
+  //             let pos = config.position;
+  //             switch (position) {
+  //               case 'leftpromo clock':
+  //                 wrapper = buildLeftPromoClockAd(position);
+  //                 pos = 'leftpromo';
+  //                 break;
+  //               case 'leftpromo toggle':
+  //                 wrapper = buildLeftPromoToggleAd(position);
+  //                 pos = 'leftpromo';
+  //                 break;
+  //               case 'top':
+  //                 wrapper = buildTopAd(position);
+  //                 break;
+  //               case 'right':
+  //                 wrapper = buildRightAd(position);
+  //                 break;
+  //               default:
+  //                 break;
+  //             }
+  //             // create new ad
+  //             if (wrapper) {
+  //               // eslint-disable-next-line no-new
+  //               new window.pgatour.Ad(wrapper, {
+  //                 trackBrowserActivity: true,
+  //                 options: { pos },
+  //                 refreshOnResize: false,
+  //                 companionAd: false,
+  //                 justOnScroll: false,
+  //                 suspended: false,
+  //                 size: getAdSize(position),
+  //               });
+  //             }
+  //           });
+  //         });
+  //       });
+  //     });
+  //   }
+  // }, { threshold: 0 });
 
-  const triggerBlocks = {
-    'leftpromo clock': '.leaderboard, .columns',
-    'leftpromo toggle': '.tee-times',
-    top: '.carousel, .hero',
-    right: '.carousel, .hero',
-  };
+  // const triggerBlocks = {
+  //   'leftpromo clock': '.leaderboard, .columns',
+  //   'leftpromo toggle': '.tee-times',
+  //   top: '.carousel, .hero',
+  //   right: '.carousel, .hero',
+  // };
 
-  const positions = config.position.split(',').map((p) => p.trim());
-  positions.forEach((position) => {
-    const blocks = document.querySelectorAll(triggerBlocks[position]);
-    blocks.forEach((trigger) => observer.observe(trigger));
-  });
+  // const positions = config.position.split(',').map((p) => p.trim());
+  // positions.forEach((position) => {
+  //   const blocks = document.querySelectorAll(triggerBlocks[position]);
+  //   blocks.forEach((trigger) => observer.observe(trigger));
+  // });
 }
