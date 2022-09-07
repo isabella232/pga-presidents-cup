@@ -496,3 +496,19 @@ async function setGeoCookies() {
 
 const cookieScript = loadScript('https://cdn.cookielaw.org/scripttemplates/otSDKStub.js', setGeoCookies);
 cookieScript.setAttribute('data-domain-script', '262c6c79-a114-41f0-9c07-52cb1fb7390c');
+
+function loadAds() {
+  // eslint-disable-next-line no-var
+  var tude = window.tude || { cmd: [] };
+  // eslint-disable-next-line prefer-arrow-callback
+  tude.cmd.push(function () {
+    tude.refreshAdsViaDivMappings([
+      {
+        divId: 'pb-slot-content-1',
+        baseDivId: 'pb-slot-content-1',
+      },
+    ]);
+  });
+}
+
+if (window.adOnPage) loadAds();

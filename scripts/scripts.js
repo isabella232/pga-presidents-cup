@@ -898,20 +898,6 @@ async function preloadAdPlaceholders(doc) {
   } else window.adOnPage = false;
 }
 
-function loadAds() {
-  // eslint-disable-next-line no-var
-  var tude = window.tude || { cmd: [] };
-  // eslint-disable-next-line prefer-arrow-callback
-  tude.cmd.push(function () {
-    tude.refreshAdsViaDivMappings([
-      {
-        divId: 'pb-slot-content-1',
-        baseDivId: 'pb-slot-content-1',
-      },
-    ]);
-  });
-}
-
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
@@ -987,7 +973,6 @@ async function loadEager(doc) {
 async function loadLazy(doc) {
   const main = doc.querySelector('main');
   await loadBlocks(main);
-  if (window.adOnPage) loadAds(main);
 
   const { hash } = window.location;
   const element = hash ? main.querySelector(hash) : false;
