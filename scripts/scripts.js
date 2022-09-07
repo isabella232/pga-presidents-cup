@@ -816,14 +816,30 @@ async function loadFooter(footer) {
   updateExternalLinks(footerBlock);
 }
 
-async function loadAds(doc) {
+export function loadScript(url, callback, type) {
+  const head = document.querySelector('head');
+  if (!head.querySelector(`script[src="${url}"]`)) {
+    const script = document.createElement('script');
+    script.src = url;
+    if (type) script.setAttribute('type', type);
+    head.append(script);
+    script.onload = callback;
+    return script;
+  }
+  return head.querySelector(`script[src="${url}"]`);
+}
+
+/**
+ * Gets ads object
+ * @param {string} prefix
+ */
+async function fetchAds(prefix = 'default') {
   window.ads = window.ads || {};
-  // fetch ads
-  const { loaded } = window.ads;
+  const loaded = window.ads[`${prefix}-loaded`];
   if (!loaded) {
-    window.ads.loaded = new Promise((resolve, reject) => {
+    window.ads[`${prefix}-loaded`] = new Promise((resolve, reject) => {
       try {
-        fetch('/ads.json')
+        fetch(`${prefix === 'default' ? '' : prefix}/ads.json`)
           .then((resp) => resp.json())
           .then((json) => {
             const ads = [];
@@ -833,35 +849,67 @@ async function loadAds(doc) {
                 positions: ad.Position,
               });
             });
-            window.ads.locations = ads;
+            window.ads[prefix] = ads;
             resolve();
           });
       } catch (e) {
-        // error loading placeholders
-        window.ads.locations = [];
+        // error loading ads
+        window.ads[prefix] = [];
         reject();
       }
     });
   }
-  await window.ads.loaded;
+  await window.ads[`${prefix}-loaded`];
+  return window.ads[prefix];
+}
+
+async function preloadAdPlaceholders(doc) {
+  const ads = await fetchAds();
   // find if add on page
   const { pathname } = window.location;
-  const adOnPage = window.ads.locations.find((ad) => {
+  const adOnPage = ads.find((ad) => {
     if (ad.URL.includes('**')) { // wildcard selector
       const folder = ad.URL.replace('**', '');
       return pathname.startsWith(folder);
     }
     return ad.URL === pathname;
   });
-  if (adOnPage) {
-    // build ad block
-    const adContainer = document.createElement('div');
-    const block = buildBlock('ads', [['<div>Position</div>', `<div>${adOnPage.positions}</div>`]]);
-    adContainer.append(block);
-    decorateBlock(block);
-    loadBlock(block);
-    doc.querySelector('main').append(block);
-  }
+  if (adOnPage) { // build ad placeholder(s)
+    window.adOnPage = true;
+    adOnPage.positions.split(',').forEach((position) => {
+      // eslint-disable-next-line no-param-reassign
+      position = position.trim();
+      const placements = {
+        top: {
+          slot: 'pb-slot-content-1',
+          insertAfter: doc.querySelector('.hero-container, .carousel-container'),
+        },
+      };
+      if (placements[position]) {
+        const pos = placements[position];
+        const placeholder = document.createElement('aside');
+        placeholder.className = `ad ad-${toClassName(position)}`;
+        placeholder.innerHTML = `<div id="${pos.slot}"></div>`;
+        if (pos.insertAfter) {
+          pos.insertAfter.after(placeholder);
+        }
+      }
+    });
+  } else window.adOnPage = false;
+}
+
+function loadAds() {
+  // eslint-disable-next-line no-var
+  var tude = window.tude || { cmd: [] };
+  // eslint-disable-next-line prefer-arrow-callback
+  tude.cmd.push(function () {
+    tude.refreshAdsViaDivMappings([
+      {
+        divId: 'pb-slot-content-1',
+        baseDivId: 'pb-slot-content-1',
+      },
+    ]);
+  });
 }
 
 /**
@@ -929,6 +977,7 @@ async function loadEager(doc) {
     await decorateMain(main);
     await waitForLCP();
     loadHeader(doc.querySelector('header'));
+    await preloadAdPlaceholders(doc);
   }
 }
 
@@ -938,6 +987,7 @@ async function loadEager(doc) {
 async function loadLazy(doc) {
   const main = doc.querySelector('main');
   await loadBlocks(main);
+  if (window.adOnPage) loadAds(main);
 
   const { hash } = window.location;
   const element = hash ? main.querySelector(hash) : false;
@@ -948,9 +998,7 @@ async function loadLazy(doc) {
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.ico`);
 
-  // loadAds(doc);
-
-  doc.querySelectorAll('div:not([class]):empty').forEach((empty) => empty.remove());
+  doc.querySelectorAll('div:not([class]):not([id]):empty').forEach((empty) => empty.remove());
 }
 
 /**

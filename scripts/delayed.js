@@ -1,18 +1,5 @@
 // eslint-disable-next-line import/no-cycle
-import { decorateIcons, sampleRUM } from './scripts.js';
-
-function loadScript(url, callback, type) {
-  const head = document.querySelector('head');
-  if (!head.querySelector(`script[src="${url}"]`)) {
-    const script = document.createElement('script');
-    script.src = url;
-    if (type) script.setAttribute('type', type);
-    head.append(script);
-    script.onload = callback;
-    return script;
-  }
-  return head.querySelector(`script[src="${url}"]`);
-}
+import { decorateIcons, sampleRUM, loadScript } from './scripts.js';
 
 // Core Web Vitals RUM collection
 sampleRUM('cwv');

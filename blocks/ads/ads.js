@@ -248,7 +248,7 @@ function buildRightAd(position) {
 }
 
 export default function decorate(block) {
-  const config = readBlockConfig(block);
+  // const config = readBlockConfig(block);
   block.innerHTML = '';
 
   // const observer = new IntersectionObserver((entries) => {
