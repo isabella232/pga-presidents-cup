@@ -70,7 +70,8 @@ main .news .news-item-image img {
 }
 
 /* item body */
-main .news .news-item-body {
+main .news .news-item-body,
+main .news .news-placeholder {
   box-sizing: border-box;
   display: flex;
   align-items: flex-end;

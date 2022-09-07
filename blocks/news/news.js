@@ -57,6 +57,14 @@ function paginateNews(e) {
 export default async function decorate(block) {
   const config = readBlockConfig(block);
   block.textContent = '';
+  // set placeholder content
+  const placeholderUl = document.createElement('ul');
+  block.append(placeholderUl);
+  for (let i = 0; i < 8; i += 1) {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'news-placeholder';
+    placeholderUl.append(placeholder);
+  }
   const observer = new IntersectionObserver(async (entries) => {
     if (entries.some((entry) => entry.isIntersecting)) {
       observer.disconnect();
@@ -64,7 +72,6 @@ export default async function decorate(block) {
       const damPrefix = 'https://www.pgatour.com';
       const newsURL = config.source;
       const limit = config.limit || 8;
-      block.textContent = '';
       // populate news content
       /* TODO: add CORS header, to be replaced with direct API */
       let directURL;
@@ -92,6 +99,7 @@ export default async function decorate(block) {
         li.append(a);
         ul.append(li);
       });
+      block.innerHTML = '';
       block.append(ul);
       // add filtering
       if (config.filter) {
