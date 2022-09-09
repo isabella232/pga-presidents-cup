@@ -139,7 +139,7 @@ export default {
    * @param {HTMLDocument} document The document
    * @returns {HTMLElement} The root element
    */
-  transformDOM: ({ document }) => {
+  transformDOM: ({ document, url }) => {
     const main = document.querySelector('.page');
 
     reorganiseHero(main, document);
