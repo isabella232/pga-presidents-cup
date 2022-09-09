@@ -166,8 +166,10 @@ export default {
       }
     });
 
-    makeProxySrcs(main, 'https://www.theplayers.com');
-    makeAbsoluteLinks(main, 'https://www.theplayers.com');
+    const u = new URL(url);
+    const host = u.searchParams.get('host');
+    makeProxySrcs(main, host);
+    makeAbsoluteLinks(main, host);
 
     return main;
   },
