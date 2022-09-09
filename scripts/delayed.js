@@ -506,6 +506,6 @@ async function setGeoCookies() {
     console.error('Setting geo cookies failed', error);
   }
 }
-
+const isProd = window.location.hostname.endsWith('theplayers.com');
 const cookieScript = loadScript('https://cdn.cookielaw.org/scripttemplates/otSDKStub.js', setGeoCookies);
-cookieScript.setAttribute('data-domain-script', '262c6c79-a114-41f0-9c07-52cb1fb7390c');
+cookieScript.setAttribute('data-domain-script', `262c6c79-a114-41f0-9c07-52cb1fb7390c${isProd ? '' : '-test'}`);
