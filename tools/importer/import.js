@@ -182,6 +182,6 @@ export default {
    */
   // eslint-disable-next-line arrow-body-style
   generateDocumentPath: ({ url }) => {
-    return new URL(url).pathname.replace(/\.html$/, '');
+    return new URL(url).pathname.replace(/\.html$/, '').toLocaleLowerCase();
   },
 };
