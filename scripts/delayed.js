@@ -3,6 +3,11 @@ import { decorateIcons, sampleRUM } from './scripts.js';
 
 const isProd = window.location.hostname.endsWith('theplayers.com');
 
+if (!isProd) {
+  // temporary override for analytics testing
+  if (!localStorage.getItem('OptIn_PreviousPermissions')) localStorage.setItem('OptIn_PreviousPermissions', '{"aa":true,"mediaaa":true,"target":true,"ecid":true,"adcloud":true,"aam":true,"campaign":true,"livefyre":false}');
+}
+
 function loadScript(url, callback, type) {
   const head = document.querySelector('head');
   if (!head.querySelector(`script[src="${url}"]`)) {
