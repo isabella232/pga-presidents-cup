@@ -865,6 +865,7 @@ async function preloadAdPlaceholders(doc) {
       if (placements[position]) {
         const pos = placements[position];
         const placeholder = document.createElement('aside');
+        placeholder.setAttribute('data-slot', pos.slot);
         placeholder.className = `ad ad-${toClassName(position)}`;
         placeholder.innerHTML = `<div id="${pos.slot}"></div>`;
         if (pos.insertAfter) {

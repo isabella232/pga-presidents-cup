@@ -518,16 +518,29 @@ const cookieScript = loadScript('https://cdn.cookielaw.org/scripttemplates/otSDK
 cookieScript.setAttribute('data-domain-script', '262c6c79-a114-41f0-9c07-52cb1fb7390c');
 
 function loadAds() {
-  // eslint-disable-next-line no-var
-  var tude = window.tude || { cmd: [] };
-  // eslint-disable-next-line prefer-arrow-callback
-  tude.cmd.push(function () {
-    tude.refreshAdsViaDivMappings([
-      {
-        divId: 'pb-slot-content-1',
-        baseDivId: 'pb-slot-content-1',
-      },
-    ]);
+  window.tude = window.tude || { cmd: [] };
+  loadScript('https://www.googletagservices.com/tag/js/gpt.js', () => {
+    loadScript('https://web.prebidwrapper.com/et-DAz5JreYZr/default/prebid-load.js', () => {
+      loadScript('https://web.prebidwrapper.com/et-DAz5JreYZr/default/prebid-library.js', () => {
+        loadScript('https://web.prebidwrapper.com/et-DAz5JreYZr/default/prebid-wrapper.js', () => {
+          window.tude.cmd.push(() => {
+            window.tude.setPageTargeting({ // optional
+              et_platform: 'web',
+            });
+            window.tude.setAdUnitPath('/9517547/ET/web'); // or whatever you want to set the ad unit of all ads on the page to be
+          });
+          window.tude.cmd.push(() => {
+            [...document.querySelectorAll('.ad')].forEach((ad) => {
+              const slot = ad.getAttribute('data-slot');
+              window.tude.refreshAdsViaDivMappings([{
+                divId: slot,
+                baseDivId: slot,
+              }]);
+            });
+          });
+        });
+      });
+    });
   });
 }
 

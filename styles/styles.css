@@ -493,6 +493,32 @@ main .section.teaser picture.section-background img {
   }
 }
 
+/* ads */
+.ad {
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+}
+
+.ad.ad-top {
+  display: none;
+  visibility: hidden;
+  min-height: 90px;
+  margin: 32px 0;
+}
+
+@media (min-width: 980px) {
+  .ad.ad-top {
+    display: flex;
+    visibility: visible;
+  }
+}
+
+.ad > div {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 /* icons */
 .icon[class*=icon-flag-] svg {
   fill: #000; 
