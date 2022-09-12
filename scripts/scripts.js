@@ -329,7 +329,6 @@ export function decorateSections(main) {
     });
     wrappers.forEach((wrapper) => section.append(wrapper));
     section.classList.add('section');
-    updateExternalLinks(section);
     section.setAttribute('data-section-status', 'initialized');
 
     /* process section metadata */
@@ -805,7 +804,6 @@ async function loadHeader(header) {
   header.append(headerBlock);
   decorateBlock(headerBlock);
   await loadBlock(headerBlock);
-  updateExternalLinks(headerBlock);
 }
 
 async function loadFooter(footer) {
@@ -813,7 +811,6 @@ async function loadFooter(footer) {
   footer.append(footerBlock);
   decorateBlock(footerBlock);
   await loadBlock(footerBlock);
-  updateExternalLinks(footerBlock);
 }
 
 async function loadAds(doc) {
