@@ -515,7 +515,6 @@ async function setGeoCookies() {
 }
 
 const cookieScript = loadScript('https://cdn.cookielaw.org/scripttemplates/otSDKStub.js', setGeoCookies);
-<<<<<<< HEAD
 cookieScript.setAttribute('data-domain-script', '262c6c79-a114-41f0-9c07-52cb1fb7390c');
 
 function loadAds() {
@@ -533,6 +532,3 @@ function loadAds() {
 }
 
 if (window.adOnPage) loadAds();
-=======
-cookieScript.setAttribute('data-domain-script', `262c6c79-a114-41f0-9c07-52cb1fb7390c${isProd ? '' : '-test'}`);
->>>>>>> main
