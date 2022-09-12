@@ -249,8 +249,9 @@ export default async function decorate(block) {
         buttons.append(button);
       });
       block.parentElement.prepend(buttons);
+      block.classList.add('appear');
     }
   }, { threshold: 0 });
 
-  observer.observe(block);
+  observer.observe(block.parentElement);
 }

@@ -191,6 +191,7 @@ export default async function decorate(block) {
     if (data.hasChildNodes()) statusBar.append(data);
 
     await setupPartners(nav.querySelector('.nav-brand'));
+    block.classList.add('appear');
   }
 }
 
