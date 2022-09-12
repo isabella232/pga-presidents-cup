@@ -164,6 +164,7 @@ export function decorateIcons(element) {
  */
 export function updateExternalLinks(container) {
   const REFERERS = [
+    window.location.origin,
     'http://pubads.g.doubleclick.net',
     'https://googleads.g.doubleclick.net',
     'https://adclick.g.doubleclick.net',
@@ -176,11 +177,12 @@ export function updateExternalLinks(container) {
   ];
   container.querySelectorAll('a[href]').forEach((a) => {
     try {
-      const { origin, hash } = new URL(a.href, window.location.href);
+      const { origin, pathname, hash } = new URL(a.href, window.location.href);
       const targetHash = hash && hash.startsWith('#_');
-      if (origin && origin !== window.location.origin && !targetHash) {
+      const isPDF = pathname.split('.').pop() === 'pdf';
+      if ((origin && origin !== window.location.origin && !targetHash) || isPDF) {
         a.setAttribute('target', '_blank');
-        if (!REFERERS.includes('origin')) a.setAttribute('rel', 'noopener');
+        if (!REFERERS.includes(origin)) a.setAttribute('rel', 'noopener');
       } else if (targetHash) {
         a.setAttribute('target', hash.replace('#', ''));
         a.href = a.href.replace(hash, '');
@@ -560,28 +562,6 @@ export function normalizeHeadings(el, allowedHeadings) {
 }
 
 /**
- * Turns absolute links within the domain into relative links.
- * @param {Element} main The container element
- */
-export function makeLinksRelative(main) {
-  main.querySelectorAll('a').forEach((a) => {
-    // eslint-disable-next-line no-use-before-define
-    const hosts = ['hlx.page', 'hlx.live', ...PRODUCTION_DOMAINS];
-    if (a.href) {
-      try {
-        const url = new URL(a.href);
-        const relative = hosts.some((host) => url.hostname.includes(host));
-        if (relative) a.href = `${url.pathname.split('.')[0]}${url.search}${url.hash}`;
-      } catch (e) {
-        // something went wrong
-        // eslint-disable-next-line no-console
-        console.log(e);
-      }
-    }
-  });
-}
-
-/**
  * Decorates the picture elements and removes formatting.
  * @param {Element} main The container element
  */
@@ -724,7 +704,6 @@ initHlx();
 
 const LCP_BLOCKS = ['carousel', 'hero']; // add your LCP blocks to the list
 const RUM_GENERATION = 'project-1'; // add your RUM generation information here
-const PRODUCTION_DOMAINS = ['www.theplayers.com'];
 
 sampleRUM('top');
 window.addEventListener('load', () => sampleRUM('load'));
@@ -805,7 +784,6 @@ async function loadHeader(header) {
   header.append(headerBlock);
   decorateBlock(headerBlock);
   await loadBlock(headerBlock);
-  updateExternalLinks(headerBlock);
 }
 
 async function loadFooter(footer) {
@@ -813,7 +791,6 @@ async function loadFooter(footer) {
   footer.append(footerBlock);
   decorateBlock(footerBlock);
   await loadBlock(footerBlock);
-  updateExternalLinks(footerBlock);
 }
 
 export function loadScript(url, callback, type) {
@@ -930,8 +907,6 @@ async function buildAutoBlocks(main) {
 export async function decorateMain(main) {
   // forward compatible pictures redecoration
   decoratePictures(main);
-  // forward compatible link rewriting
-  makeLinksRelative(main);
   decorateLinkedPictures(main);
 
   // hopefully forward compatible button decoration

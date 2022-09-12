@@ -4,7 +4,6 @@ import {
   decorateLinkedPictures,
   createOptimizedPicture,
   lookupPages,
-  makeLinksRelative,
   wrapImgsInLinks,
 } from '../../scripts/scripts.js';
 
@@ -58,7 +57,6 @@ export default async function decorate(block) {
     // decorate footer DOM
     const footer = document.createElement('div');
     footer.innerHTML = html;
-    makeLinksRelative(footer);
 
     const classes = ['partners', 'nav', 'links', 'social', 'copyright'];
     classes.forEach((c, i) => {

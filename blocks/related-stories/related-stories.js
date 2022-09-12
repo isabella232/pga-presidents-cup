@@ -1,4 +1,4 @@
-import { readBlockConfig } from '../../scripts/scripts.js';
+import { readBlockConfig, updateExternalLinks } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
   // const stories = block.querySelectorAll('a');
@@ -42,6 +42,7 @@ export default async function decorate(block) {
         });
         block.append(title, ul);
       }
+      updateExternalLinks(block);
     }
   }, { threshold: 0 });
 
