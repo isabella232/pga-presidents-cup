@@ -559,28 +559,6 @@ export function normalizeHeadings(el, allowedHeadings) {
 }
 
 /**
- * Turns absolute links within the domain into relative links.
- * @param {Element} main The container element
- */
-export function makeLinksRelative(main) {
-  main.querySelectorAll('a').forEach((a) => {
-    // eslint-disable-next-line no-use-before-define
-    const hosts = ['hlx.page', 'hlx.live', ...PRODUCTION_DOMAINS];
-    if (a.href) {
-      try {
-        const url = new URL(a.href);
-        const relative = hosts.some((host) => url.hostname.includes(host));
-        if (relative) a.href = `${url.pathname.split('.')[0]}${url.search}${url.hash}`;
-      } catch (e) {
-        // something went wrong
-        // eslint-disable-next-line no-console
-        console.log(e);
-      }
-    }
-  });
-}
-
-/**
  * Decorates the picture elements and removes formatting.
  * @param {Element} main The container element
  */
@@ -893,8 +871,6 @@ async function buildAutoBlocks(main) {
 export async function decorateMain(main) {
   // forward compatible pictures redecoration
   decoratePictures(main);
-  // forward compatible link rewriting
-  makeLinksRelative(main);
   decorateLinkedPictures(main);
 
   // hopefully forward compatible button decoration
