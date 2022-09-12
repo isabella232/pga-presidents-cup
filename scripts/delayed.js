@@ -497,7 +497,6 @@ function getCookie(cookieName) {
 }
 
 async function setGeoCookies() {
-  window.OptanonWrapper = () => {};
   try {
     const resp = await fetch('https://geolocation.onetrust.com/cookieconsentpub/v1/geo/location');
     if (resp.ok) {
@@ -516,4 +515,4 @@ async function setGeoCookies() {
 }
 
 const cookieScript = loadScript('https://cdn.cookielaw.org/scripttemplates/otSDKStub.js', setGeoCookies);
-cookieScript.setAttribute('data-domain-script', `dfb66c00-8c96-419c-a76f-8b837e371c36${isProd ? '' : '-test'}`);
+cookieScript.setAttribute('data-domain-script', `262c6c79-a114-41f0-9c07-52cb1fb7390c${isProd ? '' : '-test'}`);
