@@ -375,7 +375,7 @@ export function decorateSections(main) {
  * @param {Element} main The container element
  */
 export function updateSectionsStatus(main) {
-  const sections = [...main.querySelectorAll(':scope > div.section')];
+  const sections = [...main.querySelectorAll(':scope > .section')];
   for (let i = 0; i < sections.length; i += 1) {
     const section = sections[i];
     const status = section.getAttribute('data-section-status');
@@ -833,10 +833,10 @@ export function loadScript(url, callback, type) {
 function findNonFullWidthSection(main) {
   if (main.querySelector('.two-col')) return main.querySelector('.two-col');
   const FULL_WIDTH_BLOCKS = ['ad', 'carousel', 'carousel course', 'hero', 'news', 'player-feature', 'teaser', 'weather'];
-  const nonFullWidthSection = [...main.querySelectorAll(':scope > div > div')]
-    .find((section) => ![...section.children] // check section
-      .find((child) => FULL_WIDTH_BLOCKS.includes(child.className))); // check blocks in section
-  return nonFullWidthSection ? nonFullWidthSection.parentNode : null;
+  const nonFullWidthSection = [...main.querySelectorAll(':scope > div')]
+    .find((section) => ![...section.querySelectorAll(':scope > div > *')] // check section
+      .find((child) => FULL_WIDTH_BLOCKS.includes(child.className.replace('block', '').trim()))); // check blocks in section
+  return nonFullWidthSection;
 }
 
 /**
@@ -910,7 +910,8 @@ async function buildAdPlaceholders(main) {
         const pos = placements[position];
         const placeholder = document.createElement('aside');
         placeholder.setAttribute('data-slot', pos.slot);
-        placeholder.className = `ad ad-${toClassName(position)}`;
+        placeholder.setAttribute('data-section-status', 'loading');
+        placeholder.className = `section ad ad-${toClassName(position)}`;
         placeholder.innerHTML = `<div id="${pos.slot}"></div>`;
         if (pos.insertBefore) {
           const parent = pos.insertBefore.parentNode.parentNode;
