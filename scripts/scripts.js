@@ -810,10 +810,10 @@ export function loadScript(url, callback, type) {
 function findNonFullWidthSection(main) {
   if (main.querySelector('.two-col')) return main.querySelector('.two-col');
   const FULL_WIDTH_BLOCKS = ['ad', 'carousel', 'carousel course', 'hero', 'news', 'player-feature', 'teaser', 'weather'];
-  const nonFullWidthSection = [...main.querySelectorAll(':scope > div')]
+  const nonFullWidthSection = [...main.querySelectorAll(':scope > div > div')]
     .find((section) => ![...section.children] // check section
       .find((child) => FULL_WIDTH_BLOCKS.includes(child.className))); // check blocks in section
-  return nonFullWidthSection;
+  return nonFullWidthSection ? nonFullWidthSection.parentNode : null;
 }
 
 /**
@@ -890,10 +890,12 @@ async function buildAdPlaceholders(main) {
         placeholder.className = `ad ad-${toClassName(position)}`;
         placeholder.innerHTML = `<div id="${pos.slot}"></div>`;
         if (pos.insertBefore) {
-          const parent = pos.insertBefore.parentNode;
+          const parent = pos.insertBefore.parentNode.parentNode;
+          // container > wrapper > block
           parent.parentNode.insertBefore(placeholder, parent);
         } else if (pos.insertAfter) {
-          pos.insertAfter.parentNode.after(placeholder);
+          // container > wrapper > block
+          pos.insertAfter.parentNode.parentNode.after(placeholder);
         } else if (pos.append) {
           const existingColumn = pos.append.querySelector('.col-right');
           if (existingColumn) {
