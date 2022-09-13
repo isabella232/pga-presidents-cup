@@ -10,6 +10,7 @@ main .ad.ad-leftpromo-toggle div[id] {
   display: none;
   visibility: hidden;
   max-height: 90px;
+  min-width: 350px;
   overflow-y: hidden;
 }
 
