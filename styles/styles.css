@@ -536,7 +536,7 @@ main .section.two-col > :not(.col-right) {
 }
 
 /* ads */
-main .ads {
+main .ads-container, main .ads {
   display: none;
   visibility: hidden;
 }

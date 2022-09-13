@@ -921,7 +921,6 @@ async function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
     buildImageBlocks(main);
-    await buildAdPlaceholders(main);
 
     const template = getMetadata('template');
     if (template === 'left-align' || template === 'past-champions') {
@@ -965,6 +964,7 @@ export async function decorateMain(main) {
     }
   });
 
+  await buildAdPlaceholders(main);
   decorateBlocks(main);
 }
 
