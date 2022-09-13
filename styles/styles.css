@@ -493,28 +493,122 @@ main .section.teaser picture.section-background img {
   }
 }
 
+/* two col layout */
+main .section.two-col {
+  box-sizing: border-box;
+  display: grid;
+  max-width: 1290px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+main .section.two-col > .col-right {
+  order: 2;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main .section.two-col > :not(.col-right) {
+  order: 1;
+}
+
+@media (min-width: 900px) {
+  main .section.two-col {
+    grid-template-columns: 1fr 300px;
+    gap: 0 32px;
+  }
+
+  main .section.two-col > * {
+    grid-column: 1;
+    width: 100%;
+  }
+
+  main .section.two-col > .col-right {
+    grid-column: 2;
+    grid-row: 1 / span 99;
+    width: 300px;
+  }
+}
+
+@media (min-width: 1322px) {
+  main .section.two-col {
+    padding: 0;
+  }
+}
+
 /* ads */
-.ad {
+main .ads {
+  display: none;
+  visibility: hidden;
+}
+
+main .ad {
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
-}
-
-.ad.ad-top {
-  display: none;
-  visibility: hidden;
-  min-height: 90px;
   margin: 32px 0;
 }
 
+main .ad.ad-leftpromo-clock {
+  min-height: calc(90px + (16px * 2));
+}
+
+main .ad.ad-leftpromo-toggle {
+  min-height: calc(58px + (16px * 2));
+}
+
+main .ad.ad-leftpromo-clock,
+main .ad.ad-leftpromo-toggle {
+  padding: 16px 0;
+  background-color: var(--highlight-background-color);
+}
+
+main .ad.ad-top {
+  display: none;
+  visibility: hidden;
+  min-height: 90px;
+}
+
+main .ad.ad-right {
+  display: flex;
+  align-self: flex-start;
+  min-height: 250px;
+}
+
+@media (min-width: 700px) {
+  main .ad.ad-leftpromo-clock,
+  main .ad.ad-leftpromo-toggle {
+    min-height: calc(90px + (32px * 2));
+    padding: 32px 16px;
+  }
+}
+
+@media (min-width: 900px) {
+  main .ad.ad-leftpromo-toggle {
+    min-height: calc(100px + (32px * 2));
+  }
+
+  main .ad.ad-right {
+    position: sticky;
+    top: 32px;
+  }
+}
+
 @media (min-width: 980px) {
-  .ad.ad-top {
+  main .ad.ad-top {
     display: flex;
     visibility: visible;
   }
 }
 
-.ad > div {
+@media (min-width: 1340px) {
+  main .ad.ad-leftpromo-clock,
+  main .ad.ad-leftpromo-toggle {
+    padding: 32px 55px;
+  }
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main .ad > div {
   max-width: 100%;
   overflow-x: hidden;
 }

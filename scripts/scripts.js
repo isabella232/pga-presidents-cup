@@ -321,6 +321,7 @@ export function decorateSections(main) {
     const wrappers = [];
     let defaultContent = false;
     [...section.children].forEach((e) => {
+      if (e.className === 'col-right') return;
       if (e.tagName === 'DIV' || !defaultContent) {
         const wrapper = document.createElement('div');
         wrappers.push(wrapper);
@@ -806,6 +807,15 @@ export function loadScript(url, callback, type) {
   return head.querySelector(`script[src="${url}"]`);
 }
 
+function findNonFullWidthSection(main) {
+  if (main.querySelector('.two-col')) return main.querySelector('.two-col');
+  const FULL_WIDTH_BLOCKS = ['ad', 'carousel', 'carousel course', 'hero', 'news', 'player-feature', 'teaser', 'weather'];
+  const nonFullWidthSection = [...main.querySelectorAll(':scope > div')]
+    .find((section) => ![...section.children] // check section
+      .find((child) => FULL_WIDTH_BLOCKS.includes(child.className))); // check blocks in section
+  return nonFullWidthSection;
+}
+
 /**
  * Gets ads object
  * @param {string} prefix
@@ -840,9 +850,9 @@ async function fetchAds(prefix = 'default') {
   return window.ads[prefix];
 }
 
-async function preloadAdPlaceholders(doc) {
+async function buildAdPlaceholders(main) {
   const ads = await fetchAds();
-  // find if add on page
+  // find if ad on page
   const { pathname } = window.location;
   const adOnPage = ads.find((ad) => {
     if (ad.URL.includes('**')) { // wildcard selector
@@ -852,14 +862,25 @@ async function preloadAdPlaceholders(doc) {
     return ad.URL === pathname;
   });
   if (adOnPage) { // build ad placeholder(s)
-    window.adOnPage = true;
     adOnPage.positions.split(',').forEach((position) => {
       // eslint-disable-next-line no-param-reassign
       position = position.trim();
       const placements = {
+        'leftpromo toggle': {
+          slot: 'pb-slot-sponsor-banner',
+          insertBefore: main.querySelector('.tee-times'),
+        },
+        'leftpromo clock': {
+          slot: 'pb-slot-sponsor-banner',
+          insertBefore: main.querySelector('.leaderboard, .columns'),
+        },
         top: {
           slot: 'pb-slot-content-1',
-          insertAfter: doc.querySelector('.hero-container, .carousel-container'),
+          insertAfter: main.querySelector('.hero, .carousel'),
+        },
+        right: {
+          slot: 'pb-slot-sidebar-1',
+          append: findNonFullWidthSection(main),
         },
       };
       if (placements[position]) {
@@ -868,12 +889,28 @@ async function preloadAdPlaceholders(doc) {
         placeholder.setAttribute('data-slot', pos.slot);
         placeholder.className = `ad ad-${toClassName(position)}`;
         placeholder.innerHTML = `<div id="${pos.slot}"></div>`;
-        if (pos.insertAfter) {
-          pos.insertAfter.after(placeholder);
+        if (pos.insertBefore) {
+          const parent = pos.insertBefore.parentNode;
+          parent.parentNode.insertBefore(placeholder, parent);
+        } else if (pos.insertAfter) {
+          pos.insertAfter.parentNode.after(placeholder);
+        } else if (pos.append) {
+          const existingColumn = pos.append.querySelector('.col-right');
+          if (existingColumn) {
+            existingColumn.append(placeholder);
+          } else {
+            // build column
+            const column = document.createElement('section');
+            column.className = 'col-right';
+            column.append(placeholder);
+            pos.append.classList.add('two-col');
+            pos.append.append(column);
+          }
         }
       }
     });
-  } else window.adOnPage = false;
+    main.append(buildBlock('ads', ''));
+  }
 }
 
 /**
@@ -884,6 +921,8 @@ async function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
     buildImageBlocks(main);
+    await buildAdPlaceholders(main);
+
     const template = getMetadata('template');
     if (template === 'left-align' || template === 'past-champions') {
       buildShareBlock(main);
@@ -939,7 +978,6 @@ async function loadEager(doc) {
     await decorateMain(main);
     await waitForLCP();
     loadHeader(doc.querySelector('header'));
-    await preloadAdPlaceholders(doc);
   }
 }
 

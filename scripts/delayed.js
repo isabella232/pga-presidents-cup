@@ -1,5 +1,10 @@
 // eslint-disable-next-line import/no-cycle
-import { decorateIcons, sampleRUM } from './scripts.js';
+import {
+  decorateIcons,
+  sampleRUM,
+  decorateBlock,
+  loadBlock,
+} from './scripts.js';
 
 const isProd = window.location.hostname.endsWith('theplayers.com');
 
@@ -517,31 +522,8 @@ async function setGeoCookies() {
 const cookieScript = loadScript('https://cdn.cookielaw.org/scripttemplates/otSDKStub.js', setGeoCookies);
 cookieScript.setAttribute('data-domain-script', '262c6c79-a114-41f0-9c07-52cb1fb7390c');
 
-function loadAds() {
-  window.tude = window.tude || { cmd: [] };
-  loadScript('https://www.googletagservices.com/tag/js/gpt.js', () => {
-    loadScript('https://web.prebidwrapper.com/et-DAz5JreYZr/default/prebid-load.js', () => {
-      loadScript('https://web.prebidwrapper.com/et-DAz5JreYZr/default/prebid-library.js', () => {
-        loadScript('https://web.prebidwrapper.com/et-DAz5JreYZr/default/prebid-wrapper.js', () => {
-          window.tude.cmd.push(() => {
-            window.tude.setPageTargeting({ // optional
-              et_platform: 'web',
-            });
-            window.tude.setAdUnitPath('/9517547/ET/web'); // or whatever you want to set the ad unit of all ads on the page to be
-          });
-          window.tude.cmd.push(() => {
-            [...document.querySelectorAll('.ad')].forEach((ad) => {
-              const slot = ad.getAttribute('data-slot');
-              window.tude.refreshAdsViaDivMappings([{
-                divId: slot,
-                baseDivId: slot,
-              }]);
-            });
-          });
-        });
-      });
-    });
-  });
+if (document.querySelector('.ads')) {
+  const adsBlock = document.querySelector('.ads');
+  decorateBlock(adsBlock);
+  loadBlock(adsBlock);
 }
-
-if (window.adOnPage) loadAds();
