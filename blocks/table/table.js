@@ -27,7 +27,6 @@ async function buildDataTable(table, head, body, src) {
         });
         head.append(headRow);
         tournaments.forEach((tournament, i) => {
-          // console.log('trn:', tournament);
           const tr = document.createElement('tr');
           const rowData = [
             tournament.trnYear,

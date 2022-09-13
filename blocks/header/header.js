@@ -192,8 +192,3 @@ export default async function decorate(block) {
     block.classList.add('appear');
   }
 }
-
-/* {
-  "isConnected":true,
-  "thumbnailURL":"https://cdns.gigya.com/photos/7834081/2208c9f2f57049889e9378ad8a22bd1c/thumbnail?ts=637952981134401936"
-} */
