@@ -159,6 +159,28 @@ export function decorateIcons(element) {
 }
 
 /**
+ * Turns absolute links within the domain into relative links.
+ * @param {Element} main The container element
+ */
+export function makeLinksRelative(main) {
+  main.querySelectorAll('a').forEach((a) => {
+    // eslint-disable-next-line no-use-before-define
+    const hosts = ['hlx.page', 'hlx.live', ...PRODUCTION_DOMAINS];
+    if (a.href) {
+      try {
+        const url = new URL(a.href);
+        const relative = hosts.some((host) => url.hostname.includes(host));
+        if (relative) a.href = `${url.pathname.replace('.html', '')}${url.search}${url.hash}`;
+      } catch (e) {
+        // something went wrong
+        // eslint-disable-next-line no-console
+        console.log(e);
+      }
+    }
+  });
+}
+
+/**
  * Sets external target and rel for links in a container element.
  * @param {Element} container The container element
  */
@@ -332,7 +354,6 @@ export function decorateSections(main) {
     });
     wrappers.forEach((wrapper) => section.append(wrapper));
     section.classList.add('section');
-    updateExternalLinks(section);
     section.setAttribute('data-section-status', 'initialized');
 
     /* process section metadata */
@@ -442,6 +463,7 @@ export async function loadBlock(block, eager = false) {
       // eslint-disable-next-line no-console
       console.log(`failed to load block ${blockName}`, err);
     }
+    makeLinksRelative(block);
     updateExternalLinks(block);
     block.setAttribute('data-block-status', 'loaded');
   }
@@ -705,6 +727,7 @@ initHlx();
 
 const LCP_BLOCKS = ['carousel', 'hero']; // add your LCP blocks to the list
 const RUM_GENERATION = 'project-1'; // add your RUM generation information here
+const PRODUCTION_DOMAINS = ['www.theplayers.com'];
 
 sampleRUM('top');
 window.addEventListener('load', () => sampleRUM('load'));
@@ -949,9 +972,12 @@ export async function decorateMain(main) {
   // forward compatible pictures redecoration
   decoratePictures(main);
   decorateLinkedPictures(main);
-
+  // forward compatible link rewriting
+  makeLinksRelative(main);
+  updateExternalLinks(main);
   // hopefully forward compatible button decoration
   decorateButtons(main);
+
   decorateIcons(main);
   await buildAutoBlocks(main);
   decorateSections(main);
