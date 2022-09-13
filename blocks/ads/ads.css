@@ -3,6 +3,7 @@ main .ad.ad-leftpromo-toggle {
   max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
+  background-color: var(--highlight-background-color);
 }
 
 main .ad.ad-leftpromo-clock div[id],

@@ -992,7 +992,6 @@ export async function decorateMain(main) {
     }
   });
 
-  await buildAdPlaceholders(main);
   decorateBlocks(main);
 }
 
@@ -1005,6 +1004,7 @@ async function loadEager(doc) {
   if (main) {
     await decorateMain(main);
     await waitForLCP();
+    await buildAdPlaceholders(main);
     loadHeader(doc.querySelector('header'));
   }
 }

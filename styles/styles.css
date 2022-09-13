@@ -559,7 +559,6 @@ main .ad.ad-leftpromo-toggle {
 main .ad.ad-leftpromo-clock,
 main .ad.ad-leftpromo-toggle {
   padding: 16px 0;
-  background-color: var(--highlight-background-color);
 }
 
 main .ad.ad-top {
