@@ -572,13 +572,47 @@ main .ad.ad-right {
   display: flex;
   align-self: flex-start;
   min-height: 250px;
+  padding: 0;
 }
+
+main .ad > div[id] {
+  background-color: var(--background-color);
+  width: 100%;
+}
+
+main .ad.ad-leftpromo-clock > div[id],
+main .ad.ad-leftpromo-toggle > div[id] {
+  display: none;
+  visibility: hidden;
+  height: 90px;
+  width: 420px;
+}
+
+main .ad.ad-top > div[id] {
+  min-width: 728px;
+  max-width: 970px;
+  height: 90px;
+}
+
+main .ad.ad-right > div[id] {
+  width: 300px;
+  min-height: 250px;
+  max-height: 600px;
+}
+
 
 @media (min-width: 700px) {
   main .ad.ad-leftpromo-clock,
   main .ad.ad-leftpromo-toggle {
     min-height: calc(90px + (32px * 2));
     padding: 32px 16px;
+  }
+}
+
+@media (min-width: 728px) {
+  main .ad.ad-top {
+    display: flex;
+    visibility: visible;
   }
 }
 
@@ -591,11 +625,10 @@ main .ad.ad-right {
     position: sticky;
     top: 32px;
   }
-}
 
-@media (min-width: 980px) {
-  main .ad.ad-top {
-    display: flex;
+  main .ad.ad-leftpromo-clock > div[id],
+  main .ad.ad-leftpromo-toggle > div[id] {
+    display: unset;
     visibility: visible;
   }
 }
@@ -607,10 +640,10 @@ main .ad.ad-right {
   }
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-main .ad > div {
-  max-width: 100%;
-  overflow-x: hidden;
+@media (min-width: 900px) {
+  main .ad.ad-leftpromo-toggle > div[id] {
+    height: 100px;
+  }
 }
 
 /* icons */

@@ -890,20 +890,20 @@ async function buildAdPlaceholders(main) {
       position = position.trim();
       const placements = {
         'leftpromo toggle': {
-          slot: 'pb-slot-sponsor-banner',
-          insertBefore: main.querySelector('.tee-times'),
+          slot: 'pb-slot-home',
+          location: 'insertBefore',
         },
         'leftpromo clock': {
-          slot: 'pb-slot-sponsor-banner',
-          insertBefore: main.querySelector('.leaderboard, .columns'),
+          slot: 'pb-slot-home',
+          location: 'insertBefore',
         },
         top: {
-          slot: 'pb-slot-content-1',
-          insertAfter: main.querySelector('.hero, .carousel'),
+          slot: 'pb-slot-content',
+          location: 'insertAfter',
         },
         right: {
-          slot: 'pb-slot-sidebar-1',
-          append: findNonFullWidthSection(main),
+          slot: 'pb-slot-right',
+          location: 'append',
         },
       };
       if (placements[position]) {
@@ -913,24 +913,33 @@ async function buildAdPlaceholders(main) {
         placeholder.setAttribute('data-section-status', 'loading');
         placeholder.className = `section ad ad-${toClassName(position)}`;
         placeholder.innerHTML = `<div id="${pos.slot}"></div>`;
-        if (pos.insertBefore) {
-          const parent = pos.insertBefore.parentNode.parentNode;
-          // container > wrapper > block
-          parent.parentNode.insertBefore(placeholder, parent);
-        } else if (pos.insertAfter) {
-          // container > wrapper > block
-          pos.insertAfter.parentNode.parentNode.after(placeholder);
-        } else if (pos.append) {
-          const existingColumn = pos.append.querySelector('.col-right');
-          if (existingColumn) {
-            existingColumn.append(placeholder);
-          } else {
-            // build column
-            const column = document.createElement('section');
-            column.className = 'col-right';
-            column.append(placeholder);
-            pos.append.classList.add('two-col');
-            pos.append.append(column);
+        if (pos.location === 'insertBefore') {
+          const location = main.querySelector('.tee-times, .leaderboard, .columns');
+          if (location) {
+            // container > wrapper > block
+            const parent = location.parentNode.parentNode;
+            parent.parentNode.insertBefore(placeholder, parent);
+          }
+        } else if (pos.location === 'insertAfter') {
+          const location = main.querySelector('.hero, .carousel');
+          if (location) {
+            // container > wrapper > block
+            location.parentNode.parentNode.after(placeholder);
+          }
+        } else if (pos.location === 'append') {
+          const location = findNonFullWidthSection(main);
+          if (location) {
+            const existingColumn = location.querySelector('.col-right');
+            if (existingColumn) {
+              existingColumn.append(placeholder);
+            } else {
+              // build column
+              const column = document.createElement('section');
+              column.className = 'col-right';
+              column.append(placeholder);
+              location.classList.add('two-col');
+              location.append(column);
+            }
           }
         }
       }

@@ -137,23 +137,39 @@ function buildToggle(block) {
 export default function decorate(block) {
   block.innerHTML = '';
 
+  const adPlaceholders = [...document.querySelectorAll('.ad')];
+  adPlaceholders.forEach((ad) => {
+    const position = [...ad.classList].pop().replace('ad-', '');
+    if (position === 'leftpromo-toggle') {
+      buildToggle(ad);
+    } else if (position === 'leftpromo-clock') {
+      buildClock(ad);
+    }
+  });
+
   window.tude = window.tude || { cmd: [] };
   loadScript('https://www.googletagservices.com/tag/js/gpt.js', () => {
-    loadScript('https://web.prebidwrapper.com/et-DAz5JreYZr/default/prebid-load.js', () => {
+    loadScript('https://web.prebidwrapper.com/pgatour-dOyvDOhyTp/players/prebid-load.js', () => {
       window.tude.cmd.push(() => {
         window.tude.setPageTargeting({ // optional
-          et_platform: 'web',
+          url_path: window.location.pathname,
+          s1: 'pgatour',
+          s2: 'tournaments',
+          s3: 'the-players',
+          s4: 'landing',
+          m_data: '0',
+          m_safety: 'safe',
+          m_catagories: 'moat_safe',
+          m_mv: 'noHisData',
+          m_gv: 'noHisData',
+          ksg: '',
+          kuid: '',
+          aid: '20767395437692810572475817725693908164',
         });
-        window.tude.setAdUnitPath('/9517547/ET/web'); // or whatever you want to set the ad unit of all ads on the page to be
+        window.tude.setAdUnitPath('/9517547/pgat.phone/pgatour'); // or whatever you want to set the ad unit of all ads on the page to be
       });
       window.tude.cmd.push(() => {
-        [...document.querySelectorAll('.ad')].forEach((ad) => {
-          const position = [...ad.classList].pop().replace('ad-', '');
-          if (position === 'leftpromo-toggle') {
-            buildToggle(ad);
-          } else if (position === 'leftpromo-clock') {
-            buildClock(ad);
-          }
+        adPlaceholders.forEach((ad) => {
           const slot = ad.getAttribute('data-slot');
           window.tude.refreshAdsViaDivMappings([{
             divId: slot,
@@ -161,8 +177,6 @@ export default function decorate(block) {
           }]);
         });
       });
-      loadScript('https://web.prebidwrapper.com/et-DAz5JreYZr/default/prebid-library.js');
-      loadScript('https://web.prebidwrapper.com/et-DAz5JreYZr/default/prebid-wrapper.js');
     });
   });
 }

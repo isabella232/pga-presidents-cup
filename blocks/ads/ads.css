@@ -1,18 +1,10 @@
+
 main .ad.ad-leftpromo-clock,
 main .ad.ad-leftpromo-toggle {
   max-width: 1400px;
   margin-left: auto;
   margin-right: auto;
   background-color: var(--highlight-background-color);
-}
-
-main .ad.ad-leftpromo-clock div[id],
-main .ad.ad-leftpromo-toggle div[id] {
-  display: none;
-  visibility: hidden;
-  max-height: 90px;
-  min-width: 350px;
-  overflow-y: hidden;
 }
 
 main .ad.ad-leftpromo-clock .rolex-frame,
@@ -31,24 +23,12 @@ main .ad.ad-leftpromo-toggle .rolex-frame {
     justify-content: space-between;
     gap: 0 32px;
   }
-
-  main .ad.ad-leftpromo-clock div[id],
-  main .ad.ad-leftpromo-toggle div[id] {
-    display: unset;
-    visibility: visible;
-  }
 }
 
 /* leftpromo clock */
 @media (min-width: 700px) {
   main .ad.ad-leftpromo-clock .rolex-frame {
     flex: 1 0 320px;
-  }
-}
-
-@media (min-width: 900px) {
-  main .ad.ad-leftpromo-clock div[id] {
-    max-height: 100px;
   }
 }
 
@@ -61,17 +41,14 @@ main .ad.ad-leftpromo-toggle .rolex-frame-medium {
 @media (min-width: 700px) {
   main .ad.ad-leftpromo-toggle .rolex-frame {
     flex: 1 0 300px;
-    min-height: 90px;
+    height: 90px;
   }
 }
 
 @media (min-width: 900px) {
-  main .ad.ad-leftpromo-toggle div[id] {
-    max-height: 100px;
-  }
-
   main .ad.ad-leftpromo-toggle .rolex-frame {
-    flex: 1 0 450px;
+    flex: 0 0 450px;
+    height: 100px;
     background-color: transparent;
   }
 
