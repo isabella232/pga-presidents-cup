@@ -190,7 +190,7 @@ export default async function decorate(block) {
     }
     if (data.hasChildNodes()) statusBar.append(data);
 
-    const brand = nav.querySelector('.nav-brand')
+    const brand = nav.querySelector('.nav-brand');
     const sectionMeta = brand.querySelector('.section-metadata');
     if (sectionMeta) {
       const meta = readBlockConfig(sectionMeta);

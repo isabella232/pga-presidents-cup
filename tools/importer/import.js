@@ -17,9 +17,9 @@ const reorganiseHero = (main, document) => {
     heroLegend.remove();
   }
 
-  const hero = document.querySelector('.main-image');
-  if (hero) {
-    main.prepend(hero);
+  const mainImage = document.querySelector('.main-image');
+  if (mainImage) {
+    main.prepend(mainImage);
   }
 
   const video = document.querySelector('.hero-module .video-container');
@@ -49,15 +49,14 @@ const reorganiseHero = (main, document) => {
   if (h1 && h1.textContent.trim() !== '') {
     main.prepend(h1);
 
-    const hero = document.querySelector('.hero-image');
-    if (hero) {
-      h1.before(hero);
+    const heroImage = document.querySelector('.hero-image');
+    if (heroImage) {
+      h1.before(heroImage);
     }
 
     const hr = document.createElement('hr');
     h1.after(hr);
   }
-  
 };
 
 const createMetadata = (main, document) => {
@@ -139,10 +138,10 @@ const ticketSummaryToColumnsBlock = (main, document) => {
         item.remove();
       }
     });
-    
+
     const table = WebImporter.DOMUtils.createTable(cells, document);
     lastItem.replaceWith(table);
-  };
+  }
 };
 
 const makeAbsoluteLinks = (main, host, base) => {
@@ -220,7 +219,7 @@ export default {
 
     const u = new URL(params.originalURL);
     makeProxySrcs(main, u.origin);
-   
+
     if (u.pathname.startsWith('/tournaments/sentry-tournament-of-champions')) {
       makeAbsoluteLinks(main, 'https://main--pga-sentry-tournament-of-champions--hlxsites.hlx.page', '/tournaments/sentry-tournament-of-champions');
     } else if (u.pathname.startsWith('/tournaments/wgc-dell-technologies-match-play')) {
