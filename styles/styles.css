@@ -578,28 +578,14 @@ main .ad.ad-right {
 main .ad > div[id] {
   background-color: var(--background-color);
   width: 100%;
+  text-align: center;
 }
 
 main .ad.ad-leftpromo-clock > div[id],
 main .ad.ad-leftpromo-toggle > div[id] {
   display: none;
   visibility: hidden;
-  height: 90px;
-  width: 420px;
 }
-
-main .ad.ad-top > div[id] {
-  min-width: 728px;
-  max-width: 970px;
-  height: 90px;
-}
-
-main .ad.ad-right > div[id] {
-  width: 300px;
-  min-height: 250px;
-  max-height: 600px;
-}
-
 
 @media (min-width: 700px) {
   main .ad.ad-leftpromo-clock,
@@ -637,12 +623,6 @@ main .ad.ad-right > div[id] {
   main .ad.ad-leftpromo-clock,
   main .ad.ad-leftpromo-toggle {
     padding: 32px 55px;
-  }
-}
-
-@media (min-width: 900px) {
-  main .ad.ad-leftpromo-toggle > div[id] {
-    height: 100px;
   }
 }
 

@@ -16,6 +16,12 @@ main .ad.ad-leftpromo-toggle .rolex-frame {
   background-color: #01613A;
 }
 
+main .ad.ad-leftpromo-clock > div[id],
+main .ad.ad-leftpromo-toggle > div[id] {
+  height: 90px;
+  width: 420px;
+}
+
 @media (min-width: 700px) {
   main .ad.ad-leftpromo-clock,
   main .ad.ad-leftpromo-toggle {
@@ -61,4 +67,22 @@ main .ad.ad-leftpromo-toggle .rolex-frame-medium {
     display: none;
     visibility: hidden;
   }
+
+  main .ad.ad-leftpromo-toggle > div[id] {
+    height: 100px;
+  }
+}
+
+/* top */
+main .ad.ad-top > div[id] {
+  min-width: 728px;
+  max-width: 970px;
+  height: 90px;
+}
+
+/* right */
+main .ad.ad-right > div[id] {
+  width: 300px;
+  min-height: 250px;
+  max-height: 600px;
 }

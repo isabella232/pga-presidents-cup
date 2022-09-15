@@ -892,10 +892,12 @@ async function buildAdPlaceholders(main) {
         'leftpromo toggle': {
           slot: 'pb-slot-home',
           location: 'insertBefore',
+          promo: 'rolex-frame',
         },
         'leftpromo clock': {
           slot: 'pb-slot-home',
           location: 'insertBefore',
+          promo: 'rolex-frame',
         },
         top: {
           slot: 'pb-slot-content',
@@ -913,6 +915,7 @@ async function buildAdPlaceholders(main) {
         placeholder.setAttribute('data-section-status', 'loading');
         placeholder.className = `section ad ad-${toClassName(position)}`;
         placeholder.innerHTML = `<div id="${pos.slot}"></div>`;
+        if (pos.promo) placeholder.innerHTML += `<div class="${pos.promo}"></div>`;
         if (pos.location === 'insertBefore') {
           const location = main.querySelector('.tee-times, .leaderboard, .columns');
           if (location) {

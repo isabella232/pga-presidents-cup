@@ -78,8 +78,7 @@ function buildClock(block) {
     offset: -4,
     dst: '0',
   }];
-  const clock = document.createElement('div');
-  clock.className = 'rolex-frame';
+  const clock = block.querySelector('.rolex-frame');
   clock.innerHTML = `<iframe
       id="rolexFrameNCVHdBD"
       data-src="/blocks/ads/rolex/rolex.frame.html?cities=rolexNCVHdBD"
@@ -89,12 +88,11 @@ function buildClock(block) {
       transparency="true"
       src="/blocks/ads/rolex/rolex.frame.html?cities=rolexNCVHdBD">
     </iframe>`;
-  block.append(clock);
+  // block.append(clock);
 }
 
 function buildToggle(block) {
-  const toggle = document.createElement('div');
-  toggle.className = 'rolex-frame';
+  const toggle = block.querySelector('.rolex-frame');
   toggle.innerHTML = `<iframe
       id="rolexFrame1txbOyjg"
       class="rolex-frame-medium"
@@ -115,7 +113,7 @@ function buildToggle(block) {
       transparency="true"
       src="/blocks/ads/rolex/rolex.frameToggleMobile.html?eventcity=Ponte+Vedra+Beach&utc=-4&lang=en">
     </iframe>`;
-  block.append(toggle);
+  // block.append(toggle);
   window.addEventListener('message', (e) => {
     if (e.data && e.data.toString().includes('rolex')) {
       const rolexData = JSON.parse(e.data);
@@ -149,7 +147,8 @@ export default function decorate(block) {
 
   window.tude = window.tude || { cmd: [] };
   loadScript('https://www.googletagservices.com/tag/js/gpt.js', () => {
-    loadScript('https://web.prebidwrapper.com/pgatour-dOyvDOhyTp/players/prebid-load.js', () => {
+    loadScript('https://dn0qt3r0xannq.cloudfront.net/pgatour-dOyvDOhyTp/players/prebid-load.js', () => {
+    // loadScript('https://web.prebidwrapper.com/pgatour-dOyvDOhyTp/players/prebid-load.js', () => {
       window.tude.cmd.push(() => {
         window.tude.setPageTargeting({ // optional
           url_path: window.location.pathname,
