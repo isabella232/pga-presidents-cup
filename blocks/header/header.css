@@ -95,14 +95,13 @@ header nav .nav-brand {
   z-index: 2;
 }
 
+header nav .nav-brand.white {
+  background-color: var(--color-white);
+}
+
 header nav[aria-expanded=true] .nav-brand a {
   left: 10px;
   transform: translateY(-50%);
-}
-
-header nav .nav-brand img {
-  max-width: 120px;
-  max-height: 40px;
 }
 
 @media (min-width: 700px) {
@@ -176,7 +175,6 @@ header nav .nav-partner-appear {
 }
 
 header nav .nav-partner img {
-  max-width: 70px;
   max-height: 50px;
 }
 
