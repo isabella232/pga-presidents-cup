@@ -343,7 +343,7 @@ export function decorateSections(main) {
     const wrappers = [];
     let defaultContent = false;
     [...section.children].forEach((e) => {
-      if (e.className === 'col-right') return;
+      if ([...e.classList].includes('col-right')) return;
       if (e.tagName === 'DIV' || !defaultContent) {
         const wrapper = document.createElement('div');
         wrappers.push(wrapper);
@@ -777,9 +777,14 @@ function buildRelatedStoriesBlock(main, tags) {
     storiesSection = document.createElement('div');
     main.append(storiesSection);
   } else {
-    storiesSection.classList.add('related-stories-cols');
+    storiesSection.classList.add('two-col');
   }
-  storiesSection.append(buildBlock('related-stories', [['<div>Tags</div>', `<div>${tags}</div>`]]));
+  const block = buildBlock('related-stories', [['<div>Tags</div>', `<div>${tags}</div>`]]);
+  const wrapper = document.createElement('section');
+  wrapper.className = 'col-right';
+  wrapper.append(block);
+  decorateBlock(block);
+  storiesSection.append(wrapper);
 }
 
 export function linkPicture(picture) {
