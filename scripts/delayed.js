@@ -44,8 +44,8 @@ const pageType = window.location.pathname === '/' ? 'homePage' : 'contentPage';
 const pname = window.location.pathname.split('/').pop();
 window.pgatour.Omniture = {
   properties: {
-    pageName: `pgatour:the-players-championship:${pname}`,
-    eVar16: `pgatour:the-players-championship:${pname}`,
+    pageName: `pgatour:tournaments:the-players-championship:${pname}`,
+    eVar16: `pgatour:tournaments:the-players-championship:${pname}`,
     prop18: pageType,
     eVar1: 'pgatour',
     prop1: 'pgatour',
@@ -59,7 +59,9 @@ window.pgatour.Omniture = {
 
 window.pgatour.docWrite = document.write.bind(document);
 
-loadScript(`https://assets.adobedtm.com/d17bac9530d5/90b3c70cfef1/launch-1ca88359b76c${isProd ? '.min' : ''}.js`);
+loadScript(`https://assets.adobedtm.com/d17bac9530d5/90b3c70cfef1/launch-1ca88359b76c${isProd ? '.min' : ''}.js`, () => {
+  window._satellite.setVar('eVar1', 'pgatour');
+});
 
 /* setup favorite players */
 function alphabetize(a, b) {
