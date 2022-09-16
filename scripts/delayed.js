@@ -53,15 +53,15 @@ window.pgatour.Omniture = {
     eVar2: 'r011',
     eVar6: window.location.href,
   },
-  defineOmnitureVars: () => {},
+  defineOmnitureVars: () => {
+    Object.assign(window.s, window.pgatour.Omniture.properties);
+  },
 
 };
 
 window.pgatour.docWrite = document.write.bind(document);
 
-loadScript(`https://assets.adobedtm.com/d17bac9530d5/90b3c70cfef1/launch-1ca88359b76c${isProd ? '.min' : ''}.js`, () => {
-  window._satellite.setVar('eVar1', 'pgatour');
-});
+loadScript(`https://assets.adobedtm.com/d17bac9530d5/90b3c70cfef1/launch-1ca88359b76c${isProd ? '.min' : ''}.js`);
 
 /* setup favorite players */
 function alphabetize(a, b) {
