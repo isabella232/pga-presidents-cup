@@ -62,22 +62,24 @@ function paginateNews(e) {
 
 export default async function decorate(block) {
   const config = readBlockConfig(block);
+  const videoPrefix = 'https://pga-tour-res.cloudinary.com/image/upload/c_fill,f_auto,g_face,h_311,q_auto,w_425/v1/';
+  const damPrefix = 'https://www.pgatour.com';
+  const newsURL = config.source;
+  const limit = config.limit || 8;
   block.textContent = '';
+
   // set placeholder content
-  const placeholderUl = document.createElement('ul');
-  block.append(placeholderUl);
-  for (let i = 0; i < 8; i += 1) {
-    const placeholder = document.createElement('div');
+  const ul = document.createElement('ul');
+  block.append(ul);
+  for (let i = 0; i < limit; i += 1) {
+    const placeholder = document.createElement('li');
     placeholder.className = 'news-placeholder';
-    placeholderUl.append(placeholder);
+    ul.append(placeholder);
   }
+
   const observer = new IntersectionObserver(async (entries) => {
     if (entries.some((entry) => entry.isIntersecting)) {
       observer.disconnect();
-      const videoPrefix = 'https://pga-tour-res.cloudinary.com/image/upload/c_fill,f_auto,g_face,h_311,q_auto,w_425/v1/';
-      const damPrefix = 'https://www.pgatour.com';
-      const newsURL = config.source;
-      const limit = config.limit || 8;
       // populate news content
       /* TODO: add CORS header, to be replaced with direct API */
       let directURL;
@@ -90,8 +92,7 @@ export default async function decorate(block) {
       }
       const resp = await fetch(`https://little-forest-58aa.david8603.workers.dev/?url=${encodeURIComponent(directURL)}`);
       const json = await resp.json();
-      const ul = document.createElement('ul');
-      json.items.forEach((item) => {
+      json.items.forEach((item, i) => {
         const prefix = item.image.startsWith('brightcove') ? videoPrefix : damPrefix;
         const li = document.createElement('li');
         li.classList.add('news-item', `news-item-${item.type}`);
@@ -104,10 +105,8 @@ export default async function decorate(block) {
           ${video}
         `;
         li.append(a);
-        ul.append(li);
+        [...ul.children][i].replaceWith(li);
       });
-      block.innerHTML = '';
-      block.append(ul);
       // add filtering
       if (config.filter) {
         const filters = config.filter.split(',').map((f) => f.trim());
