@@ -54,7 +54,9 @@ window.pgatour.Omniture = {
     eVar6: window.location.href,
   },
   defineOmnitureVars: () => {
-    Object.assign(window.s, window.pgatour.Omniture.properties);
+    if (window.s) {
+      Object.assign(window.s, window.pgatour.Omniture.properties);
+    }
   },
 
 };
