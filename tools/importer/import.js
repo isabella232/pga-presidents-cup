@@ -232,7 +232,7 @@ export default {
     } else if (u.pathname.startsWith('/tournaments/mitsubishi-electric-championship-at-hualalai')) {
       makeAbsoluteLinks(main, 'https://main--pga-mitsubishi-electric-championship--hlxsites.hlx.page', '/champions/tournaments/mitsubishi-electric-championship-at-hualalai');
     } else if (u.pathname.startsWith('/tournaments/bridgestone-senior-players-championship')) {
-      makeAbsoluteLinks(main, 'https://main--pga-bridgestone-senior-players--hlxsites.hlx.page', '/champions/tournaments/bridgestone-senior-players-championship');
+      makeAbsoluteLinks(main, 'https://main--pga-kaulig-companies-championship--hlxsites.hlx.page', '/champions/tournaments/kaulig-companies-championship');
     } else if (u.pathname.startsWith('/tournaments/dominion-energy-charity-classic')) {
       makeAbsoluteLinks(main, 'https://main--pga-dominion-energy-charity-classic--hlxsites.hlx.page', '/champions/tournaments/dominion-energy-charity-classic');
     } else if (u.pathname.startsWith('/tournaments/charles-schwab-cup-championship')) {
