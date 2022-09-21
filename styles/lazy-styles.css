@@ -19,6 +19,7 @@ body .gigya-style-modern div.gigya-screen-dialog-caption {
 /* close button */
 body .gigya-style-modern div.gigya-screen-dialog-close > a > img {
   filter: brightness(2) grayscale(1);
+  height: 15px;
 }
 
 body .gigya-style-modern div.gigya-screen-dialog-close > a > img:hover {
@@ -136,6 +137,15 @@ body .gigya-find-player-options li.hide {
 body .gigya-find-player-options li:hover {
   background-color: var(--background-color);
   cursor: pointer;
+}
+
+body .gigya-style-modern.gigya-screen-dialog-mobile div.gigya-screen-dialog-top {
+  line-height: unset;
+  height: 64px;
+}
+
+body .gigya-style-modern div.gigya-screen-dialog-close > a {
+  padding: 0;
 }
 
 /* one trust */
