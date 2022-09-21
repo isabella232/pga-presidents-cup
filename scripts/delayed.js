@@ -462,7 +462,7 @@ async function populateStatusBar(statusBar) {
     const statusBarData = document.querySelector('.status-bar-data');
     // fetch weather
     try {
-      const resp = await fetch('https://www.pgatour.com/bin/data/feeds/weather.json/r011');
+      const resp = await fetch('https://little-forest-58aa.david8603.workers.dev/?url=https://www.pgatour.com/bin/data/feeds/weather.json/r011');
       const { current_observation: weatherData } = await resp.json();
       const location = weatherData.display_location.full;
       const icon = weatherData.icon_url.replace('.gif', '.png');

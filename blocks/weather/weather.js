@@ -27,7 +27,7 @@ function buildRow(data) {
 
 export default async function decorate(block) {
   const blockClasses = [...block.classList];
-  const weatherPrefix = 'https://www.pgatour.com/bin/data/feeds';
+  const weatherPrefix = 'https://little-forest-58aa.david8603.workers.dev/?url=https://www.pgatour.com/bin/data/feeds';
   if (blockClasses.includes('forecast')) {
     block.parentNode.classList.add('forecast-wrapper');
     // fetch weather
