@@ -160,13 +160,6 @@ export default function decorate(block) {
     } else if (position === 'leftpromo-clock') {
       buildClock(ad);
     }
-    const observer = new MutationObserver((mutations) => {
-      if (mutations.some((mutation) => mutation.type === 'childList')) {
-        observer.disconnect();
-        insertFallbacks(ad);
-      }
-    });
-    observer.observe(ad.querySelector('div[id]'), { childList: true });
   });
 
   window.tude = window.tude || { cmd: [] };
@@ -202,6 +195,13 @@ export default function decorate(block) {
             config.targeting = { pos: 'leftpromo' };
           }
           window.tude.refreshAdsViaDivMappings([config]);
+          const observer = new MutationObserver((mutations) => {
+            if (mutations.some((mutation) => mutation.type === 'childList')) {
+              observer.disconnect();
+              insertFallbacks(ad);
+            }
+          });
+          observer.observe(ad.querySelector('div[id]'), { childList: true });
         });
       });
     });
