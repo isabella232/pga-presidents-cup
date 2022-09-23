@@ -1,4 +1,4 @@
-import { loadScript } from '../../scripts/scripts.js';
+import { fetchAds, loadScript, updateExternalLinks, createOptimizedPicture } from '../../scripts/scripts.js';
 
 function calculateLocalOffset() {
   const date = new Date();
@@ -130,6 +130,25 @@ function buildToggle(block) {
   });
 }
 
+async function insertFallbacks(ad) {
+  const { fallbacks } = await fetchAds();
+  if (fallbacks) {
+    const iframe = ad.querySelector('div[id] iframe');
+    if (!iframe) {
+      const slot = ad.getAttribute('data-slot');
+      const config = fallbacks.find((fb) => fb.slot === slot);
+      if (config) {
+        const placeholder = ad.querySelector('div[id] > div[id]');
+        const fallback = `<a href="${config.link}" class="ad-fallback">
+            ${createOptimizedPicture(config.image).outerHTML}
+          </a>`;
+        placeholder.innerHTML = fallback;
+      }
+    }
+  }
+  updateExternalLinks(ad);
+}
+
 export default function decorate(block) {
   block.innerHTML = '';
 
@@ -141,6 +160,13 @@ export default function decorate(block) {
     } else if (position === 'leftpromo-clock') {
       buildClock(ad);
     }
+    const observer = new MutationObserver((mutations) => {
+      if (mutations.some((mutation) => mutation.type === 'childList')) {
+        observer.disconnect();
+        insertFallbacks(ad);
+      }
+    });
+    observer.observe(ad.querySelector('div[id]'), { childList: true });
   });
 
   window.tude = window.tude || { cmd: [] };
@@ -149,7 +175,7 @@ export default function decorate(block) {
     // loadScript('https://web.prebidwrapper.com/pgatour-dOyvDOhyTp/players/prebid-load.js', () => {
       window.tude.cmd.push(() => {
         window.tude.setPageTargeting({ // optional
-          url_path: 'hlxsites.hlx.page',
+          url_path: window.location.origin,
           s1: 'pgatour',
           s2: 'tournaments',
           s3: 'the-players',
@@ -173,10 +199,8 @@ export default function decorate(block) {
             baseDivId: slot,
           };
           if (slot.includes('home')) {
-            config.divId = 'leftpromo';
             config.targeting = { pos: 'leftpromo' };
           }
-          console.log('config:', config);
           window.tude.refreshAdsViaDivMappings([config]);
         });
       });

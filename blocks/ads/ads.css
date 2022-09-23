@@ -67,10 +67,6 @@ main .ad.ad-leftpromo-toggle .rolex-frame-medium {
     display: none;
     visibility: hidden;
   }
-
-  main .ad.ad-leftpromo-toggle > div[id] {
-    height: 100px;
-  }
 }
 
 /* top */

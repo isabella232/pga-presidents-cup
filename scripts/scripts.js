@@ -848,23 +848,37 @@ function findNonFullWidthSection(main) {
  * Gets ads object
  * @param {string} prefix
  */
-async function fetchAds(prefix = 'default') {
+export async function fetchAds(prefix = 'default') {
   window.ads = window.ads || {};
   const loaded = window.ads[`${prefix}-loaded`];
   if (!loaded) {
     window.ads[`${prefix}-loaded`] = new Promise((resolve, reject) => {
       try {
-        fetch(`${prefix === 'default' ? '' : prefix}/ads.json`)
-          .then((resp) => resp.json())
+        Promise.all([
+          fetch(`${prefix === 'default' ? '' : prefix}/ads.json`),
+          fetch(`${prefix === 'default' ? '' : prefix}/ads.json?sheet=fallbacks`),
+        ]).then((responses) => Promise.all(responses.map((response) => response.json())))
           .then((json) => {
+            const [adsData, fallbacksData] = json;
+            // setup ads
             const ads = [];
-            json.data.forEach((ad) => {
+            adsData.data.forEach((ad) => {
               ads.push({
                 URL: ad.URL,
                 positions: ad.Position,
               });
             });
-            window.ads[prefix] = ads;
+            window.ads.ads = ads;
+            // setup fallbacks
+            const fallbacks = [];
+            fallbacksData.data.forEach((fallback) => {
+              fallbacks.push({
+                slot: fallback.Slot,
+                image: fallback.Image,
+                link: fallback.Link,
+              });
+            });
+            window.ads.fallbacks = fallbacks;
             resolve();
           });
       } catch (e) {
@@ -875,11 +889,11 @@ async function fetchAds(prefix = 'default') {
     });
   }
   await window.ads[`${prefix}-loaded`];
-  return window.ads[prefix];
+  return window.ads;
 }
 
 async function buildAdPlaceholders(main) {
-  const ads = await fetchAds();
+  const { ads } = await fetchAds();
   // find if ad on page
   const { pathname } = window.location;
   const adOnPage = ads.find((ad) => {
@@ -919,11 +933,7 @@ async function buildAdPlaceholders(main) {
         placeholder.setAttribute('data-slot', pos.slot);
         placeholder.setAttribute('data-section-status', 'loading');
         placeholder.className = `section ad ad-${toClassName(position)}`;
-        if (pos.slot === 'pb-slot-home') {
-          placeholder.innerHTML = '<div id="leftpromo"></div>';
-        } else {
-          placeholder.innerHTML = `<div id="${pos.slot}"></div>`;
-        }
+        placeholder.innerHTML = `<div id="${pos.slot}"></div>`;
         if (pos.promo) placeholder.innerHTML += `<div class="${pos.promo}"></div>`;
         if (pos.location === 'insertBefore') {
           const location = main.querySelector('.tee-times, .leaderboard, .columns');
