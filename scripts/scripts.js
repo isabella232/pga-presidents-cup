@@ -919,7 +919,11 @@ async function buildAdPlaceholders(main) {
         placeholder.setAttribute('data-slot', pos.slot);
         placeholder.setAttribute('data-section-status', 'loading');
         placeholder.className = `section ad ad-${toClassName(position)}`;
-        placeholder.innerHTML = `<div id="${pos.slot}"></div>`;
+        if (pos.slot === 'pb-slot-home') {
+          placeholder.innerHTML = '<div id="leftpromo"></div>';
+        } else {
+          placeholder.innerHTML = `<div id="${pos.slot}"></div>`;
+        }
         if (pos.promo) placeholder.innerHTML += `<div class="${pos.promo}"></div>`;
         if (pos.location === 'insertBefore') {
           const location = main.querySelector('.tee-times, .leaderboard, .columns');

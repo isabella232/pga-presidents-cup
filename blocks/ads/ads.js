@@ -88,7 +88,6 @@ function buildClock(block) {
       transparency="true"
       src="/blocks/ads/rolex/rolex.frame.html?cities=rolexNCVHdBD">
     </iframe>`;
-  // block.append(clock);
 }
 
 function buildToggle(block) {
@@ -113,7 +112,6 @@ function buildToggle(block) {
       transparency="true"
       src="/blocks/ads/rolex/rolex.frameToggleMobile.html?eventcity=Ponte+Vedra+Beach&utc=-4&lang=en">
     </iframe>`;
-  // block.append(toggle);
   window.addEventListener('message', (e) => {
     if (e.data && e.data.toString().includes('rolex')) {
       const rolexData = JSON.parse(e.data);
@@ -151,7 +149,7 @@ export default function decorate(block) {
     // loadScript('https://web.prebidwrapper.com/pgatour-dOyvDOhyTp/players/prebid-load.js', () => {
       window.tude.cmd.push(() => {
         window.tude.setPageTargeting({ // optional
-          url_path: window.location.pathname,
+          url_path: 'hlxsites.hlx.page',
           s1: 'pgatour',
           s2: 'tournaments',
           s3: 'the-players',
@@ -170,10 +168,16 @@ export default function decorate(block) {
       window.tude.cmd.push(() => {
         adPlaceholders.forEach((ad) => {
           const slot = ad.getAttribute('data-slot');
-          window.tude.refreshAdsViaDivMappings([{
+          const config = {
             divId: slot,
             baseDivId: slot,
-          }]);
+          };
+          if (slot.includes('home')) {
+            config.divId = 'leftpromo';
+            config.targeting = { pos: 'leftpromo' };
+          }
+          console.log('config:', config);
+          window.tude.refreshAdsViaDivMappings([config]);
         });
       });
     });
