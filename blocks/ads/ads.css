@@ -51,7 +51,7 @@ main .ad.ad-leftpromo-toggle .rolex-frame-medium {
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 980px) {
   main .ad.ad-leftpromo-toggle .rolex-frame {
     flex: 0 0 450px;
     height: 100px;
