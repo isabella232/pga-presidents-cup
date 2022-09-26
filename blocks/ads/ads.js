@@ -1,4 +1,10 @@
-import { fetchAds, loadScript, updateExternalLinks, createOptimizedPicture } from '../../scripts/scripts.js';
+import {
+  fetchAds,
+  fetchPlaceholders,
+  loadScript,
+  updateExternalLinks,
+  createOptimizedPicture,
+} from '../../scripts/scripts.js';
 
 function calculateLocalOffset() {
   const date = new Date();
@@ -149,7 +155,7 @@ async function insertFallbacks(ad) {
   updateExternalLinks(ad);
 }
 
-export default function decorate(block) {
+export default async function decorate(block) {
   block.innerHTML = '';
 
   const adPlaceholders = [...document.querySelectorAll('.ad')];
@@ -162,16 +168,18 @@ export default function decorate(block) {
     }
   });
 
+  const placeholders = await fetchPlaceholders();
+
   window.tude = window.tude || { cmd: [] };
   loadScript('https://www.googletagservices.com/tag/js/gpt.js', () => {
-    loadScript('https://dn0qt3r0xannq.cloudfront.net/pgatour-dOyvDOhyTp/players/prebid-load.js', () => {
-    // loadScript('https://web.prebidwrapper.com/pgatour-dOyvDOhyTp/players/prebid-load.js', () => {
+    loadScript(`https://dn0qt3r0xannq.cloudfront.net/${placeholders.adsPath}/prebid-load.js`, () => {
+    // loadScript(`https://web.prebidwrapper.com/${placeholders.adsPath}/prebid-load.js`, () => {
       window.tude.cmd.push(() => {
         window.tude.setPageTargeting({ // optional
           url_path: window.location.origin,
           s1: 'pgatour',
           s2: 'tournaments',
-          s3: 'the-players',
+          s3: placeholders.adsS3,
           s4: 'landing',
           m_data: '0',
           m_safety: 'safe',
