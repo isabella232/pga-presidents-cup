@@ -71,7 +71,7 @@ export default async function decorate(block) {
           col.append(
             buildRow(hour.FCTTIME.civil),
             buildRow(`${hour.wspd.english} mp/h ${hour.wdir.dir}`),
-            buildRow(`<img src="${hour.icon_url.replace('.gif', '.png')}" alt="${hour.condition}" /> ${hour.condition}`),
+            buildRow(`<img src="${hour.icon_url.replace('.gif', '.png')}" alt="${hour.condition}" /> ${hour.condition.replaceAll('/', '/<wbr>')}`),
             buildRow(`<span class="weather-temp">${hour.temp.english}</span>`),
             buildRow(`<span class="weather-humidity">${hour.humidity}</span>`),
             buildRow(`<span class="weather-chance-of-rain">${hour.pop}</span>`),
@@ -85,7 +85,7 @@ export default async function decorate(block) {
           col.append(
             buildRow(day.date.weekday),
             buildRow(`${day.avewind.mph} mp/h ${day.avewind.dir}`),
-            buildRow(`<img src="${day.icon_url.replace('.gif', '.png')}" alt="${day.conditions}" /> ${day.conditions}`),
+            buildRow(`<img src="${day.icon_url.replace('.gif', '.png')}" alt="${day.conditions}" /> ${day.conditions.replaceAll('/', '/<wbr>')}`),
             buildRow(`<span class="weather-temp">${day.high.fahrenheit}</span>`),
             buildRow(`<span class="weather-humidity">${day.avehumidity}</span>`),
             buildRow(`<span class="weather-chance-of-rain">${day.pop}</span>`),
