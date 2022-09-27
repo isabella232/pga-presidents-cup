@@ -445,7 +445,10 @@ function setupGigya() {
   gigya.accounts.session.verify({ callback: checkIfLoggedIn });
 }
 
-function initGigya() {
+// eslint-disable-next-line import/prefer-default-export
+export function initGigya() {
+  const button = document.getElementById('nav-user-button');
+  if (button) button.removeEventListener('click', initGigya);
   loadScript(
     'https://cdns.gigya.com/JS/socialize.js?apikey=3__4H034SWkmoUfkZ_ikv8tqNIaTA0UIwoX5rsEk96Ebk5vkojWtKRZixx60tZZdob',
     setupGigya,
