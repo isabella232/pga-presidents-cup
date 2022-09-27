@@ -760,10 +760,15 @@ function buildHeroBlock(main) {
 }
 
 function buildShareBlock(main) {
-  const firstSection = main.querySelector('div');
   const section = document.createElement('div');
   section.append(buildBlock('share', ''));
-  firstSection.after(section);
+  const ad = main.querySelector('.ad-top');
+  const hero = main.querySelector('.hero, .carousel');
+  if (ad) {
+    ad.parentNode.after(section);
+  } else if (hero) {
+    hero.parentNode.after(section);
+  }
 }
 
 function buildRelatedStoriesBlock(main, tags) {
@@ -835,141 +840,6 @@ export function loadScript(url, callback, type) {
   return head.querySelector(`script[src="${url}"]`);
 }
 
-function findNonFullWidthSection(main) {
-  if (main.querySelector('.two-col')) return main.querySelector('.two-col');
-  const FULL_WIDTH_BLOCKS = ['ad', 'carousel', 'carousel course', 'hero', 'news', 'player-feature', 'teaser', 'weather'];
-  const nonFullWidthSection = [...main.querySelectorAll(':scope > div')]
-    .find((section) => ![...section.querySelectorAll(':scope > div > *')] // check section
-      .find((child) => FULL_WIDTH_BLOCKS.includes(child.className.replace('block', '').trim()))); // check blocks in section
-  return nonFullWidthSection;
-}
-
-/**
- * Gets ads object
- * @param {string} prefix
- */
-export async function fetchAds(prefix = 'default') {
-  window.ads = window.ads || {};
-  const loaded = window.ads[`${prefix}-loaded`];
-  if (!loaded) {
-    window.ads[`${prefix}-loaded`] = new Promise((resolve, reject) => {
-      try {
-        Promise.all([
-          fetch(`${prefix === 'default' ? '' : prefix}/ads.json`),
-          fetch(`${prefix === 'default' ? '' : prefix}/ads.json?sheet=fallbacks`),
-        ]).then((responses) => Promise.all(responses.map((response) => response.json())))
-          .then((json) => {
-            const [adsData, fallbacksData] = json;
-            // setup ads
-            const ads = [];
-            adsData.data.forEach((ad) => {
-              ads.push({
-                URL: ad.URL,
-                positions: ad.Position,
-              });
-            });
-            window.ads.ads = ads;
-            // setup fallbacks
-            const fallbacks = [];
-            fallbacksData.data.forEach((fallback) => {
-              fallbacks.push({
-                slot: fallback.Slot,
-                image: fallback.Image,
-                link: fallback.Link,
-              });
-            });
-            window.ads.fallbacks = fallbacks;
-            resolve();
-          });
-      } catch (e) {
-        // error loading ads
-        window.ads[prefix] = [];
-        reject();
-      }
-    });
-  }
-  await window.ads[`${prefix}-loaded`];
-  return window.ads;
-}
-
-async function buildAdPlaceholders(main) {
-  const { ads } = await fetchAds();
-  // find if ad on page
-  const { pathname } = window.location;
-  const adOnPage = ads.find((ad) => {
-    if (ad.URL.includes('**')) { // wildcard selector
-      const folder = ad.URL.replace('**', '');
-      return pathname.startsWith(folder);
-    }
-    return ad.URL === pathname;
-  });
-  if (adOnPage) { // build ad placeholder(s)
-    adOnPage.positions.split(',').forEach((position) => {
-      // eslint-disable-next-line no-param-reassign
-      position = position.trim();
-      const placements = {
-        'leftpromo toggle': {
-          slot: 'pb-slot-home',
-          location: 'insertBefore',
-          promo: 'rolex-frame',
-        },
-        'leftpromo clock': {
-          slot: 'pb-slot-home',
-          location: 'insertBefore',
-          promo: 'rolex-frame',
-        },
-        top: {
-          slot: 'pb-slot-content',
-          location: 'insertAfter',
-        },
-        right: {
-          slot: 'pb-slot-right',
-          location: 'append',
-        },
-      };
-      if (placements[position]) {
-        const pos = placements[position];
-        const placeholder = document.createElement('aside');
-        placeholder.setAttribute('data-slot', pos.slot);
-        placeholder.setAttribute('data-section-status', 'loading');
-        placeholder.className = `section ad ad-${toClassName(position)}`;
-        placeholder.innerHTML = `<div id="${pos.slot}"></div>`;
-        if (pos.promo) placeholder.innerHTML += `<div class="${pos.promo}"></div>`;
-        if (pos.location === 'insertBefore') {
-          const location = main.querySelector('.tee-times, .leaderboard, .columns');
-          if (location) {
-            // container > wrapper > block
-            const parent = location.parentNode.parentNode;
-            parent.parentNode.insertBefore(placeholder, parent);
-          }
-        } else if (pos.location === 'insertAfter') {
-          const location = main.querySelector('.hero, .carousel');
-          if (location) {
-            // container > wrapper > block
-            location.parentNode.parentNode.after(placeholder);
-          }
-        } else if (pos.location === 'append') {
-          const location = findNonFullWidthSection(main);
-          if (location) {
-            const existingColumn = location.querySelector('.col-right');
-            if (existingColumn) {
-              existingColumn.append(placeholder);
-            } else {
-              // build column
-              const column = document.createElement('section');
-              column.className = 'col-right';
-              column.append(placeholder);
-              location.classList.add('two-col');
-              location.append(column);
-            }
-          }
-        }
-      }
-    });
-    main.append(buildBlock('ads', ''));
-  }
-}
-
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
@@ -978,6 +848,19 @@ async function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
     buildImageBlocks(main);
+
+    const hasAd = getMetadata('ad');
+    if (hasAd) {
+      const adPlaceholder = document.createElement('aside');
+      adPlaceholder.setAttribute('data-section-status', 'loading');
+      adPlaceholder.className = 'section ad';
+      adPlaceholder.innerHTML = '<div id="pb-slot-content" class="ad-top"></div>';
+      const hero = main.querySelector('.hero, .carousel');
+      if (hero) {
+        hero.parentNode.after(adPlaceholder);
+        main.append(buildBlock('ads', ''));
+      }
+    }
 
     const template = getMetadata('template');
     if (template === 'left-align' || template === 'past-champions') {
@@ -1036,7 +919,6 @@ async function loadEager(doc) {
   if (main) {
     await decorateMain(main);
     await waitForLCP();
-    await buildAdPlaceholders(main);
     loadHeader(doc.querySelector('header'));
   }
 }

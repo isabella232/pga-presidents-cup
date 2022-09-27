@@ -544,87 +544,28 @@ main .ads-container, main .ads {
 
 main .ad {
   box-sizing: border-box;
+  display: flex;
   align-items: center;
   justify-content: center;
   margin: 32px 0;
 }
 
-main .ad.ad-leftpromo-clock {
-  min-height: calc(90px + (16px * 2));
-}
-
-main .ad.ad-leftpromo-toggle {
-  min-height: calc(58px + (16px * 2));
-}
-
-main .ad.ad-leftpromo-clock,
-main .ad.ad-leftpromo-toggle {
-  padding: 16px 0;
-  background-color: var(--highlight-background-color);
-}
-
-main .ad.ad-top {
-  display: none;
-  visibility: hidden;
-  min-height: 90px;
-  padding: 0;
-}
-
-main .ad.ad-right {
+main .ad .ad-top {
   display: flex;
-  align-self: flex-start;
-  min-height: 250px;
-  padding: 0;
-}
-
-main .ad > div[id] {
-  background-color: var(--background-color);
-  width: 100%;
-  text-align: center;
-}
-
-main .ad.ad-leftpromo-clock > div[id],
-main .ad.ad-leftpromo-toggle > div[id] {
-  display: none;
-  visibility: hidden;
-}
-
-@media (min-width: 700px) {
-  main .ad.ad-leftpromo-clock,
-  main .ad.ad-leftpromo-toggle {
-    min-height: calc(90px + (32px * 2));
-    padding: 32px 16px;
-  }
+  align-items: center;
+  justify-content: center;
+  height: 100px;
 }
 
 @media (min-width: 728px) {
-  main .ad.ad-top {
-    display: flex;
-    visibility: visible;
+  main .ad .ad-top {
+    height: 90px;
   }
 }
 
-@media (min-width: 900px) {
-  main .ad.ad-leftpromo-toggle {
-    min-height: calc(100px + (32px * 2));
-  }
-
-  main .ad.ad-right {
-    position: sticky;
-    top: 32px;
-  }
-
-  main .ad.ad-leftpromo-clock > div[id],
-  main .ad.ad-leftpromo-toggle > div[id] {
-    display: unset;
-    visibility: visible;
-  }
-}
-
-@media (min-width: 1340px) {
-  main .ad.ad-leftpromo-clock,
-  main .ad.ad-leftpromo-toggle {
-    padding: 32px 55px;
+@media (min-width: 970px) {
+  main .ad .ad-top {
+    height: 250px;
   }
 }
 
