@@ -1,7 +1,8 @@
 // eslint-disable-next-line import/no-cycle
-import { decorateIcons, sampleRUM } from './scripts.js';
+import { decorateIcons, fetchPlaceholders, sampleRUM } from './scripts.js';
 
-const isProd = window.location.hostname.endsWith('theplayers.com');
+const placeholders = await fetchPlaceholders();
+const isProd = window.location.hostname.endsWith(placeholders.hostname);
 
 if (!isProd === 'this') {
   // temporary override for analytics testing
