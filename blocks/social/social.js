@@ -53,12 +53,11 @@ function writeDate(timestamp) {
 
 function revealRows(wrapper, rows, moreButton, lessButton) {
   wrapper.dataset.rows = rows;
-  
   let perRow = 1;
   let rowsPerCLick = 3;
-  const large = window.matchMedia('(min-width: 1200px)')
-  const mid = window.matchMedia('(min-width: 900px)')
-  const small = window.matchMedia('(min-width: 700px)')
+  const large = window.matchMedia('(min-width: 1200px)');
+  const mid = window.matchMedia('(min-width: 900px)');
+  const small = window.matchMedia('(min-width: 700px)');
   if (small.matches) {
     perRow = 2;
     rowsPerCLick = 1;
@@ -71,7 +70,7 @@ function revealRows(wrapper, rows, moreButton, lessButton) {
     perRow = 4;
     rowsPerCLick = 1;
   }
-  
+
   let all = true;
   wrapper.querySelectorAll('li').forEach((item, idx) => {
     if (idx >= (perRow * rowsPerCLick * rows)) {
@@ -82,7 +81,7 @@ function revealRows(wrapper, rows, moreButton, lessButton) {
     }
   });
 
-  if (rows === 2) {
+  if (rows < 3) {
     lessButton.style.display = 'none';
   } else {
     lessButton.style.display = 'block';
@@ -96,7 +95,7 @@ function revealRows(wrapper, rows, moreButton, lessButton) {
 }
 
 function alterRows(wrapper, offset, moreButton, lessButton) {
-  let rows = parseInt(wrapper.dataset.rows);
+  let rows = parseInt(wrapper.dataset.rows, 10);
   rows += offset;
   revealRows(wrapper, rows, moreButton, lessButton);
 }
@@ -162,7 +161,7 @@ export default async function decorate(block) {
       wrapper.append(tile);
     });
   }
-  
+
   const collapsible = typeof config.collapsible !== 'undefined' && config.collapsible.toLowerCase() === 'true';
   if (collapsible) {
     wrapper.classList.add('collapsible');
@@ -173,18 +172,19 @@ export default async function decorate(block) {
     const moreButton = document.createElement('a');
     moreButton.classList.add('button', 'primary', 'more');
     moreButton.innerText = 'Show More';
-    moreButton.href="#";
+    moreButton.href = '#';
     moreButton.title = 'More';
-    moreButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      alterRows(wrapper, 1, moreButton, lessButton);
-    });
 
     const lessButton = document.createElement('a');
     lessButton.classList.add('button', 'primary', 'less');
     lessButton.innerText = 'Show Less';
-    lessButton.href="#";
+    lessButton.href = '#';
     lessButton.title = 'Less';
+
+    moreButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      alterRows(wrapper, 1, moreButton, lessButton);
+    });
     lessButton.addEventListener('click', (e) => {
       e.preventDefault();
       alterRows(wrapper, -1, moreButton, lessButton);
@@ -195,7 +195,7 @@ export default async function decorate(block) {
 
     block.append(buttonContainer);
     revealRows(wrapper, 2, moreButton, lessButton);
-    window.addEventListener('resize', (e) => {
+    window.addEventListener('resize', () => {
       revealRows(wrapper, wrapper.dataset.rows, moreButton, lessButton);
     });
   }
