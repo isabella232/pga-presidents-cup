@@ -854,7 +854,7 @@ async function buildAutoBlocks(main) {
       const adPlaceholder = document.createElement('aside');
       adPlaceholder.setAttribute('data-section-status', 'loading');
       adPlaceholder.className = 'section ad';
-      adPlaceholder.innerHTML = '<div id="pb-slot-content" class="ad-top"></div>';
+      adPlaceholder.innerHTML = '<div id="pb-slot-top" class="ad-top"></div>';
       const hero = main.querySelector('.hero, .carousel');
       if (hero) {
         hero.parentNode.after(adPlaceholder);
