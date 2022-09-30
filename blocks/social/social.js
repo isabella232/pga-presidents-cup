@@ -299,13 +299,13 @@ export default async function decorate(block) {
         await buildImageFeed(wrapper, config);
       } else {
         await buildSocialFeed(wrapper, config);
+        const collapsible = typeof config.collapsible !== 'undefined' && config.collapsible.toLowerCase() === 'true';
+        if (collapsible) {
+          const buttonContainer = initCollapsing(wrapper);
+          block.append(buttonContainer);
+        }
       }
 
-      const collapsible = typeof config.collapsible !== 'undefined' && config.collapsible.toLowerCase() === 'true';
-      if (collapsible) {
-        const buttonContainer = initCollapsing(wrapper);
-        block.append(buttonContainer);
-      }
       block.prepend(wrapper);
     }
   }, { threshold: 0 });
