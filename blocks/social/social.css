@@ -2,7 +2,7 @@ main .social-container {
   --social-bg-color: var(--color-blue);
   --social-text-color: var(--overlay-text-color);
   --social-card-bg-color: var(--color-blue-dark);
-  --socail-tweet-color: var(--color-tan);
+  --social-tweet-color: var(--color-tan);
 }
 
 main .social-container:not(.image-feed-container) {
@@ -34,7 +34,7 @@ main .social-wrapper {
 /* stylelint-disable-next-line no-descending-specificity */
 main .social h3 {
   margin: 0;
-  color: var(--socail-tweet-color);
+  color: var(--social-tweet-color);
 }
 
 main .social p {
@@ -113,7 +113,7 @@ main .social .social-tile-footer a {
 }
 
 main .social .social-twitter-tweet a {
-  color: var(--socail-tweet-color);
+  color: var(--social-tweet-color);
 }
 
 main .social .social-tile-footer a:hover {
@@ -158,7 +158,7 @@ main .social .social-twitter-header .social-twitter-username {
 }
 
 main .social .social-twitter-header .social-twitter-screenname a {
-  color: var(--socail-tweet-color);
+  color: var(--social-tweet-color);
 }
 
 main .social .social-twitter-header .social-twitter-screenname a::before,
