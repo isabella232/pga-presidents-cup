@@ -74,14 +74,14 @@ main .social > ul.collapsible {
 }
 
 main .social {
-  min-height: 1700px;
+  min-height: 600px;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 700px) {  
   main .social {
     min-height: 750px;
   }
-  
+
   main .social > ul {
     grid-template-columns: repeat(2, 1fr);
   }
