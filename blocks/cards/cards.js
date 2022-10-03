@@ -1,7 +1,7 @@
 import { createOptimizedPicture, readBlockConfig, lookupPages } from '../../scripts/scripts.js';
 
 function decorateChampionCardsFeed(champions, block) {
-  block.classList.add('champions');
+  block.classList.add('two-cols');
   // eslint-disable-next-line no-param-reassign
   champions = champions.sort((a, b) => {
     const aYear = parseInt(a.title.split(' ').pop(), 10);
