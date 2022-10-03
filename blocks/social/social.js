@@ -16,7 +16,7 @@ function buildProfilesTile(config) {
         <a href="${config[key]}" class="button social-profile"><span class="icon icon-email"></span></a>
       </p>`;
       profiles.append(newsletter);
-    } else {
+    } else if (config[key].startsWith('http')) {
       const a = document.createElement('a');
       a.className = 'button social-profile';
       a.href = config[key];
