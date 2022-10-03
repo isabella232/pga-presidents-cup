@@ -317,6 +317,7 @@ export default async function decorate(block) {
       }
 
       block.prepend(wrapper);
+      block.classList.add('loaded');
     }
   }, { threshold: 0 });
 

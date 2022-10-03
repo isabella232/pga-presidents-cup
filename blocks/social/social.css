@@ -73,12 +73,12 @@ main .social > ul.collapsible {
   margin-bottom: 16px;
 }
 
-main .social {
+main .social.twitter:not(.loaded) {
   min-height: 600px;
 }
 
 @media (min-width: 700px) {  
-  main .social {
+  main .social.twitter:not(.loaded) {
     min-height: 750px;
   }
 
