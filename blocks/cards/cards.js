@@ -1,14 +1,5 @@
 import { createOptimizedPicture, readBlockConfig, lookupPages } from '../../scripts/scripts.js';
 
-// function decorateChampionCards(block) {
-//   [...block.children].forEach((row) => {
-//     const children = row.querySelectorAll('div');
-//     const pars = children[1].querySelectorAll('p');
-//     pars[0].classList.add('cards-card-bubble');
-//     pars[1].classList.add('cards-card-country');
-//   });
-// }
-
 function decorateChampionCardsFeed(champions, block) {
   block.classList.add('champions');
   // eslint-disable-next-line no-param-reassign
