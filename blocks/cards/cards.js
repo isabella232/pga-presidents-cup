@@ -15,7 +15,7 @@ function decorateChampionCardsFeed(champions, block) {
     card.innerHTML = `<div>
         <a href="${champion.path}">${createOptimizedPicture(champion.image).outerHTML}</a>
       </div>
-      <div>${year ? `<p class="cards-card-bubble">${year}</p>` : ''}<h3><a href="${champion.path}">${name}</a></h3></div>`;
+      <div>${year ? `<p class="cards-card-bubble-wrapper"><u class="cards-card-bubble">${year}</u></p>` : ''}<h3><a href="${champion.path}">${name}</a></h3></div>`;
     block.append(card);
   });
 }
