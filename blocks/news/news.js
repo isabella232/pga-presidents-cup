@@ -84,7 +84,7 @@ export default async function decorate(block) {
   const placeholderUl = document.createElement('ul');
   block.append(placeholderUl);
   for (let i = 0; i < 8; i += 1) {
-    const placeholder = document.createElement('div');
+    const placeholder = document.createElement('li');
     placeholder.className = 'news-placeholder';
     placeholderUl.append(placeholder);
   }
@@ -107,8 +107,8 @@ export default async function decorate(block) {
       }
       const resp = await fetch(`https://little-forest-58aa.david8603.workers.dev/?url=${encodeURIComponent(directURL)}`);
       const json = await resp.json();
-      const ul = document.createElement('ul');
-      [...pinnedItems, ...json.items].forEach((item) => {
+
+      [...pinnedItems, ...json.items].forEach((item, idx) => {
         const prefix = item.image.startsWith('brightcove') ? videoPrefix : damPrefix;
         const li = document.createElement('li');
         li.classList.add('news-item', `news-item-${item.type}`);
@@ -121,10 +121,14 @@ export default async function decorate(block) {
           ${video}
         `;
         li.append(a);
-        ul.append(li);
+        if (idx < 8) {
+          const toReplace = placeholderUl.querySelector('.news-placeholder');
+          toReplace.parentNode.replaceChild(li, toReplace);
+        } else {
+          placeholderUl.appendChild(li);
+        }
       });
-      block.innerHTML = '';
-      block.append(ul);
+
       // add filtering
       if (config.filter) {
         const filters = config.filter.split(',').map((f) => f.trim());
