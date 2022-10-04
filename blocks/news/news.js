@@ -116,7 +116,7 @@ export default async function decorate(block) {
         const a = document.createElement('a');
         a.href = item.link;
         a.innerHTML = `
-          <div class="news-item-image"><img src="${item.pinned ? '' : prefix}${item.image}"></div>
+          <div class="news-item-image"><img loading="lazy" src="${item.pinned ? '' : prefix}${item.image}"></div>
           <div class="news-item-body"><a href="${item.link}">${item.title}</a></div>
           ${video}
         `;
