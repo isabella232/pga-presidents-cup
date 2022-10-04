@@ -108,7 +108,7 @@ export default async function decorate(block) {
       const resp = await fetch(`https://little-forest-58aa.david8603.workers.dev/?url=${encodeURIComponent(directURL)}`);
       const json = await resp.json();
 
-      [...pinnedItems, ...json.items].forEach((item, idx) => {
+      [...pinnedItems, ...json.items].forEach((item) => {
         const prefix = item.image.startsWith('brightcove') ? videoPrefix : damPrefix;
         const li = document.createElement('li');
         li.classList.add('news-item', `news-item-${item.type}`);
