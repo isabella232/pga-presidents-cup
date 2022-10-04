@@ -121,8 +121,8 @@ export default async function decorate(block) {
           ${video}
         `;
         li.append(a);
-        if (idx < 8) {
-          const toReplace = placeholderUl.querySelector('.news-placeholder');
+        const toReplace = placeholderUl.querySelector('.news-placeholder');
+        if (toReplace) {
           toReplace.parentNode.replaceChild(li, toReplace);
         } else {
           placeholderUl.appendChild(li);
