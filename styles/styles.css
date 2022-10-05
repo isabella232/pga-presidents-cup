@@ -516,7 +516,7 @@ main .section.teaser .teaser-play {
 }
 
 main .section.teaser .teaser-play::before {
-  content: "";
+  content: '';
   clear: both;
   display: block;
   border-top: 15px solid transparent;
