@@ -8,8 +8,6 @@ import {
   decorateLinkedPictures,
 } from '../../scripts/scripts.js';
 
-import { initGigya } from '../../scripts/delayed.js';
-
 /**
  * collapses all open nav sections
  * @param {Element} sections The container element
@@ -64,7 +62,9 @@ function setupUser(section) {
       </button>`;
   }
   const button = section.querySelector('button');
-  button.addEventListener('click', initGigya);
+  button.addEventListener('click', () => {
+    import('../../scripts/delayed.js').then((module) => module.initGigya());
+  });
 }
 
 function parseCountdown(ms) {
@@ -187,6 +187,22 @@ export default async function decorate(block) {
         </div>`;
         data.insertAdjacentHTML('beforeend', countdown);
         setInterval(updateCountdown, 60 * 1000); // update countdown every minute
+      }
+      // check for stored weather
+      const isStored = sessionStorage.getItem(`${placeholders.tourCode}${placeholders.tournamentId}Weather`);
+      if (isStored) {
+        // build weather from session storage
+        const weatherData = JSON.parse(isStored);
+        const weather = document.createElement('div');
+        weather.className = 'status-bar-weather';
+        weather.innerHTML = `<p>
+            <a href="/weather">
+              <span class="status-bar-location">${weatherData.location}</span>
+              <img src="${weatherData.icon}"/ >
+              <span class="status-bar-temp">${weatherData.temp}</span>
+            </a>
+          </p>`;
+        data.append(weather);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
