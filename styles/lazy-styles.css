@@ -38,7 +38,7 @@ main .login-modal .icon.icon-close {
 
 /* gigya */
 body [class*=gigya] {
-  --gigya-heading-color: var(--color-color);
+  --gigya-heading-color: var(--color-blue);
   --gigya-accent-color: var(--color-tan);
 }
 
