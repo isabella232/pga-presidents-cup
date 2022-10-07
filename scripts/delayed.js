@@ -366,8 +366,6 @@ async function setupFavoritePlayersScreen(userData) {
 }
 
 function updateFavoriteButtons(res) {
-  // eslint-disable-next-line no-param-reassign
-  // if (user.eventName === 'afterSubmit') user = user.response.user;
   const buttons = document.querySelectorAll('.leaderboard-favorite-button');
   if (res && res != null && res.data) {
     const favorites = res.data.favorites || [];
