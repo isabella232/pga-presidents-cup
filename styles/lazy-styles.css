@@ -12,7 +12,7 @@ main .login-modal {
   max-width: 520px;
   padding: 16px;
   background-color: var(--highlight-background-color);
-  box-shadow: 0 0 100vh 100vh rgba(180,180,180,0.9);
+  box-shadow: 0 0 100vh 100vh rgba(180 180 180 / 90%);
   z-index: 2;
 }
 
@@ -25,6 +25,7 @@ main .login-modal .login-modal-close-wrapper {
   justify-content: flex-end;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 main .login-modal .login-modal-close-wrapper button {
   background-color: unset;
   margin: unset;
@@ -63,6 +64,7 @@ body .gigya-style-modern.gigya-screen-dialog-mobile div.gigya-screen-dialog-top 
 }
 
 /* body */
+/* stylelint-disable-next-line no-descending-specificity */
 body .gigya-screen, body .gigya-screen *, body .gigya-screen .gigya-label-text {
   color: var(--text-color);
   font-family: var(--body-font-family);
@@ -130,6 +132,7 @@ body .gigya-your-favorites > div p {
   justify-self: start;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 body .gigya-your-favorites > div button {
   height: 22px;
   width: 22px;
