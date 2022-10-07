@@ -398,6 +398,24 @@ function updateFavoriteButtons(res) {
   }
 }
 
+function resetFavoriteButtons() {
+  const buttons = document.querySelectorAll('.leaderboard-favorite-button');
+  buttons.forEach((btn) => {
+    const icon = btn.querySelector('.icon');
+    const tooltip = btn.nextElementSibling;
+    btn.setAttribute('data-op', 'add');
+    // ensure add to favorite button
+    if (icon) icon.className = 'icon icon-plus';
+    if (tooltip && tooltip.className === 'tooltip') {
+      tooltip.querySelector('.tooltip-op').textContent = 'Add to';
+    }
+    btn.removeEventListener('click', removeFavoritePlayerFromLeaderboard);
+    btn.removeEventListener('click', addFavoritePlayerFromLeaderboard);
+    // eslint-disable-next-line no-use-before-define
+    btn.addEventListener('click', promptToLogin);
+  });
+}
+
 function promptToLogin() {
   const modal = document.createElement('aside');
   modal.classList.add('login-modal');
@@ -526,6 +544,7 @@ function clearUserButton() {
 
 function logout() {
   clearUserButton();
+  resetFavoriteButtons();
   // eslint-disable-next-line no-undef
   gigya.accounts.hideScreenSet({ screenSet: 'Website-ManageProfile' });
   // eslint-disable-next-line no-undef
