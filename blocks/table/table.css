@@ -54,7 +54,8 @@ main .table td:not(.table-cell-num) {
 }
 
 main .table.light th, main .table.light td {
-  border: 1px solid var(--color-gray);
+  border-left: 1px solid var(--color-gray-light);
+  border-right: 1px solid var(--color-gray-light);
   text-align: left;
 }
 
@@ -64,6 +65,10 @@ main .table.light td {
 
 main .table.stats th {
   color: var(--heading-color);
+  text-align: center;
+}
+
+main .table.stats td {
   text-align: center;
 }
 
