@@ -88,7 +88,7 @@ function buildFacebookTile(tile, data) {
   const profileURL = from.link;
   buildSocialTile(tile, {
     user: {
-      profileURL,
+      profileUrl: profileURL,
       name: from.name,
       handle: from.broadcast_name,
       img: {
@@ -114,7 +114,7 @@ function buildTwitterTile(tile, data) {
   const profileURL = `${TWITTER_URL}${user.screen_name}`;
   buildSocialTile(tile, {
     user: {
-      profileURL,
+      profileUrl: profileURL,
       name: user.name,
       handle: user.screen_name,
       img: {
