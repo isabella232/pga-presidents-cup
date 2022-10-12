@@ -111,10 +111,7 @@ main .hero h1.heading-x-long  {
 }
 
 @media (min-width: 900px) {
-  main .hero h1 {
-    font-size: var(--heading-font-size-xl);
-  }
-
+  main .hero h1,
   main .hero h1.heading-x-long {
     font-size: var(--heading-font-size-xl);
   }

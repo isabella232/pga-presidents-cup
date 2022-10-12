@@ -1007,15 +1007,13 @@ export async function lookupPages(pathnames) {
  * Add dynamic font sizing CSS class names to headings
  *
  * The CSS class names are determined by character counts.
- * @param {Element} $block The container element
+ * @param {Element} block The container element
  * @param {string} classPrefix Prefix in CSS class names before "-long", "-very-long", "-x-long".
  * Default is "heading".
  * @param {string} selector CSS selector to select the target heading tags. Default is "h1, h2".
  */
 export function addHeaderSizing(block, classPrefix = 'heading', selector = 'h1, h2') {
   const headings = block.querySelectorAll(selector);
-  // Each threshold of JP should be smaller than other languages
-  // because JP characters are larger and JP sentences are longer
   const sizes = [
     { name: 'long', threshold: 30 },
     { name: 'very-long', threshold: 40 },
