@@ -904,6 +904,28 @@ export async function decorateMain(main) {
       const picture = createOptimizedPicture(bg);
       picture.classList.add('section-background');
       section.prepend(picture);
+
+      const videoId = section.dataset.video;
+      if (videoId) {
+        const playLink = document.createElement('a');
+
+        const videoFeedUrl = `https://www.pgatour.com/bin/data/feeds/video-details.json/videoIds=${videoId}`;
+        fetch(`https://little-forest-58aa.david8603.workers.dev/?url=${encodeURIComponent(videoFeedUrl)}`).then(async (resp) => {
+          if (resp.ok) {
+            const json = await resp.json();
+            if (json.length > 0) {
+              playLink.href = json[0].link;
+              section.insertBefore(playLink, picture.nextSibling);
+            }
+          }
+        });
+        playLink.target = '_blank';
+
+        const playIcon = document.createElement('span');
+
+        playIcon.classList.add('teaser-play');
+        playLink.append(playIcon);
+      }
     }
   });
 
@@ -967,4 +989,28 @@ export async function lookupPages(pathnames) {
     return (result);
   }
   return window.pageIndex.data;
+}
+
+/**
+ * Add dynamic font sizing CSS class names to headings
+ *
+ * The CSS class names are determined by character counts.
+ * @param {Element} block The container element
+ * @param {string} classPrefix Prefix in CSS class names before "-long", "-very-long", "-x-long".
+ * Default is "heading".
+ * @param {string} selector CSS selector to select the target heading tags. Default is "h1, h2".
+ */
+export function addHeaderSizing(block, classPrefix = 'heading', selector = 'h1, h2') {
+  const headings = block.querySelectorAll(selector);
+  const sizes = [
+    { name: 'long', threshold: 30 },
+    { name: 'very-long', threshold: 40 },
+    { name: 'x-long', threshold: 50 },
+  ];
+  headings.forEach((h) => {
+    const { length } = h.textContent;
+    sizes.forEach((size) => {
+      if (length >= size.threshold) h.classList.add(`${classPrefix}-${size.name}`);
+    });
+  });
 }
