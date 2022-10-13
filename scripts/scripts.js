@@ -84,16 +84,6 @@ export function loadCSS(href, callback) {
   }
 }
 
-export function preconnect(domain) {
-  // <link rel="preconnect" href="https://example.com" />
-  if (!document.querySelector(`head > link[href="${domain}"]`)) {
-    const link = document.createElement('link');
-    link.setAttribute('rel', 'preconnect');
-    link.setAttribute('href', domain);
-    document.head.appendChild(link);
-  }
-}
-
 /**
  * Retrieves the content of metadata tags.
  * @param {string} name The metadata name (or property)
