@@ -1,4 +1,9 @@
-import { readBlockConfig, decorateIcons, fetchPlaceholders } from '../../scripts/scripts.js';
+import {
+  readBlockConfig,
+  decorateIcons,
+  fetchPlaceholders,
+  updateExternalLinks,
+} from '../../scripts/scripts.js';
 
 const TWITTER_URL = 'https://twitter.com/';
 const INSTAGRAM_URL = 'https://instagram.com/';
@@ -167,6 +172,7 @@ function refreshImageTiles(wrapper, available, onPage) {
         onPage.splice(toRefreshIndex, 1);
         onPage.push(newTile);
         tileToRefresh.replaceWith(newTile);
+        updateExternalLinks(wrapper);
       }
     }
   }, 3 * 1000);
@@ -231,6 +237,7 @@ async function buildSocialFeed(wrapper, config) {
       decorateIcons(tile);
       wrapper.append(tile);
     });
+    updateExternalLinks(wrapper);
   }
 }
 
