@@ -3,7 +3,7 @@ import {
   decorateIcons,
   fetchPlaceholders,
   updateExternalLinks,
-  preconnect
+  preconnect,
 } from '../../scripts/scripts.js';
 
 const TWITTER_URL = 'https://twitter.com/';
