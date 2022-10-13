@@ -3,6 +3,7 @@ import {
   decorateIcons,
   fetchPlaceholders,
   updateExternalLinks,
+  preconnect
 } from '../../scripts/scripts.js';
 
 const TWITTER_URL = 'https://twitter.com/';
@@ -355,6 +356,7 @@ export default async function decorate(block) {
     }
   }
 
+  preconnect('https://api.massrelevance.com');
   const observer = new IntersectionObserver(async (entries) => {
     if (entries.some((entry) => entry.isIntersecting)) {
       observer.disconnect();
