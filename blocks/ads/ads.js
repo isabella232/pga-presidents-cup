@@ -31,7 +31,8 @@ export default async function decorate(block) {
           kuid: '',
           aid: '20767395437692810572475817725693908164',
         });
-        window.tude.setAdUnitPath(`/${placeholders.adsNetwork}/pgat.phone/pgatour`);
+        window.tude.setAdUnitPath(`/${placeholders.adsNetwork}/pgat.${getDevice() === 'mobile' ? 'phone' : getDevice()}/pgatour`);
+        window.tude.setFeatureFlags({ injectAds: true });
       });
       window.tude.cmd.push(() => {
         document.querySelectorAll('.ad').forEach((ad) => {
