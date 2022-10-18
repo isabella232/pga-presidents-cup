@@ -983,7 +983,7 @@ async function loadLazy(doc) {
 
   if (!isAppView()) loadAds(doc);
 
-  doc.querySelectorAll('div:not([class]):empty').forEach((empty) => empty.remove());
+  doc.querySelectorAll('div:not([class]):not([id]):empty').forEach((empty) => empty.remove());
 }
 
 /**
