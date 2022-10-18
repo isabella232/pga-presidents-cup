@@ -841,6 +841,14 @@ export function loadScript(url, callback, type) {
 }
 
 /**
+ * checks is search param 'view' is set to 'app'
+ */
+function isAppView() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('view') === 'app';
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
@@ -850,7 +858,7 @@ async function buildAutoBlocks(main) {
     buildImageBlocks(main);
 
     const hasAd = getMetadata('ad');
-    if (hasAd) {
+    if (hasAd && !isAppView()) {
       const positions = hasAd.split(',').map((a) => a.trim().toLowerCase());
       let validPositions = false;
       positions.forEach((position) => {
@@ -948,11 +956,12 @@ export async function decorateMain(main) {
  */
 async function loadEager(doc) {
   decorateTemplateAndTheme();
+  if (isAppView()) document.querySelector('header').remove();
   const main = doc.querySelector('main');
   if (main) {
     await decorateMain(main);
     await waitForLCP();
-    loadHeader(doc.querySelector('header'));
+    if (!isAppView()) loadHeader(doc.querySelector('header'));
   }
 }
 
@@ -967,7 +976,7 @@ async function loadLazy(doc) {
   const element = hash ? main.querySelector(hash) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadFooter(doc.querySelector('footer'));
+  if (!isAppView()) loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.ico`);
