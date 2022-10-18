@@ -174,8 +174,8 @@ export function makeLinksRelative(main) {
         if (hostMatch) {
           a.href = `${url.pathname.replace('.html', '')}${url.search}${url.hash}`;
         } else if (hostPathMatch) {
-          const resultHref = `/${url.hostname}${url.pathname}${url.search}${url.hash}`.replace(hostPathMatch, '').replace('.html', '');
-          a.href = resultHref;
+          const resultHref = `${url.hostname}${url.pathname}${url.search}${url.hash}`.replace(hostPathMatch, '').replace('.html', '');
+          a.href = resultHref.startsWith('/') ? resultHref : `/${resultHref}`;
         }
       } catch (e) {
         // something went wrong
