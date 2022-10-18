@@ -962,7 +962,7 @@ function isAppView() {
  */
 async function loadEager(doc) {
   decorateTemplateAndTheme();
-  if (isAppView) document.querySelector('header').remove();
+  if (isAppView()) document.querySelector('header').remove();
   const main = doc.querySelector('main');
   if (main) {
     await decorateMain(main);
@@ -989,7 +989,7 @@ async function loadLazy(doc) {
 
   if (!isAppView()) loadAds(doc);
 
-  doc.querySelectorAll('div:not([class]):empty').forEach((empty) => empty.remove());
+  doc.querySelectorAll('div:not([class]):not([id]):empty').forEach((empty) => empty.remove());
 }
 
 /**
