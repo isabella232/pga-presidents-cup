@@ -956,7 +956,7 @@ function isAppView() {
  */
 async function loadEager(doc) {
   decorateTemplateAndTheme();
-  if (isAppView) document.querySelector('header').remove();
+  if (isAppView()) document.querySelector('header').remove();
   const main = doc.querySelector('main');
   if (main) {
     await decorateMain(main);
