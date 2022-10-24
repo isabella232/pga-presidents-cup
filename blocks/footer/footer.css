@@ -1,8 +1,8 @@
 footer {
-  --footer-color: var(--color-blue);
+  --footer-color: var(--color-gray-78);
   --footer-text-color: var(--color-white);
   --footer-ribbon-color: var(--color-white);
-  --footer-ribbon-text-color: var(--color-blue);
+  --footer-ribbon-text-color: var(--color-gray);
   --footer-border-color: var(--color-gray-light);
 
   font-size: var(--body-font-size-xs);
@@ -133,7 +133,7 @@ footer .footer .footer-links img {
   width: auto;
   max-width: 130px;
   height: auto;
-  max-height: 60px;
+  max-height: 40px;
 }
 
 footer .footer .footer-links ul {

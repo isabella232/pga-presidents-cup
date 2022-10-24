@@ -34,7 +34,7 @@ async function setupPartners(section) {
     section.classList.add('has-sponsors');
     const partners = document.createElement('div');
     partners.className = 'nav-partners';
-    partners.innerHTML = '<div class="nav-partners-title"><span>Proud Partners</span></div><div class="nav-partner-wrapper"></div>';
+    partners.innerHTML = '<div class="nav-partners-title"><span>Global Partners</span></div><div class="nav-partner-wrapper"></div>';
     sponsors.forEach((sponsor, i) => {
       const partner = document.createElement('div');
       partner.className = 'nav-partner';
