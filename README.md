@@ -1,9 +1,8 @@
-# Your Project's Title...
-Your project's description...
+# presidentscup.com Helix Site
 
 ## Environments
-- Preview: https://main--theplayers--hlxsites.hlx.page/
-- Live: https://main--theplayers--hlxsites.hlx.live/
+- Preview: https://main--pga-presidents-cup--hlxsites.hlx.page/
+- Live: https://main--pga-presidents-cup--hlxsites.hlx.live/
 
 ## Installation
 
