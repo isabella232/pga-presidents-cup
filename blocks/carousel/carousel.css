@@ -401,7 +401,8 @@ main .carousel.course div.course-text {
     justify-content: flex-start;
     top: 32px;
     right: 32px;
-    height: 676px;
+    min-height: 676px;
+    height: calc(100% - 64px);
   }
 }
 
@@ -493,7 +494,7 @@ main .carousel.course div.course-text h3 {
   }
 
   main .carousel.course div.course-text .course-overview p:last-child {
-    max-height: 363px;
+    max-height: 340px;
   }
 }
 
