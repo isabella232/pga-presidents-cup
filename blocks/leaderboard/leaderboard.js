@@ -178,6 +178,176 @@ async function populateLeaderboard(block, config) {
   }
 }
 
+function createNavBtn(link, label) {
+  const btn = document.createElement('li');
+  btn.innerHTML = `<a href="${link}" ${link.includes('leaderboard') ? 'class="active"' : ''}>${label}</a>`;
+  return btn;
+} 
+
+function createMediaBtn(type, ph, forLegend = false) {
+  const el = !forLegend ? 'button' : 'i'
+  const btn = document.createElement(el);
+  btn.className = 'leaderboard-round-score-button';
+  btn.title = `${ph.view} ${ph[`${type}s`]}`
+  btn.innerHTML = `<span class="icon icon-${type}"></span>`;
+  return btn;
+}
+
+function findTeam(teams, country) {
+  return teams.find((t) => t.country.toLowerCase() === country);
+}
+
+function createTeamCell(team) {
+  const cell = buildCell();
+  team.players.forEach((player, i) => {
+    if (!i) {
+      cell.textContent += `${player.firstName} ${player.lastName}`;
+    } else {
+      cell.textContent += ` / ${player.firstName} ${player.lastName}`;
+    }
+  });
+  return cell;
+}
+
+async function populateFullLeaderboard(block, config) {
+  const placeholders = await fetchPlaceholders();
+  // fetch leaderboard content
+  const tournament = `${placeholders.tourCode}/${placeholders.tournamentId}`;
+  const resp = await fetch(`https://statdata.pgatour.com/${tournament}/${config.year}/pcup_summary.json?userTrackingId=${generateUserTrackingId(config.id)}`);
+  if (resp.ok) {
+    const json = await resp.json();
+    console.log(json);
+    // build button nav
+    const nav = document.createElement('ul');
+    nav.className = 'leaderboard-nav';
+    if (config.leaderboard) nav.append(createNavBtn(config.leaderboard, placeholders.leaderboard));
+    if (config.tourcast) nav.append(createNavBtn(config.tourcast, placeholders.tourcast));
+    if (config['tee-times']) nav.append(createNavBtn(config['tee-times'], placeholders.teeTimes));
+    if (nav.hasChildNodes()) block.append(nav);
+    // build updated time
+    if (json.generatedUTC) {
+      const date = new Date(json.generatedUTC);
+      const months = placeholders.months.split(',').map((m) => m.trim());
+      const updated = document.createElement('div');
+      updated.className = 'leaderboard-updated';
+      updated.innerHTML = `<p>${placeholders.updated}
+          <strong>
+            <span class="leaderboard-updated-month">${months[date.getMonth()]}</span> 
+            <span class="leaderboard-updated-day">${date.getDate()}</span>, 
+            <span class="leaderboard-updated-year">${date.getFullYear()}</span> 
+            <span class="leaderboard-updated-hour">${date.getHours() > 12 ? date.getHours() - 12 : date.getHours()}</span>:<span class="leaderboard-updated-minutes">${date.getMinutes().toString().padStart(2, '0')}</span>
+            <span class="leaderboard-updated-suffix">${date.getHours() < 12 ? placeholders.am : placeholders.pm}</span>
+          </strong>
+        </p>`;
+      block.append(updated);
+    }
+    // build experience on tourcast button
+    if (config.tourcast) {
+      const tourcast = document.createElement('div');
+      tourcast.className = 'leaderboard-tourcast';
+      console.log('ph:', placeholders);
+      tourcast.innerHTML = `<p class="button-container">
+          ${placeholders.experienceOn}
+          <a class="leaderboard-tourcast-button" href="${config.tourcast}">
+            <span>${placeholders.tourcast}</span><span>${placeholders.threed}</span>
+          </a>
+        </p>`;
+      block.append(tourcast);
+    }
+    // build tables per round
+    if (json.rounds) {
+      const rounds = document.createElement('div');
+      rounds.className = 'leaderboard-rounds';
+      json.rounds.forEach((round) => {
+        // console.log('round:', round);
+        const table = document.createElement('table');
+        table.className = 'leaderboard-round';
+        // setup "header" / caption
+        const caption = document.createElement('caption');
+        caption.innerHTML = `<h2>
+            ${placeholders.round} ${round.roundNum}: ${round.roundFormat.split(' ').slice(2)}
+          </h2>
+          <p class="leaderboard-round-scores">
+            <span class="icon icon-flag-international"></span>
+            <span class="leaderboard-round-score-intl">
+              ${round.scores.find((s) => s.shortName.toLowerCase() === 'intl').score}
+              </span>&nbsp;|&nbsp;<span class="leaderboard-round-score-usa">
+              ${round.scores.find((s) => s.shortName.toLowerCase() === 'usa').score}
+            </span>
+            <span class="icon icon-flag-usa"></span>
+          </p>`;
+        const body = document.createElement('tbody');
+        // create row for each match
+        round.matches.forEach((match) => {
+          const matchRow = buildRow();
+          // create cells for teams
+          const intlTeam = findTeam(match.teams, 'intl');
+          const usaTeam = findTeam(match.teams, 'usa');
+          const intlCell = createTeamCell(intlTeam);
+          const usaCell = createTeamCell(usaTeam);
+          // create column for score
+          const score = buildCell();
+          score.className = 'leaderboard-round-score';
+          if (match.matchState === 'Complete') {
+            score.innerHTML = `<span>${match.teams[0].finalMatchScore.replace('and', '&')}</span>`;
+            const banner = document.createElement('span');
+            banner.className = 'icon';
+            banner.innerHTML = `<span>${placeholders.win}</span>`;
+            if (intlTeam.matchWinner) {
+              banner.classList.add('icon-banner-left');
+              score.prepend(banner);
+            } else if (usaTeam.matchWinner) {
+              banner.classList.add('icon-banner-right');
+              score.prepend(banner);
+            }
+          } // TODO: setup display when match state is NOT complete
+          // setup match media
+          // if (intlTeam.media && usaTeam.media) {
+          //   const hasVideo = intlTeam.media.hasVideo === 'true' || usaTeam.media.hasVideo === 'true';
+          //   const hasArticle = intlTeam.media.hasArticle === 'true' || usaTeam.media.hasArticle === 'true';
+          //   if (hasVideo || hasArticle) {
+          //     const btnContainer = document.createElement('div');
+          //     btnContainer.className = 'button-container';
+          //     if (hasVideo) btnContainer.append(createMediaBtn('video', placeholders));
+          //     if (hasArticle) btnContainer.append(createMediaBtn('article', placeholders));
+          //     score.append(btnContainer);
+          //   }
+          // }
+          matchRow.append(intlCell, score, usaCell);
+          body.append(matchRow);
+        })
+        table.append(caption, body);
+        decorateIcons(table);
+        rounds.prepend(table);
+      })
+      block.append(rounds);
+    }
+    // build legend
+    // const legend = document.createElement('div');
+    // legend.className = 'leaderboard-legend';
+    // legend.innerHTML = `<p><strong>${placeholders.legend}</strong></p>
+    //   <ul>
+    //     <li>${createMediaBtn('video', placeholders, true).outerHTML} = ${placeholders.videoLegend}</li>
+    //     <li>${createMediaBtn('article', placeholders, true).outerHTML} = ${placeholders.articleLegend}</li>
+    //     <li><span class="leaderboard-legend-key">#</span> = ${placeholders.hashLegend}</li>
+    //   </ul>`;
+    // decorateIcons(legend);
+    // block.append(legend);
+    // build abbreviations
+    const abbreviations = document.createElement('div');
+    abbreviations.className = 'leaderboard-abbreviations';
+    abbreviations.innerHTML = `<p><strong>${placeholders.abbreviations}</strong></p>
+      <ul>
+        <li><span class="leaderboard-abbreviations-key">T</span> = ${placeholders.tied}</li>
+        <li><span class="leaderboard-abbreviations-key">C</span> = ${placeholders.conceded}</li>
+        <li><span class="leaderboard-abbreviations-key">WD</span> = ${placeholders.withdrawn}</li>
+        <li><span class="leaderboard-abbreviations-key">DQ</span> = ${placeholders.disqualified}</li>
+        <li><span class="leaderboard-abbreviations-key">DNS</span> = ${placeholders.didNotStart}</li>
+      </ul>`;
+    block.append(abbreviations);
+  }
+}
+
 export default async function decorate(block) {
   const config = readBlockConfig(block);
   block.textContent = '';
@@ -186,7 +356,11 @@ export default async function decorate(block) {
     if (entries.some((entry) => entry.isIntersecting)) {
       observer.disconnect();
       loadScript('https://microservice.pgatour.com/js', () => {
-        populateLeaderboard(block, config);
+        if (block.className.includes('full')) {
+          populateFullLeaderboard(block, config);
+        } else {
+          populateLeaderboard(block, config);
+        }
       });
     }
   }, { threshold: 0 });

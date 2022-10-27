@@ -1,5 +1,5 @@
 main .leaderboard {
-  --leaderboard-heading-color: var(--color-blue);
+  --leaderboard-heading-color: var(--color-gray-78);
 
   max-width: 100%;
   min-height: 558px; /* update after ads */
@@ -364,5 +364,326 @@ main .leaderboard .leaderboard-footer .button-container {
 
   main .leaderboard .leaderboard-footer .button-container {
     text-align: right;
+  }
+}
+
+/* FULL LEADERBOARD */
+main .leaderboard.full {
+  min-height: 2000px;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+main .leaderboard.full .leaderboard-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 16px;
+  list-style: none;
+  margin: 0;
+  border-top: 1px solid var(--color-gray-light);
+  border-bottom: 1px solid var(--color-gray-light);
+  padding-left: 0;
+  background-color: var(--highlight-background-color);
+  font-size: var(--body-font-size-s);
+  text-transform: uppercase;
+}
+
+main .leaderboard.full .leaderboard-nav li,
+main .leaderboard.full .leaderboard-nav a {
+  padding: 8px;
+  color: var(--text-color);
+  white-space: nowrap;
+}
+
+main .leaderboard.full .leaderboard-nav a.active {
+  padding-bottom: 5px;
+  border-bottom: 4px solid;
+  font-weight: bold;
+}
+
+main .leaderboard.full .leaderboard-nav a:hover {
+  text-decoration: none;
+  padding-bottom: 5px;
+  border-bottom: 4px solid var(--color-gray-light);
+}
+
+main .leaderboard.full .leaderboard-updated,
+main .leaderboard.full .leaderboard-tourcast {
+  padding: 16px;
+  background-color: var(--overlay-text-color);
+  font-size: var(--body-font-size-s);
+  text-align: center;
+}
+
+main .leaderboard.full .leaderboard-updated p,
+main .leaderboard.full .leaderboard-tourcast p {
+  margin: 0;
+}
+
+main .leaderboard.full .leaderboard-updated span {
+  text-transform: uppercase;
+}
+
+main .leaderboard.full .leaderboard-tourcast-button {
+  position: relative;
+  border: 2px solid;
+  border-radius: 4px;
+  padding: 4px 0;
+  font-size: var(--body-font-size-s);
+  font-weight: bold;
+}
+
+main .leaderboard.full .leaderboard-tourcast-button::after {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  right: -16px;
+  bottom: 10px;
+  transform: rotate(45deg);
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  content: '';
+  transition: right .4s;
+}
+
+main .leaderboard.full .leaderboard-tourcast-button:hover {
+  text-decoration: none;
+  filter: brightness(.9);
+  transition: filter .2s;
+}
+
+main .leaderboard.full .leaderboard-tourcast-button:hover::after {
+  right: -24px;
+}
+
+main .leaderboard.full .leaderboard-tourcast-button span {
+  box-sizing: border-box;
+  padding: 4.5px 3.5px;
+}
+
+main .leaderboard.full .leaderboard-tourcast-button span:first-child {
+  border-radius: 2px 0 0 2px;
+  color: var(--color-blue);
+  background-color: var(--highlight-background-color);
+}
+
+main .leaderboard.full .leaderboard-tourcast-button span:last-child {
+  border-radius: 0 2px 2px 0;
+  color: var(--overlay-text-color);
+  background-color: var(--color-red);
+}
+
+main .leaderboard.full .leaderboard-round {
+  margin-bottom: 16px;
+  text-transform: none;
+}
+
+main .leaderboard.full .leaderboard-round caption {
+  color: var(--color-white);
+  background-color: var(--leaderboard-heading-color);
+}
+
+main .leaderboard.full .leaderboard-round caption h2 {
+  margin-top: 8px;
+  margin-bottom: 0;
+  color: var(--color-white);
+  font-family: var(--body-font-family);
+  font-size: var(--heading-font-size-xs);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+main .leaderboard.full .leaderboard-round caption p {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: var(--heading-font-size-l);
+}
+
+main .leaderboard.full .leaderboard-round caption .icon {
+  height: unset;
+  padding: 0 8px;
+}
+
+main .leaderboard.full .leaderboard-round caption .icon svg {
+  height: 24px;
+}
+
+main .leaderboard.full .leaderboard-round tbody {
+  color: var(--text-color);
+  font-size: var(--body-font-size-s);
+}
+
+main .leaderboard.full .leaderboard-round tbody td {
+  padding: 8px;
+  width: calc(100% / 3);
+}
+
+main .leaderboard.full .leaderboard-round tbody td:first-child {
+  padding-right: 28px;
+  text-align: left;
+}
+
+main .leaderboard.full .leaderboard-round tbody tr td:first-child {
+  background-image: linear-gradient(to right, var(--background-color) calc(100% - 8px), var(--color-gray-light))
+}
+
+main .leaderboard.full .leaderboard-round tbody tr:nth-child(odd) td:first-child {
+  background-image: linear-gradient(to right, var(--highlight-background-color) calc(100% - 8px), var(--color-gray-light))
+}
+
+main .leaderboard.full .leaderboard-round tbody td:last-child {
+  padding-left: 28px;
+  text-align: right;
+}
+
+main .leaderboard.full .leaderboard-round tbody tr td:last-child {
+  background-image: linear-gradient(to right, var(--color-gray-light), var(--background-color) calc(0% + 8px))
+}
+
+main .leaderboard.full .leaderboard-round tbody tr:nth-child(odd) td:last-child {
+  background-image: linear-gradient(to right, var(--color-gray-light), var(--highlight-background-color) calc(0% + 8px))
+}
+
+main .leaderboard.full .leaderboard-round .leaderboard-round-score {
+  position: relative;
+  color: var(--color-gray);
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+main .leaderboard.full .leaderboard-round-score button,
+main .leaderboard.full .leaderboard-legend i {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 2px;
+  border-radius: 50%;
+  background-color: var(--color-gray-light);
+}
+
+main .leaderboard.full .leaderboard-round-score button:hover {
+  background-color: var(--color-gold);
+}
+
+main .leaderboard.full .leaderboard-round-score svg,
+main .leaderboard.full .leaderboard-legend i svg {
+  height: 12px;
+  width: 12px;
+  margin-top: 3px;
+  margin-left: 1px;
+}
+
+main .leaderboard.full .leaderboard-legend i .icon {
+  padding-left: 4px;
+}
+
+main .leaderboard.full .leaderboard-round-score .icon[class*=icon-banner-] {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+main .leaderboard.full .leaderboard-round-score .icon.icon-banner-left {
+  left: -10px;
+}
+
+main .leaderboard.full .leaderboard-round-score .icon.icon-banner-right {
+  right: -10px;
+}
+
+main .leaderboard.full .leaderboard-round-score .icon[class*=icon-banner-] span {
+  display: none;
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--overlay-text-color);
+  font-size: var(--body-font-size-xs);
+}
+
+main .leaderboard.full .leaderboard-legend strong,
+main .leaderboard.full .leaderboard-abbreviations strong {
+  text-transform: uppercase;
+}
+
+main .leaderboard.full .leaderboard-legend ul,
+main .leaderboard.full .leaderboard-abbreviations ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+main .leaderboard.full .leaderboard-legend .leaderboard-legend-key,
+main .leaderboard.full .leaderboard-abbreviations .leaderboard-abbreviations-key {
+  display: inline-block;
+  min-width: 22px;
+  margin: 2px;
+  text-align: center;
+}
+
+@media (min-width: 700px) {
+  main .leaderboard.full .leaderboard-nav {
+    justify-content: flex-start;
+  }
+
+  main .leaderboard.full .leaderboard-nav li {
+    padding: 8px 16px;
+  }
+
+  main .leaderboard.full .leaderboard-round tbody {
+    font-size: var(--body-font-size-m);
+  }
+
+  main .leaderboard.full .leaderboard-round tbody td {
+    padding: 16px;
+  }
+
+  main .leaderboard.full .leaderboard-round tbody td:first-child {
+    padding-right: 50px;
+  }
+  
+  main .leaderboard.full .leaderboard-round tbody td:last-child {
+    padding-left: 50px;
+  }
+
+  main .leaderboard.full .leaderboard-round-score .button-container {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+  }
+
+  main .leaderboard.full .leaderboard-round-score .icon[class*=icon-banner-] {
+    width: 32px;
+    height: 20px;
+  }
+
+  main .leaderboard.full .leaderboard-round-score .icon.icon-banner-left {
+    left: -32px;
+  }
+  
+  main .leaderboard.full .leaderboard-round-score .icon.icon-banner-right {
+    right: -32px;
+  }
+
+  main .leaderboard.full .leaderboard-round-score .icon.icon-banner-right::after,
+  main .leaderboard.full .leaderboard-round-score .icon.icon-banner-right::before {
+    left: 32px;
+  }
+
+  main .leaderboard.full .leaderboard-round-score .icon[class*=icon-banner-] span {
+    display: unset;
+    visibility: visible;
+  }
+
+  main .leaderboard.full .leaderboard-abbreviations ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 16px;
   }
 }
