@@ -18,6 +18,7 @@
   --color-blue-light: #004B98;
   --color-blue-lighter: #2D4976;
   --color-tan: #C2A36E;
+  --color-red: #E60F2F;
   --color-gold: #F5A91B;
   --color-gold-95: #F5A91Bf2;
   --color-blue-95: #003360f2;
@@ -730,4 +731,65 @@ main .section.teaser .teaser-play::before {
 
 .icon.icon-close::after {
   transform: rotate(-45deg)
+}
+
+.icon.icon-banner-left,
+.icon.icon-banner-right {
+  position: relative;
+  width: 10px;
+  height: 14px;
+  background-color: var(--color-black);
+  color: var(--color-black);
+}
+
+.icon.icon-banner-right {
+  background-color: var(--color-red);
+  color: var(--color-red);
+}
+
+.icon.icon-banner-left::after,
+.icon.icon-banner-right::after,
+.icon.icon-banner-left::before,
+.icon.icon-banner-right::before {
+  position: absolute;
+  width: 0;
+  height: 0;
+  content: '';
+}
+
+.icon.icon-banner-left::after,
+.icon.icon-banner-left::before {
+  left: -10px;
+  border-right: 11px solid currentColor;
+}
+
+.icon.icon-banner-left::after {
+  bottom: 0;
+  border-top: 11px solid transparent;
+  border-bottom: 0 solid transparent;
+}
+
+.icon.icon-banner-left::before {
+  top: 0;
+  border-top: 0 solid transparent;
+  border-bottom: 11px solid transparent;
+}
+
+.icon.icon-banner-right::after,
+.icon.icon-banner-right::before {
+  left: 10px;
+  border-left: 11px solid currentColor;
+}
+
+.icon.icon-banner-right::after {
+  bottom: 0;
+  border-top: 11px solid transparent;
+  border-bottom: 0 solid transparent;
+}
+
+.icon.icon-banner-right::before {
+  top: 0;
+  border-right: 0 solid transparent;
+  border-left: 11px solid currentColor;
+  border-bottom: 11px solid transparent;
 }
