@@ -67,7 +67,7 @@ header nav[aria-expanded=true] {
 
   header nav {
     grid-template: 'brand sections social tour user';
-    grid-template-columns: 220px 1fr auto 50px 60px;
+    grid-template-columns: 220px 1fr auto 0 60px;
     grid-template-rows: var(--nav-height);
     width: 1400px;
     max-width: 98%;
@@ -78,7 +78,7 @@ header nav[aria-expanded=true] {
 
 @media (min-width: 1200px) {
   header nav {
-    grid-template-columns: 260px 1fr auto 60px 60px;
+    grid-template-columns: 260px 1fr auto 0 60px;
     font-size: var(--body-font-size-l);
   }
 }
