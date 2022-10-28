@@ -174,8 +174,35 @@ export default async function decorate(block) {
     block.parentNode.append(statusBar);
     const data = document.createElement('div');
     data.className = 'status-bar-data';
+    const scores = document.createElement('div');
+    scores.className = 'status-bar-scores';
 
     const placeholders = await fetchPlaceholders();
+    // setup scores
+    const isScoreStored = sessionStorage.getItem(`${placeholders.tourCode}${placeholders.tournamentId}Scores`);
+    const scoreData = isScoreStored ? JSON.parse(isScoreStored) : null;
+    scores.innerHTML = `<div class="scores-intl">
+        <span class="icon icon-flag-international"></span>
+        <p class="scores-name">${placeholders.internationalTeam}</p>
+        <p class="${scoreData && scoreData.lead === 'intl' ? 'scores-score scores-score-lead' : 'scores-score'}">
+          ${scoreData ? scoreData.intlScore : ''}
+        </p>
+      </div>
+      <div class="scores-summary">
+        <p><a href="/leaderboard">
+          ${placeholders.scoringSummary}
+        </a></p>
+      </div>
+      <div class="scores-usa">
+      <p class="${scoreData && scoreData.lead === 'usa' ? 'scores-score scores-score-lead' : 'scores-score'}">
+          ${scoreData ? scoreData.usaScore : ''}
+        </p>
+        <p class="scores-name">${placeholders.usTeam}</p>
+        <span class="icon icon-flag-usa"></span>
+      </div>`;
+    decorateIcons(scores);
+    data.append(scores);
+
     if (placeholders.course) data.insertAdjacentHTML('beforeend', `<div class="status-bar-course"><p>${placeholders.course}</p></div>`);
     if (placeholders.dates) data.insertAdjacentHTML('beforeend', `<div class="status-bar-dates"><p>${placeholders.dates}</p></div>`);
     // setup countdown
@@ -193,10 +220,10 @@ export default async function decorate(block) {
       setInterval(updateCountdown, 60 * 1000); // update countdown every minute
     }
     // check for stored weather
-    const isStored = sessionStorage.getItem(`${placeholders.tourCode}${placeholders.tournamentId}Weather`);
-    if (isStored) {
+    const isWeatherStored = sessionStorage.getItem(`${placeholders.tourCode}${placeholders.tournamentId}Weather`);
+    if (isWeatherStored) {
       // build weather from session storage
-      const weatherData = JSON.parse(isStored);
+      const weatherData = JSON.parse(isWeatherStored);
       const weather = document.createElement('div');
       weather.className = 'status-bar-weather';
       weather.innerHTML = `<p>

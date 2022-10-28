@@ -609,8 +609,64 @@ export function initGigya() {
 
 initGigya();
 
+/* status bar scores */
+function generateUserTrackingId(id) {
+  return window.pgatour.setTrackingUserId(`id${id}`);
+}
+
+async function populateStatusBarScores(statusBar) {
+  if (statusBar) {
+    const statusBarScores = statusBar.querySelector('.status-bar-scores');
+    if (statusBarScores) {
+      const tournament = `${placeholders.tourCode}/${placeholders.tournamentId}`;
+      try {
+        loadScript('https://microservice.pgatour.com/js', async () => {
+        const resp = await fetch(`https://statdata.pgatour.com/${tournament}/${placeholders.currentYear}/pcup_summary.json?userTrackingId=${generateUserTrackingId(placeholders.userTrackingId)}`);
+        const json = await resp.json();
+        const recentScores = json.rounds.pop().scores;
+        const intlScore = recentScores.find((s) => s.shortName.toLowerCase() === 'intl');
+        const intlScoreEl = statusBarScores.querySelector('.scores-intl .scores-score');
+        if (intlScoreEl) {
+          intlScoreEl.textContent = intlScore.score || '';
+          intlScoreEl.classList.remove('scores-score-lead');
+        }
+        const usaScore = recentScores.find((s) => s.shortName.toLowerCase() === 'usa');
+        const usaScoreEl = statusBarScores.querySelector('.scores-usa .scores-score');
+        if (usaScoreEl) {
+          usaScoreEl.textContent = usaScore.score || '';
+          usaScoreEl.classList.remove('scores-score-lead');
+        }
+        if (intlScore.score && usaScore.score) {
+          const intlNum = Number(intlScore.score);
+          const usaNum = Number(usaScore.score);
+          let lead = null;
+          if (intlNum > usaNum) {
+            intlScoreEl.classList.add('scores-score-lead');
+            lead = 'intl';
+          }
+          if (usaNum > intlNum) {
+            usaScoreEl.classList.add('scores-score-lead');
+            lead = 'usa';
+          }
+          sessionStorage.setItem(`${tournament.replace('/', '')}Scores`, JSON.stringify({
+            intlScore: intlNum,
+            usaScore: usaNum,
+            lead,
+          }));
+        }
+      });
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log('failed to load scores', error);
+      }
+    }
+  }
+}
+
+populateStatusBarScores(document.querySelector('header > .status-bar'));
+
 /* status bar weather */
-async function populateStatusBar(statusBar) {
+async function populateStatusBarWeather(statusBar) {
   if (statusBar) {
     const statusBarData = document.querySelector('.status-bar-data');
     const tournament = `${placeholders.tourCode}${placeholders.tournamentId}`;
@@ -652,7 +708,7 @@ async function populateStatusBar(statusBar) {
   }
 }
 
-populateStatusBar(document.querySelector('header > .status-bar'));
+populateStatusBarWeather(document.querySelector('header > .status-bar'));
 
 /* setup cookie preferences */
 function getCookie(cookieName) {

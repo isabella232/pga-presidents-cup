@@ -719,22 +719,29 @@ header .status-bar {
 header .status-bar .status-bar-data {
   display: grid;
   grid-template-areas: 
+    'scores scores scores'
     '. course dates'
     'countdown countdown countdown';
   grid-template-columns: 1fr auto auto; 
-  grid-template-rows: 1fr auto; 
+  grid-template-rows: 1fr 1fr auto; 
   gap: 0 10px;
 }
 
 @media (min-width: 700px) {
   header .status-bar .status-bar-data {
+    grid-template-areas: 
+    '. scores scores'
+    'course . dates'
+    'countdown countdown countdown';
     grid-template-columns: calc(60px + 220px) auto auto; 
+    grid-template-rows: 1fr auto auto;
   }
 }
 
 @media (min-width: 900px) {
   header .status-bar .status-bar-data {
     grid-template-areas: 
+      '. scores scores scores'
       '. course dates weather'
       'countdown countdown countdown countdown';
     grid-template-columns: 220px auto auto 1fr; 
@@ -743,7 +750,9 @@ header .status-bar .status-bar-data {
 
 @media (min-width: 1200px) {
   header .status-bar .status-bar-data {
-    grid-template-areas: '. course dates countdown weather';
+    grid-template-areas: 
+      '. scores scores scores scores'
+      '. course dates countdown weather';
     grid-template-columns: 260px auto auto 1fr auto;
     width: 1400px;
     max-width: 98%;
@@ -753,7 +762,6 @@ header .status-bar .status-bar-data {
 
 header .status-bar p {
   margin: 0;
-  line-height: 1;
 }
 
 header .status-bar a {
@@ -766,6 +774,95 @@ header .status-bar a:hover {
 
 header .status-bar .status-bar-data > div {
   padding: 10px 5px;
+}
+
+/* scores */
+header .status-bar .status-bar-data .status-bar-scores {
+  grid-area: scores;
+  display: flex;
+  padding: 0;
+}
+
+header .status-bar .status-bar-data .status-bar-scores > div {
+  box-sizing: border-box;
+  flex: 1 0 calc(100% / 3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px;
+}
+
+header .status-bar .status-bar-data .status-bar-scores .icon,
+header .status-bar .status-bar-data .status-bar-scores svg {
+  height: 18px;
+}
+
+header .status-bar .status-bar-data .status-bar-scores .scores-intl,
+header .status-bar .status-bar-data .status-bar-scores .scores-usa {
+  background-color: var(--color-gray-6f);
+  padding: 8px;
+}
+
+header .status-bar .status-bar-scores .icon {
+  flex: 0 0 24px;
+}
+
+header .status-bar .status-bar-scores .scores-score {
+  flex: 1 0 auto;
+  font-weight: bold;
+  font-size: var(--body-font-size-l);
+}
+
+header .status-bar .status-bar-scores .scores-score.scores-score-lead {
+  color: var(--color-gold);
+}
+
+header .status-bar .status-bar-scores .scores-name {
+  flex: 1 1 auto;
+  display: none;
+  visibility: hidden;
+  font-size: var(--body-font-size-xxxs);
+}
+
+header .status-bar .status-bar-data .status-bar-scores .scores-summary {
+  justify-content: center;
+  background-color: var(--color-gray-64);
+  font-size: var(--body-font-size-xxxs);
+  line-height: 1;
+}
+
+@media (min-width: 700px) {
+  header .status-bar .status-bar-data .status-bar-scores > div,
+  header .status-bar .status-bar-data .status-bar-scores .scores-intl,
+  header .status-bar .status-bar-data .status-bar-scores .scores-usa {
+    padding: 8px 16px;
+  }
+
+  header .status-bar .status-bar-scores .scores-score {
+    font-size: var(--body-font-size-xl);
+  }
+  
+  header .status-bar .status-bar-data .status-bar-scores .scores-summary {
+    font-size: var(--body-font-size-xxs);
+  }
+}
+
+@media (min-width: 900px) {
+  header .status-bar .status-bar-data .status-bar-scores > div {
+    justify-content: center;
+    gap: 4px;
+  }
+
+  header .status-bar .status-bar-scores .scores-name {
+    display: unset;
+    visibility: visible;
+  }
+}
+
+@media (min-width: 1200px) {
+  header .status-bar .status-bar-scores .scores-name {
+    font-size: var(--body-font-size-s);
+  }
 }
 
 /* course */
