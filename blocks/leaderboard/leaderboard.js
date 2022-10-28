@@ -216,7 +216,6 @@ async function populateFullLeaderboard(block, config) {
   const resp = await fetch(`https://statdata.pgatour.com/${tournament}/${config.year}/pcup_summary.json?userTrackingId=${generateUserTrackingId(config.id)}`);
   if (resp.ok) {
     const json = await resp.json();
-    console.log(json);
     // build button nav
     const nav = document.createElement('ul');
     nav.className = 'leaderboard-nav';
@@ -245,7 +244,6 @@ async function populateFullLeaderboard(block, config) {
     if (config.tourcast) {
       const tourcast = document.createElement('div');
       tourcast.className = 'leaderboard-tourcast';
-      console.log('ph:', placeholders);
       tourcast.innerHTML = `<p class="button-container">
           ${placeholders.experienceOn}
           <a class="leaderboard-tourcast-button" href="${config.tourcast}">
@@ -259,7 +257,6 @@ async function populateFullLeaderboard(block, config) {
       const rounds = document.createElement('div');
       rounds.className = 'leaderboard-rounds';
       json.rounds.forEach((round) => {
-        // console.log('round:', round);
         const table = document.createElement('table');
         table.className = 'leaderboard-round';
         // setup "header" / caption
@@ -276,6 +273,7 @@ async function populateFullLeaderboard(block, config) {
             </span>
             <span class="icon icon-flag-usa"></span>
           </p>`;
+        decorateIcons(caption);
         const body = document.createElement('tbody');
         // create row for each match
         round.matches.forEach((match) => {
@@ -317,7 +315,6 @@ async function populateFullLeaderboard(block, config) {
           body.append(matchRow);
         })
         table.append(caption, body);
-        decorateIcons(table);
         rounds.prepend(table);
       })
       block.append(rounds);
