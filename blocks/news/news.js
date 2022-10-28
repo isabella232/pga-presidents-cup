@@ -131,6 +131,7 @@ export default async function decorate(block) {
   const observer = new IntersectionObserver(async (entries) => {
     if (entries.some((entry) => entry.isIntersecting)) {
       observer.disconnect();
+      const placeholders = await fetchPlaceholders();
       // populate news content
       /* TODO: add CORS header, to be replaced with direct API */
       let directURL;
@@ -138,7 +139,6 @@ export default async function decorate(block) {
         const tags = config.tags.replace(/ /g, '').split(',').join('+');
         directURL = `${newsURL}/tags=${tags}&size=${limit - pinnedItems.length}`;
       } else {
-        const placeholders = await fetchPlaceholders();
         directURL = `${newsURL}/path=/content&tags=${placeholders.newsTags}&size=${limit - pinnedItems.length}`;
       }
       const resp = await fetch(`https://little-forest-58aa.david8603.workers.dev/?url=${encodeURIComponent(directURL)}`);
@@ -192,7 +192,7 @@ export default async function decorate(block) {
         const types = ['More', 'Less'];
         types.forEach((type) => {
           const button = document.createElement('button');
-          button.textContent = `Show ${type}`;
+          button.textContent = placeholders[`show${type}`];
           button.setAttribute('data-show', type.toLowerCase());
           button.addEventListener('click', paginateNews);
           container.append(button);

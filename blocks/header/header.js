@@ -25,7 +25,7 @@ function displayNextPartner(proud) {
   partners[(appeared + 1) % partners.length].classList.add('nav-partner-appear');
 }
 
-async function setupPartners(section) {
+async function setupPartners(section, ph) {
   const pages = await lookupPages();
   const sponsors = pages.filter((e) => e.path.startsWith('/sponsors/'));
 
@@ -34,7 +34,10 @@ async function setupPartners(section) {
     section.classList.add('has-sponsors');
     const partners = document.createElement('div');
     partners.className = 'nav-partners';
-    partners.innerHTML = '<div class="nav-partners-title"><span>Global Partners</span></div><div class="nav-partner-wrapper"></div>';
+    partners.innerHTML = `<div class="nav-partners-title">
+        <span>${ph.globalPartners}</span>
+      </div>
+      <div class="nav-partner-wrapper"></div>`;
     sponsors.forEach((sponsor, i) => {
       const partner = document.createElement('div');
       partner.className = 'nav-partner';
@@ -172,43 +175,38 @@ export default async function decorate(block) {
     const data = document.createElement('div');
     data.className = 'status-bar-data';
 
-    try {
-      const placeholders = await fetchPlaceholders();
-      if (placeholders.course) data.insertAdjacentHTML('beforeend', `<div class="status-bar-course"><p>${placeholders.course}</p></div>`);
-      if (placeholders.dates) data.insertAdjacentHTML('beforeend', `<div class="status-bar-dates"><p>${placeholders.dates}</p></div>`);
-      // setup countdown
-      if (placeholders.countdown) {
-        window.placeholders.countdown = new Date(placeholders.countdown);
-        const countdownData = parseCountdown(findTimeBetween(window.placeholders.countdown));
-        const countdown = `<div class="status-bar-countdown">
-          <p>
-            <span id="countdown-days">${countdownData.days}</span> days : 
-            <span id="countdown-hours">${countdownData.hours}</span> hours : 
-            <span id="countdown-minutes">${countdownData.minutes}</span> minutes
-          </p>
-        </div>`;
-        data.insertAdjacentHTML('beforeend', countdown);
-        setInterval(updateCountdown, 60 * 1000); // update countdown every minute
-      }
-      // check for stored weather
-      const isStored = sessionStorage.getItem(`${placeholders.tourCode}${placeholders.tournamentId}Weather`);
-      if (isStored) {
-        // build weather from session storage
-        const weatherData = JSON.parse(isStored);
-        const weather = document.createElement('div');
-        weather.className = 'status-bar-weather';
-        weather.innerHTML = `<p>
-            <a href="/weather">
-              <span class="status-bar-location">${weatherData.location}</span>
-              <img src="${weatherData.icon}"/ >
-              <span class="status-bar-temp">${weatherData.temp}</span>
-            </a>
-          </p>`;
-        data.append(weather);
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('failed to load placeholders', error);
+    const placeholders = await fetchPlaceholders();
+    if (placeholders.course) data.insertAdjacentHTML('beforeend', `<div class="status-bar-course"><p>${placeholders.course}</p></div>`);
+    if (placeholders.dates) data.insertAdjacentHTML('beforeend', `<div class="status-bar-dates"><p>${placeholders.dates}</p></div>`);
+    // setup countdown
+    if (placeholders.countdown) {
+      window.placeholders.countdown = new Date(placeholders.countdown);
+      const countdownData = parseCountdown(findTimeBetween(window.placeholders.countdown));
+      const countdown = `<div class="status-bar-countdown">
+        <p>
+          <span id="countdown-days">${countdownData.days}</span> ${placeholders.days} : 
+          <span id="countdown-hours">${countdownData.hours}</span> ${placeholders.hours} : 
+          <span id="countdown-minutes">${countdownData.minutes}</span> ${placeholders.minutes}
+        </p>
+      </div>`;
+      data.insertAdjacentHTML('beforeend', countdown);
+      setInterval(updateCountdown, 60 * 1000); // update countdown every minute
+    }
+    // check for stored weather
+    const isStored = sessionStorage.getItem(`${placeholders.tourCode}${placeholders.tournamentId}Weather`);
+    if (isStored) {
+      // build weather from session storage
+      const weatherData = JSON.parse(isStored);
+      const weather = document.createElement('div');
+      weather.className = 'status-bar-weather';
+      weather.innerHTML = `<p>
+          <a href="/weather">
+            <span class="status-bar-location">${weatherData.location}</span>
+            <img src="${weatherData.icon}"/ >
+            <span class="status-bar-temp">${weatherData.temp}</span>
+          </a>
+        </p>`;
+      data.append(weather);
     }
     if (data.hasChildNodes()) statusBar.append(data);
 
@@ -224,7 +222,7 @@ export default async function decorate(block) {
       sectionMeta.remove();
     }
 
-    await setupPartners(brand);
+    await setupPartners(brand, placeholders);
     block.classList.add('appear');
   }
 }

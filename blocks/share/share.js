@@ -1,4 +1,4 @@
-import { decorateIcons } from '../../scripts/scripts.js';
+import { decorateIcons, fetchPlaceholders } from '../../scripts/scripts.js';
 
 function openPopup(e) {
   const target = e.target.closest('button');
@@ -30,14 +30,15 @@ function setupClick(btn, type) {
   }
 }
 
-export default function decorate(block) {
-  block.innerHTML = '<p>Share On</p><div class="button-container"></div>';
+export default async function decorate(block) {
+  const placeholders = await fetchPlaceholders();
+  block.innerHTML = `<p>${placeholders.shareOn}</p><div class="button-container"></div>`;
   const socials = ['facebook', 'twitter', 'email'];
   socials.forEach((social) => {
     const btn = document.createElement('button');
     btn.className = `button share-${social}`;
     btn.innerHTML = `<span class="icon icon-${social}"></span>`;
-    btn.title = `Share on ${social.charAt(0).toUpperCase() + social.slice(1)}`;
+    btn.title = `${placeholders.shareOn} ${social.charAt(0).toUpperCase() + social.slice(1)}`;
     btn.setAttribute('data-type', social);
     setupClick(btn, social);
     block.querySelector('.button-container').append(btn);

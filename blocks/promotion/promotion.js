@@ -1,4 +1,4 @@
-import { fetchPlaceholders } from '../../scripts/scripts.js';
+import { fetchPlaceholders, isFr } from '../../scripts/scripts.js';
 
 function calculateLocalOffset() {
   const date = new Date();
@@ -93,7 +93,7 @@ async function buildClock(block) {
   // setup clock
   window[`rolex${placeholders.rolexId}`] = [{
     city: placeholders.city,
-    local: 'Your Time',
+    local: placeholders.yourTime,
     cdtext: 'Change countdown values',
     startDate: dates.start,
     endDate: dates.end,
@@ -126,22 +126,22 @@ async function buildToggle(block) {
   toggle.innerHTML = `<iframe
       id="rolexFrame1txbOyjg"
       class="rolex-frame-medium"
-      data-src="/blocks/promotion/rolex/rolex.frameToggle.html?eventcity=${placeholders.city.split(' ').join('+')}&utc=${placeholders.eventOffset}&lang=en"
+      data-src="/blocks/promotion/rolex/rolex.frameToggle.html?eventcity=${placeholders.city.split(' ').join('+')}&utc=${placeholders.eventOffset}&lang=${isFr() ? 'fr' : 'en'}"
       style="width:450px;height:100px;border:0;margin:0;padding:0;overflow:hidden;scroll:none"
       scrolling="NO"
       frameborder="NO"
       transparency="true"
-      src="/blocks/promotion/rolex/rolex.frameToggle.html?eventcity=${placeholders.city.split(' ').join('+')}&utc=${placeholders.eventOffset}&lang=en">
+      src="/blocks/promotion/rolex/rolex.frameToggle.html?eventcity=${placeholders.city.split(' ').join('+')}&utc=${placeholders.eventOffset}&lang=${isFr() ? 'fr' : 'en'}">
     </iframe>
     <iframe
       id="rolexFrame1txbOyjg"
       class="rolex-frame-small"
-      data-src="/blocks/promotion/rolex/rolex.frameToggleMobile.html?eventcity=${placeholders.city.split(' ').join('+')}&utc=${placeholders.eventOffset}&lang=en"
+      data-src="/blocks/promotion/rolex/rolex.frameToggleMobile.html?eventcity=${placeholders.city.split(' ').join('+')}&utc=${placeholders.eventOffset}&lang=${isFr() ? 'fr' : 'en'}"
       style="width:100%;height:58px;border:0px;margin:0px;padding:0px;overflow:hidden;background-color:rgb(0,96,57);"
       scrolling="NO"
       frameborder="NO"
       transparency="true"
-      src="/blocks/promotion/rolex/rolex.frameToggleMobile.html?eventcity=${placeholders.city.split(' ').join('+')}&utc=${placeholders.eventOffset}&lang=en">
+      src="/blocks/promotion/rolex/rolex.frameToggleMobile.html?eventcity=${placeholders.city.split(' ').join('+')}&utc=${placeholders.eventOffset}&lang=${isFr() ? 'fr' : 'en'}">
     </iframe>`;
   block.append(toggle);
   window.addEventListener('message', (e) => {
